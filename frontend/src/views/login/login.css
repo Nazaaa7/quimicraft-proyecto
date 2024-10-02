@@ -1,0 +1,77 @@
+.login-container {
+  height: 100vh;
+  background-image: url("/img/FONDO.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.login-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffff;
+  margin-bottom: 20px;
+}
+
+.login-header h2 {
+  font-weight: 700;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  border-radius: 10px;
+  border-color: #003e06;
+}
+
+.login-form input {
+  background-color: transparent;
+  width: 300px;
+  color: #fff;
+  border-color: #003e06;
+}
+
+.login-form label {
+  color: #ffffff !important;
+ 
+}
+
+.login-form input:focus {
+  background-color: transparent;
+  color: #fff;
+}
+
+.login-form label::after {
+  background-color: transparent !important;
+  color: #fff !important;
+}
+
+.button-login {
+  background-color: #439662;
+  border: 1px solid #003e06;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.button-login:hover {
+  background-color: #199147;
+}
+
+.login-label {
+  margin-bottom: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+.login-label a {
+  color: #003d17 !important;
+  text-decoration: none;
+}
