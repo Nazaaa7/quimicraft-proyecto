@@ -3,7 +3,7 @@
   background-image: url("/img/FONDO.png");
   background-size: cover;
   background-position: center;
-  background-repeat: none;
+  background-repeat: no-repeat; /* Cambié 'none' por 'no-repeat' */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,37 +26,39 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  background-color: transparent;
+  background-color: #ffffff83;
   border-radius: 10px;
-  border-color: #003e06;
+  border: 2px solid rgb(0, 54, 10);
+  padding: 20px; 
+ height: 50%;
+ padding-top: 4%;
 }
 
 .login-form input {
   background-color: transparent;
   width: 300px;
-  color: #fff;
+  color: #000000;
   border-color: #003e06;
 }
 
 .login-form label {
-  color: #ffffff !important;
- 
+  color: #000000 !important;
 }
 
 .login-form input:focus {
   background-color: transparent;
-  color: #fff;
+  color: #000000;
 }
 
 .login-form label::after {
   background-color: transparent !important;
-  color: #fff !important;
+  color: #000000 !important;
 }
 
 .button-login {
   background-color: #439662;
   border: 1px solid #003e06;
-  color: #ffffff;
+  color: #000000;
   padding: 10px;
   border-radius: 10px;
 }
@@ -68,7 +70,7 @@
 .login-label {
   margin-bottom: 10px;
   text-align: center;
-  color: #fff;
+  color: #000000;
 }
 
 .login-label a {

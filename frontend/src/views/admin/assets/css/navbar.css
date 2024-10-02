@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+
+/* Estilos para la barra de navegación */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
   font-family: "Abel", sans-serif;
   background-color: #ebfadc;
   border-bottom: 1px solid #ccc;
@@ -12,6 +13,7 @@
 .navbar h1 {
   font-size: 24px;
   font-family: "Abel", sans-serif;
+  margin:1% 2% 2% 5%;
 }
 
 .nav-links {
@@ -24,7 +26,7 @@
   cursor: pointer;
 }
 
-.get-started {
+.logOut {
   padding: 10px 20px;
   background-color: #46ad81;
   color: white;

@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './assets/css/navbar.css';
+import { UserContext } from '../../context/UserContext'; // Importa el contexto
+import { userType } from '../../context/userTypes'; // Importa los tipos de acción
 
-function Navbar() {
+function Navbar({ setActiveForo }) { // Recibe la función para cambiar el foro activo
+  const { stateDispatch } = useContext(UserContext); // Accede al dispatch
+
+  const logOut = () => {
+    localStorage.removeItem("userData");
+    stateDispatch({
+      type: userType.logOut,
+    });
+    window.location.href = "/";
+  };
+
   return (
     <nav className="navbar">
       <h1>QuimiCraft</h1>
       <ul className="nav-links">
-        <li>Home</li>
-        <li>Categories</li>
-        <li>About</li>
-        <li>Contact Us</li>
+        <li onClick={() => setActiveForo('profesores')}>Publicaciones</li>
         <li>Blogs</li>
+        <li>Subir archivos</li>
       </ul>
-      <button className="get-started">Get Started</button>
+      <button onClick={logOut} className='logOut'>Cerrar Sesión</button>
+      
     </nav>
   );
 }

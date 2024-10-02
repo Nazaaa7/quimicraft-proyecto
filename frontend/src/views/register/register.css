@@ -28,6 +28,8 @@
   flex-direction: column;
   background-color: transparent;
   border-radius: 10px;
+  border: 2px solid rgb(0, 54, 10); /* Borde blanco */  
+  padding: 30px;
 }
 
 .register-form input {

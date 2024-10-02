@@ -1,0 +1,102 @@
+.foro-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #ebfadc;
+  padding:10% 10% 10% 7% ;
+}
+
+.foro-comments {
+  width: 60%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.foro-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.foro-comment {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fafafa;
+}
+
+.foro-user-info {
+  display: flex;
+  align-items: center;
+}
+
+.foro-user-photo {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.foro-user-photo-small {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+}
+
+.foro-actions {
+  margin-top: 10px;
+}
+
+.foro-actions button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.report-button {
+  background-color: rgb(213, 119, 3);
+}
+
+.delete-button {
+  background-color: rgb(144, 8, 8);
+}
+
+.like{
+  background-color: rgb(8, 144, 56);
+}
+.respond{
+  background-color: rgb(75, 127, 43);
+}
+.foro-reply, .foro-sub-reply {
+  margin-top: 10px;
+}
+
+.foro-replies {
+  margin-top: 10px;
+}
+
+.foro-replies ul {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.foro-replies ul li {
+  margin-bottom: 10px;
+}
+
+.foro-sub-actions {
+  margin-top: 5px;
+}
+
+.foro-sub-actions button {
+  margin-right: 5px;
+}
