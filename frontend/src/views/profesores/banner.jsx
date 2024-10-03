@@ -4,7 +4,6 @@ import bannerImage from '/img/banner.png'; // Cambia la ruta según tu estructur
 
 function Banner({ onNewPost }) {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
-  const [titulo, setTitulo] = useState('');
   const [contenido, setContenido] = useState('');
 
   const toggleFormulario = () => {
@@ -13,17 +12,16 @@ function Banner({ onNewPost }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (titulo.trim() && contenido.trim()) {
-      // Crear un nuevo post y llamarlo desde el componente padre (Foro)
+    if (contenido.trim()) {
+      // Crear un nuevo post y llamarlo desde el componente padre (Estudiantes.jsx)
       onNewPost({
-        id: Date.now(), // Genera un id único
-        userId: 8, // Asumiendo que el usuario actual es 'Roa Lucianno'
+        id: Date.now(), // Genera un id único basado en la marca de tiempo
+        userId: 8, // ID del usuario actual, puedes adaptarlo según sea necesario
         text: contenido,
         likes: [],
         replies: []
       });
       // Limpiar los campos del formulario
-      setTitulo('');
       setContenido('');
       toggleFormulario();
     }
@@ -44,10 +42,6 @@ function Banner({ onNewPost }) {
           <div className="formulario-post">
             <h3>Crear nuevo post</h3>
             <form onSubmit={handleSubmit}>
-              <label>
-                Título:
-                <input type="text" value={titulo} onChange={(e) => setTitulo(e.target.value)} placeholder="Escribe el título" />
-              </label>
               <label>
                 Contenido:
                 <textarea value={contenido} onChange={(e) => setContenido(e.target.value)} placeholder="Escribe tu publicación"></textarea>

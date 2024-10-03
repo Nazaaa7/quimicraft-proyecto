@@ -1,18 +1,18 @@
 .foro-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #ebfadc;
-  padding:10% 10% 10% 7% ;
+  background-color: #ebfadc1c;
+  padding:5% 10% 10% 7% ;
 }
 
 .foro-comments {
   width: 60%;
   background-color: white;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 20px;
+  width: 100%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -26,8 +26,9 @@
   margin-bottom: 20px;
   padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #fafafa;
+  border-radius: 15px;
+  width:100%;
+  background-color: #d0d0d04f;
 }
 
 .foro-user-info {
