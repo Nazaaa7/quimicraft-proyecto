@@ -46,11 +46,10 @@ function Profesor() {
 
   return (
     <div className="App">
-<<<<<<< HEAD
-    <div>
-=======
+
+ 
+
       <div>
->>>>>>> ed5289ab22ded5f054ab4348f9d7ee95de5c86e4
 
       <Navbar setActiveForo={setActiveForo} /> {/* Pasamos la función para actualizar la sección activa */}
       <Banner onNewPost={handleNewPost} /> {/* Pasamos la función para agregar nuevos posts */}
@@ -61,10 +60,7 @@ function Profesor() {
         <p style={{ textAlign: 'center', marginTop: '20px' }}>Selecciona "Publicaciones" para ver las publicaciones.</p>
       )}
       </div>
-<<<<<<< HEAD
-=======
 
->>>>>>> ed5289ab22ded5f054ab4348f9d7ee95de5c86e4
     </div>
   );
 }
