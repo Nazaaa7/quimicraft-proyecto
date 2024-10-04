@@ -46,15 +46,18 @@ function Profesor() {
 
   return (
     <div className="App">
+      <div>
+
       <Navbar setActiveForo={setActiveForo} /> {/* Pasamos la función para actualizar la sección activa */}
       <Banner onNewPost={handleNewPost} /> {/* Pasamos la función para agregar nuevos posts */}
-
       {/* Mostramos el foro correspondiente según el valor de activeForo */}
       {activeForo === 'profesores' ? (
         <ForoProf comments={comments} onReply={handleReply} /> // Pasamos la función de respuesta como prop a ForoProf
       ) : (
         <p style={{ textAlign: 'center', marginTop: '20px' }}>Selecciona "Publicaciones" para ver las publicaciones.</p>
       )}
+      </div>
+
     </div>
   );
 }
