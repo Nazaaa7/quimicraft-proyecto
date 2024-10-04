@@ -26,6 +26,8 @@ function Admin() {
 
   return (
     <div className="App">
+      <div>
+
       <Navbar setActiveForo={setActiveForo} /> {/* Pasamos la función para cambiar el foro activo */}
       <Banner />
 
@@ -33,6 +35,7 @@ function Admin() {
       {activeForo === 'profesores' && <ForoProfesores />}
       {activeForo === 'estudiantes' && <ForoEstudiantes />}
       
+      </div>
     </div>
   );
 }

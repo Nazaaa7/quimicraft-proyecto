@@ -46,6 +46,8 @@ function Profesor() {
 
   return (
     <div className="App">
+    <div>
+
       <Navbar setActiveForo={setActiveForo} /> {/* Pasamos la función para actualizar la sección activa */}
       <Banner onNewPost={handleNewPost} /> {/* Pasamos la función para agregar nuevos posts */}
 
@@ -55,6 +57,7 @@ function Profesor() {
       ) : (
         <p style={{ textAlign: 'center', marginTop: '20px' }}>Selecciona "Publicaciones" para ver las publicaciones.</p>
       )}
+      </div>
     </div>
   );
 }
