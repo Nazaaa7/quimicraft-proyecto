@@ -30,12 +30,12 @@ function Estudiantes() {
   return (
     <div className='App'>
       <Sidebar />
-    <div>
-    <Navbar />
-    <Banner />
-    <Categories />
+      <div>
+        <Navbar />
+        <Banner />
+        <Categories />
 
-    
+
       </div>
 
     </div>

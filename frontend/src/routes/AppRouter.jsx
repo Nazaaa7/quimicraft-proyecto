@@ -27,7 +27,7 @@ const AppRouter = () => {
           <Route path="/admin" element={<Admin />} />
           <Route path="/organicCompoundConcept" element={<OrganicCompoundConcept />} />
           <Route path="/projects" element={<Projects />} />
-
+          
         </Route>
       </Routes>
     </BrowserRouter>

@@ -27,7 +27,10 @@ function Admin() {
   return (
     <div className="App">
       <div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> ed5289ab22ded5f054ab4348f9d7ee95de5c86e4
       <Navbar setActiveForo={setActiveForo} /> {/* Pasamos la función para cambiar el foro activo */}
       <Banner />
 
