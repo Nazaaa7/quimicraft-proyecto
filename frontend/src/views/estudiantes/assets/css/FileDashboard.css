@@ -1,0 +1,71 @@
+/* FileDashboard.css */
+
+.dashboard-container {
+  display: flex;
+}
+
+.dashboard {
+  margin-left: 30px; /* Ajusta este valor según el ancho de tu Sidebar */
+  padding: 5px;
+  width: 100%;
+}
+
+.quick-access, .all-files {
+  margin-bottom: 20px;
+}
+
+.files-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.files-table th, .files-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.quick-access-items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.quick-access-item {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.quick-access-icon {
+  margin-right: 10px;
+}
+
+.shared-users {
+  display: flex;
+}
+
+.user-icon {
+  margin-left: 5px;
+}
+/* Estilo para los enlaces en quick access y archivos */
+.quick-access-link, .file-link {
+  color: rgb(0, 0, 0);            /* Letras blancas */
+  text-decoration: none;    /* Quita el subrayado */
+}
+
+.quick-access-link:hover, .file-link:hover {
+  text-decoration: underline;  /* Opción: si quieres subrayado al pasar el mouse */
+}
+
+/* Otros estilos adicionales si necesitas personalizar más */
+.quick-access-item, .files-table td {
+  padding: 10px;            /* Espaciado alrededor del contenido */
+}
+
+.file-name {
+  display: flex;
+  align-items: center;
+}
+
+.file-name span {
+  margin-left: 8px;         /* Separación entre el ícono y el texto */
+}

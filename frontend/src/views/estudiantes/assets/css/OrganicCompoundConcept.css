@@ -1,0 +1,94 @@
+.card {
+  transition: transform 0.2s; /* Transición suave para el efecto de hover */
+  margin: 1px; /* Margen entre las cartas */
+  width: 230px; /* Ancho de las cartas */
+  height: 20px; /* Altura automática según el contenido */
+}
+.card a {
+  text-decoration: none; /* Sin subrayado en el enlace */
+  color: rgb(0, 0, 0); /* Color del texto en  */
+  display: flex; /* Asegura que el enlace ocupe todo el espacio de la carta */
+  flex-direction: column; /* Para alinear imagen y texto en columna */
+}
+.small-title {
+  font-size: 25px; /* Ajusta el tamaño de la fuente según sea necesario */
+}
+
+
+.card:hover {
+  transform: scale(1.05); /* Aumentar ligeramente el tamaño al pasar el mouse */
+}
+
+/* Asegúrate de que las imágenes mantengan su aspecto */
+.card img {
+  max-width: 90%; /* Asegura que la imagen no se desborde */
+  height: auto; /* Mantiene la relación de aspecto de la imagen */
+}
+
+/* Estilos adicionales (opcional) */
+.card h3 {
+  margin-top: 0.5rem; /* Espaciado superior para el título */
+}
+
+.card p {
+  margin-top: 0.25rem; /* Espaciado superior para la descripción */
+}
+
+
+
+
+
+/* Estilo para el contenedor de cartas */
+.grid {
+  display: grid; /* Utiliza Grid Layout */
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+  gap: 1rem; /* Espacio entre las cartas */
+  margin-top: 1.5rem; /* Espacio superior para el contenedor de cartas */
+}
+
+.dashboard-container {
+  display: flex;
+  gap: 20px; /* Espacio entre la descripción y el chat */
+}
+
+.chat-container {
+  height: 100%; /* Asegúrate de que ocupe toda la altura del contenedor */
+}
+
+.chat-box {
+  height: 300px; /* Ajusta la altura del cuadro de chat */
+  width: 300px; /* Ajusta el ancho del cuadro de chat */
+  overflow-y: auto; /* Habilita el desplazamiento vertical */
+  border-radius: 8px; /* Bordes redondeados */
+  background-color: #46ad81; /* Color de fondo del cuadro de chat */
+}
+
+.message {
+  padding: 10px;
+  background-color: #e3f2fd; /* Color de fondo del mensaje */
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+input[type="text"] {
+  width: 80%;
+  padding: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #46ad81; /* Color de fondo del botón */
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Transición suave para el cambio de color */
+}
+
+button:hover {
+  background-color: #0056b3; /* Color de fondo al pasar el mouse */
+}
+
+/* Estilo para el chat (se repite, se ha consolidado) */
+.chat-box {
+  background-color: #f1f8ff; /* Color de fondo del cuadro de chat */
+}

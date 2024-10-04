@@ -4,8 +4,10 @@ import Login from "../views/login/Login";
 import Register from "../views/register/Register";
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
-import Estudiantes from "../views/estudiantes/Estudiantes"; 
-import Profesores from "../views/profesores/Profesores"; 
+import Estudiantes from "../views/estudiantes/Estudiantes";
+import OrganicCompoundConcept from "../views/estudiantes/organicCompoundConcept";
+import Projects from "../views/estudiantes/project" 
+import Profesores from "../views/profesores/profesores"; 
 import Admin from "../views/admin/admin"; 
 
 const AppRouter = () => {
@@ -23,6 +25,9 @@ const AppRouter = () => {
           <Route path="/estudiantes" element={<Estudiantes />} />
           <Route path="/profesores" element={<Profesores />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/organicCompoundConcept" element={<OrganicCompoundConcept />} />
+          <Route path="/projects" element={<Projects />} />
+
         </Route>
       </Routes>
     </BrowserRouter>
