@@ -1,10 +1,11 @@
+// Navbar.jsx
 import React, { useContext } from 'react';
 import './assets/css/navbar.css';
-import { UserContext } from '../../context/UserContext'; // Importa el contexto
-import { userType } from '../../context/userTypes'; // Importa los tipos de acción
+import { UserContext } from '../../context/UserContext';
+import { userType } from '../../context/userTypes';
 
-function Navbar({ setActiveForo }) { // Recibe la función para cambiar el foro activo
-  const { stateDispatch } = useContext(UserContext); // Accede al dispatch
+function Navbar({ setActiveForo }) {
+  const { stateDispatch } = useContext(UserContext);
 
   const logOut = () => {
     localStorage.removeItem("userData");
@@ -19,11 +20,10 @@ function Navbar({ setActiveForo }) { // Recibe la función para cambiar el foro 
       <h1>QuimiCraft</h1>
       <ul className="nav-links">
         <li onClick={() => setActiveForo('profesores')}>Publicaciones</li>
-        <li>Blogs</li>
+        <li onClick={() => setActiveForo('consultas')}>Consultas</li>
         <li>Subir archivos</li>
       </ul>
       <button onClick={logOut} className='logOut'>Cerrar Sesión</button>
-      
     </nav>
   );
 }

@@ -6,37 +6,44 @@ import './assets/css/chat.css'; // Asegúrate de importar el archivo CSS
 
 const socket = io('http://localhost:3000');
 
-function Chat() {
+const Chat = ({ onNewMessage, newMessage, openChat }) => {
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState([]);
-  const [replyTo, setReplyTo] = useState(null); // Estado para la respuesta
+  const [replyTo, setReplyTo] = useState(null);
 
   useEffect(() => {
     socket.on('receiveMessage', (messageData) => {
       setChat((prevChat) => [...prevChat, messageData]);
+      onNewMessage(messageData);
     });
 
     return () => {
       socket.off('receiveMessage');
     };
-  }, []);
+  }, [onNewMessage]);
+
+  useEffect(() => {
+    if (newMessage) {
+      openChat();
+    }
+  }, [newMessage, openChat]);
 
   const sendMessage = () => {
     if (message.trim()) {
       const messageData = {
         message,
         id: socket.id,
-        replyTo: replyTo, // Incluimos el mensaje al que se responde
+        replyTo,
       };
 
       socket.emit('sendMessage', messageData);
-      setMessage(''); // Limpiamos el mensaje
-      setReplyTo(null); // Resetear la respuesta
+      setMessage('');
+      setReplyTo(null);
     }
   };
 
   const handleReply = (messageId) => {
-    setReplyTo(messageId); // Asigna el ID del mensaje al que se va a responder
+    setReplyTo(messageId);
   };
 
   return (
@@ -48,14 +55,12 @@ function Chat() {
         ) : (
           chat.map((msg, index) => (
             <div key={index} className="message">
-              {/* Muestra el mensaje al que se está respondiendo si existe */}
               {msg.replyTo && (
                 <div className="reply">
                   Respondiendo a: {chat.find((m) => m.id === msg.replyTo)?.message || 'Mensaje eliminado'}
                 </div>
               )}
               {msg.message}
-              {/* Botón para responder */}
               <button className="reply-button" onClick={() => handleReply(msg.id)}>
                 <FontAwesomeIcon icon={faReply} />
               </button>
@@ -63,8 +68,6 @@ function Chat() {
           ))
         )}
       </div>
-
-      {/* Muestra el mensaje al que se está respondiendo */}
       {replyTo && (
         <div className="replying-to">
           Respondiendo a: {chat.find((m) => m.id === replyTo)?.message || 'Mensaje eliminado'}
@@ -82,6 +85,6 @@ function Chat() {
       </div>
     </div>
   );
-}
+};
 
-export default Chat;
+export default Chat; // Asegúrate de que esta línea está presente
