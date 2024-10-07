@@ -1,0 +1,106 @@
+/* Contenedor principal del chat */
+.chat-container {
+  background: #ffffff; /* Fondo blanco del contenedor */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  padding: 20px; /* Espaciado interno */
+  height: 450px; /* Ajustar altura */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Título del chat */
+.chat-container h2 {
+  margin-bottom: 10px; /* Espacio inferior */
+  font-size: 1.5rem; /* Tamaño del título */
+  font-weight: bold;
+}
+
+/* Caja del chat con estilo de fondo y desplazamiento */
+.chat-box {
+  height: 300px; /* Ajusta la altura del cuadro de chat */
+  background-color: #f8f8f8; /* Fondo blanco */
+  padding: 15px; /* Espaciado interno */
+  border: 1px solid #ddd; /* Borde gris */
+  border-radius: 8px; /* Bordes redondeados */
+  overflow-y: auto; /* Habilita el desplazamiento vertical */
+  margin-bottom: 10px; /* Espacio inferior */
+}
+
+/* Mensajes individuales */
+.message {
+  padding: 8px 12px; /* Espaciado interno */
+  background-color: #e1f3fb; /* Fondo azul claro */
+  border-radius: 12px; /* Bordes redondeados */
+  margin-bottom: 8px; /* Espacio inferior entre mensajes */
+  position: relative;
+}
+
+/* Mensaje de aviso */
+.chat-container .empty-message {
+  color: #666; /* Texto en color gris */
+  font-style: italic; /* Estilo en cursiva */
+}
+
+/* Input y botón de envío */
+.input-group {
+  display: flex;
+  width: 100%; /* Ocupa el ancho completo */
+}
+
+input[type="text"] {
+  flex-grow: 1; /* Que el input crezca según el contenedor */
+  padding: 10px;
+  border: 1px solid #ddd; /* Borde gris */
+  border-right: none; /* Sin borde derecho */
+  border-radius: 8px 0 0 8px; /* Bordes redondeados en la izquierda */
+  outline: none; /* Sin borde de enfoque */
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #46ad81; /* Color de fondo del botón */
+  color: white; /* Color del texto */
+  border: none;
+  cursor: pointer;
+  border-radius: 8px 0 0 8px; /* Bordes redondeados en la izquierda */
+  transition: background-color 0.3s; /* Transición suave */
+}
+
+.reply-button:hover {
+  background-color: #00000000; /* Color de fondo al hacer hover */
+  font-size: 20px;
+ 
+}
+
+/* Mensaje que está respondiendo */
+.reply {
+  font-size: 0.8rem;
+  color: #555;
+  border-left: 2px solid #46ad81; /* Línea indicadora de respuesta */
+  padding-left: 10px;
+  margin-bottom: 5px;
+}
+
+/* Botón de responder */
+.reply-button {
+  background: none;
+  border: none;
+  color: #46ad81;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+
+
+/* Indicación de mensaje respondido */
+.replying-to {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 10px;
+  background: #e1f3fb;
+  padding: 5px;
+  border-left: 4px solid #46ad81;
+  border-radius: 5px;
+}
