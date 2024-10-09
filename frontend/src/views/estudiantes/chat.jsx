@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReply } from '@fortawesome/free-solid-svg-icons';
-import './assets/css/chat.css'; // Asegúrate de importar el archivo CSS
+import './assets/css/chat.css';
 
 const socket = io('http://localhost:3000');
 
@@ -10,12 +10,12 @@ const Chat = ({ onNewMessage, newMessage, openChat }) => {
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState([]);
   const [replyTo, setReplyTo] = useState(null);
+  const newMessageRef = useRef(null);
 
-  // Efecto para recibir mensajes por socket
   useEffect(() => {
     socket.on('receiveMessage', (messageData) => {
-      setChat((prevChat) => [...prevChat, messageData]); // Agregar el mensaje recibido al chat
-      onNewMessage(messageData); // Notificar que hay un nuevo mensaje
+      setChat((prevChat) => [...prevChat, { ...messageData, sender: messageData.sender || 'other' }]);
+      onNewMessage(messageData);
     });
 
     return () => {
@@ -23,30 +23,35 @@ const Chat = ({ onNewMessage, newMessage, openChat }) => {
     };
   }, [onNewMessage]);
 
-  // Efecto para agregar el nuevo mensaje cuando se abre el chat
   useEffect(() => {
-    if (newMessage) {
-      setChat((prevChat) => [...prevChat, newMessage]); // Agregar el nuevo mensaje al chat
-      openChat(); // Asegurarse de que el chat esté abierto
+    if (newMessage && newMessage !== newMessageRef.current) {
+      newMessageRef.current = newMessage;
+      setChat((prevChat) => {
+        if (!prevChat.some(msg => msg.id === newMessage.id)) {
+          return [...prevChat, { ...newMessage, sender: newMessage.sender || 'other' }];
+        }
+        return prevChat;
+      });
+      openChat();
     }
   }, [newMessage, openChat]);
 
-  // Función para enviar mensajes
   const sendMessage = () => {
     if (message.trim()) {
       const messageData = {
         message,
         id: socket.id,
         replyTo,
+        sender: 'me',
       };
 
       socket.emit('sendMessage', messageData);
-      setMessage(''); // Limpiar el mensaje
-      setReplyTo(null); // Limpiar la respuesta
+      // No añadimos el mensaje al chat aquí, lo haremos cuando lo recibamos de vuelta
+      setMessage('');
+      setReplyTo(null);
     }
   };
 
-  // Función para manejar respuestas
   const handleReply = (messageId) => {
     setReplyTo(messageId);
   };
@@ -59,7 +64,7 @@ const Chat = ({ onNewMessage, newMessage, openChat }) => {
           <p className="empty-message">No hay mensajes. Sé el primero en preguntar algo.</p>
         ) : (
           chat.map((msg, index) => (
-            <div key={index} className="message">
+            <div key={index} className={`message ${msg.sender}`}>
               {msg.replyTo && (
                 <div className="reply">
                   Respondiendo a: {chat.find((m) => m.id === msg.replyTo)?.message || 'Mensaje eliminado'}
@@ -78,7 +83,6 @@ const Chat = ({ onNewMessage, newMessage, openChat }) => {
           Respondiendo a: {chat.find((m) => m.id === replyTo)?.message || 'Mensaje eliminado'}
         </div>
       )}
-
       <div className="input-group">
         <input
           type="text"

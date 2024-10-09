@@ -30,7 +30,6 @@
 /* Mensajes individuales */
 .message {
   padding: 8px 12px; /* Espaciado interno */
-  background-color: #e1f3fb; /* Fondo azul claro */
   border-radius: 12px; /* Bordes redondeados */
   margin-bottom: 8px; /* Espacio inferior entre mensajes */
   position: relative;
@@ -52,7 +51,6 @@ input[type="text"] {
   flex-grow: 1; /* Que el input crezca según el contenedor */
   padding: 10px;
   border: 1px solid #ddd; /* Borde gris */
-  border-right: none; /* Sin borde derecho */
   border-radius: 8px 0 0 8px; /* Bordes redondeados en la izquierda */
   outline: none; /* Sin borde de enfoque */
 }
@@ -63,14 +61,13 @@ button {
   color: white; /* Color del texto */
   border: none;
   cursor: pointer;
-  border-radius: 8px 0 0 8px; /* Bordes redondeados en la izquierda */
+  border-radius: 0 8px 8px 0; /* Bordes redondeados en la derecha */
   transition: background-color 0.3s; /* Transición suave */
 }
 
 .reply-button:hover {
   background-color: #00000000; /* Color de fondo al hacer hover */
   font-size: 20px;
- 
 }
 
 /* Mensaje que está respondiendo */
@@ -93,14 +90,25 @@ button {
   top: 5px;
 }
 
-
 /* Indicación de mensaje respondido */
 .replying-to {
   font-size: 0.9rem;
   color: #555;
   margin-bottom: 10px;
   background: #e1f3fb;
+  border-left: 2px solid #46ad81; /* Línea indicadora de respuesta */
   padding: 5px;
-  border-left: 4px solid #46ad81;
   border-radius: 5px;
+}
+
+/* Estilos para mensajes de usuario */
+.message.me {
+  background-color: #e1f3fb; /* Azul claro para mensajes enviados */
+  color: black; /* Color del texto para mensajes enviados */
+}
+
+/* Estilos para mensajes de otros */
+.message.other {
+  background-color: #96ccc4; /* Color diferente para mensajes recibidos */
+  color: black; /* Color del texto para mensajes recibidos */
 }

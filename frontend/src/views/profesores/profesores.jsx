@@ -11,7 +11,7 @@ import './profesores.css'; // Estilos para la notificación
 const socket = io('http://localhost:3000');
 
 const initialComments = [
-  { id: 1, userId: 1, text: 'La química orgánica es fundamental para entender cómo se estructuran y comportan las moléculas en nuestro entorno.', likes: [], replies: [] },
+  { id: 1, userId: 4, text: 'La química orgánica es fundamental para entender cómo se estructuran y comportan las moléculas en nuestro entorno.', likes: [], replies: [] },
   // ... otros comentarios iniciales
 ];
 
@@ -79,7 +79,7 @@ function Profesor() {
         {/* Notificación personalizada cuando hay un nuevo mensaje */}
         {newMessageAlert && !showChat && (
           <div className="custom-alert" onClick={handleNewMessage}>
-            <p>¡Tienes un nuevo mensaje de {messageData?.sender || "un estudiante"}! Haz clic para verlo.</p>
+            <p>¡Tienes un nuevo mensaje de un estudiante! Hace clic para verlo.</p>
           </div>
         )}
 
