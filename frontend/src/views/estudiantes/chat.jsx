@@ -6,7 +6,7 @@ import './assets/css/chat.css'; // Asegúrate de importar el archivo CSS
 
 const socket = io('http://localhost:3000');
 
-const Chat = ({ onNewMessage, openChat }) => {
+const Chat = ({ onNewMessage, newMessage, openChat }) => {
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState([]);
   const [replyTo, setReplyTo] = useState(null);
@@ -14,14 +14,7 @@ const Chat = ({ onNewMessage, openChat }) => {
   // Efecto para recibir mensajes por socket
   useEffect(() => {
     socket.on('receiveMessage', (messageData) => {
-      // Verificar si el mensaje ya está en el chat
-      setChat((prevChat) => {
-        const isDuplicate = prevChat.some((msg) => msg.id === messageData.id && msg.message === messageData.message);
-        if (!isDuplicate) {
-          return [...prevChat, messageData];
-        }
-        return prevChat;
-      });
+      setChat((prevChat) => [...prevChat, messageData]); // Agregar el mensaje recibido al chat
       onNewMessage(messageData); // Notificar que hay un nuevo mensaje
     });
 
@@ -29,6 +22,14 @@ const Chat = ({ onNewMessage, openChat }) => {
       socket.off('receiveMessage');
     };
   }, [onNewMessage]);
+
+  // Efecto para agregar el nuevo mensaje cuando se abre el chat
+  useEffect(() => {
+    if (newMessage) {
+      setChat((prevChat) => [...prevChat, newMessage]); // Agregar el nuevo mensaje al chat
+      openChat(); // Asegurarse de que el chat esté abierto
+    }
+  }, [newMessage, openChat]);
 
   // Función para enviar mensajes
   const sendMessage = () => {
