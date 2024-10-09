@@ -6,15 +6,23 @@ import './assets/css/chat.css'; // Asegúrate de importar el archivo CSS
 
 const socket = io('http://localhost:3000');
 
-const Chat = ({ onNewMessage, newMessage, openChat }) => {
+const Chat = ({ onNewMessage, openChat }) => {
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState([]);
   const [replyTo, setReplyTo] = useState(null);
 
+  // Efecto para recibir mensajes por socket
   useEffect(() => {
     socket.on('receiveMessage', (messageData) => {
-      setChat((prevChat) => [...prevChat, messageData]);
-      onNewMessage(messageData);
+      // Verificar si el mensaje ya está en el chat
+      setChat((prevChat) => {
+        const isDuplicate = prevChat.some((msg) => msg.id === messageData.id && msg.message === messageData.message);
+        if (!isDuplicate) {
+          return [...prevChat, messageData];
+        }
+        return prevChat;
+      });
+      onNewMessage(messageData); // Notificar que hay un nuevo mensaje
     });
 
     return () => {
@@ -22,12 +30,7 @@ const Chat = ({ onNewMessage, newMessage, openChat }) => {
     };
   }, [onNewMessage]);
 
-  useEffect(() => {
-    if (newMessage) {
-      openChat();
-    }
-  }, [newMessage, openChat]);
-
+  // Función para enviar mensajes
   const sendMessage = () => {
     if (message.trim()) {
       const messageData = {
@@ -37,11 +40,12 @@ const Chat = ({ onNewMessage, newMessage, openChat }) => {
       };
 
       socket.emit('sendMessage', messageData);
-      setMessage('');
-      setReplyTo(null);
+      setMessage(''); // Limpiar el mensaje
+      setReplyTo(null); // Limpiar la respuesta
     }
   };
 
+  // Función para manejar respuestas
   const handleReply = (messageId) => {
     setReplyTo(messageId);
   };
@@ -87,4 +91,4 @@ const Chat = ({ onNewMessage, newMessage, openChat }) => {
   );
 };
 
-export default Chat; // Asegúrate de que esta línea está presente
+export default Chat;

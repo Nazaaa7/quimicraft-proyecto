@@ -26,14 +26,17 @@ function Profesor() {
   // Escuchar mensajes entrantes con socket.io
   useEffect(() => {
     socket.on('receiveMessage', (message) => {
-      setMessageData(message); // Guardar el mensaje recibido
-      setNewMessageAlert(true); // Activar la notificación
+      // Solo mostrar la notificación si el chat no está abierto
+      if (!showChat) {
+        setMessageData(message); // Guardar el mensaje recibido
+        setNewMessageAlert(true); // Activar la notificación
+      }
     });
 
     return () => {
       socket.off('receiveMessage');
     };
-  }, []);
+  }, [showChat]);
 
   // Manejar la creación de un nuevo post en el foro
   const handleNewPost = (newPost) => {
@@ -61,10 +64,10 @@ function Profesor() {
     window.location.href = "/";
   };
 
-  // Función para ocultar la notificación y mostrar el chat
+  // Función para ocultar la notificación y mostrar el chat con el mensaje recibido
   const handleNewMessage = () => {
     setShowChat(true);
-    setNewMessageAlert(false);
+    setNewMessageAlert(false); // Ocultar la notificación
   };
 
   return (
@@ -74,7 +77,7 @@ function Profesor() {
         <Banner onNewPost={handleNewPost} />
 
         {/* Notificación personalizada cuando hay un nuevo mensaje */}
-        {newMessageAlert && (
+        {newMessageAlert && !showChat && (
           <div className="custom-alert" onClick={handleNewMessage}>
             <p>¡Tienes un nuevo mensaje de {messageData?.sender || "un estudiante"}! Haz clic para verlo.</p>
           </div>
@@ -84,7 +87,7 @@ function Profesor() {
         {activeForo === 'profesores' ? (
           <ForoProf comments={comments} onReply={handleReply} />
         ) : activeForo === 'consultas' || showChat ? (
-          <Chat onNewMessage={() => setShowChat(true)} />
+          <Chat onNewMessage={() => setShowChat(true)} newMessage={messageData} openChat={handleNewMessage} />
         ) : (
           <p style={{ textAlign: 'center', marginTop: '20px' }}>Selecciona una sección para ver el contenido.</p>
         )}
