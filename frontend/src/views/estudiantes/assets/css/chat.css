@@ -101,14 +101,15 @@ button {
   border-radius: 5px;
 }
 
-/* Estilos para mensajes de usuario */
+/* Estilos para mensajes de usuario (enviados) */
 .message.me {
   background-color: #e1f3fb; /* Azul claro para mensajes enviados */
   color: black; /* Color del texto para mensajes enviados */
 }
 
-/* Estilos para mensajes de otros */
+/* Estilos para mensajes de otros (recibidos) */
 .message.other {
-  background-color: #96ccc4; /* Color diferente para mensajes recibidos */
+  background-color: #d1f7c4; /* Verde claro para mensajes recibidos */
   color: black; /* Color del texto para mensajes recibidos */
 }
+
