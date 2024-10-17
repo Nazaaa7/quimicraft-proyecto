@@ -26,7 +26,7 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  background-color: #ffffff83;
+  background-color: #ffffff00;
   border-radius: 10px;
   border: 2px solid rgb(0, 54, 10);
   padding: 20px; 
@@ -37,8 +37,8 @@
 .login-form .mb-3 input {
   background-color: transparent;
   width: 280px !important;
-  border-radius: 27px;
   color: #000000;
+  border-radius: 10px !important;
   border-color: #003e06;
 }
 

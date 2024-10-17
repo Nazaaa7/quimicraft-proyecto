@@ -34,9 +34,10 @@
 
 .register-form input {
   background-color: transparent;
-  width: 300px;
+  width: 340px !important;
   color: #fff;
-  border-color: #004835;
+  border-radius: 10px !important;
+  border-color: #004835 !important;
 }
 
 .register-form label {
@@ -67,4 +68,6 @@
 
 .register-form select{
   background-color: transparent;
+  border-color: #004835;
+  border-radius: 10px;
 }

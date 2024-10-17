@@ -1,4 +1,4 @@
-/* src/estuduantes/Sidebar.css */
+/* Estilos para el sidebar */
 .sidebar {
   width: 250px;
   background-color: #539653;
@@ -6,12 +6,25 @@
   padding: 30px;
   display: flex;
   flex-direction: column;
-  height: 90%;
+  height: 95%;
+  transition: transform 0.3s ease-in-out;
 }
 
-.sidebar ul {
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar {
+  transform: translateX(-100%);
+}
+
+.menu {
   list-style-type: none;
   padding: 0;
+}
+
+.sidebar li {
+  margin: 20px 0;
 }
 
 .sidebar hr {
@@ -19,7 +32,9 @@
   margin: 150px 0;
 }
 
-.Home {
-  color: white;
-  text-decoration: none;
+/* Responsive Styles */
+@media (min-width: 768px) {
+  .sidebar {
+    transform: translateX(0);
+  }
 }

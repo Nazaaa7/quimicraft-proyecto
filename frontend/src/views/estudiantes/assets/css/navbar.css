@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -14,9 +15,21 @@
   font-family: "Abel", sans-serif;
 }
 
+/* Estilos para el botón de hamburguesa */
+.hamburger {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* Estilos para el menú */
 .nav-links {
   list-style-type: none;
   display: flex;
+  margin: 0;
 }
 
 .nav-links li {
@@ -24,7 +37,7 @@
   cursor: pointer;
 }
 
-.logOut{
+.logOut {
   padding: 10px 20px;
   background-color: #46ad81;
   color: white;
@@ -32,4 +45,15 @@
   border-radius: 5px;
   font-family: "Abel", sans-serif;
   cursor: pointer;
+}
+
+/* Estilos responsive */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+  }
 }
