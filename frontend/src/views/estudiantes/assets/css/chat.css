@@ -30,7 +30,8 @@
 /* Mensajes individuales */
 .message {
   padding: 8px 12px; /* Espaciado interno */
-  border-radius: 12px; /* Bordes redondeados */
+  margin: 1rem 1rem 1rem auto ;
+  border-radius: 1.125rem 1.125rem 0 1.125rem;
   margin-bottom: 8px; /* Espacio inferior entre mensajes */
   position: relative;
 }
