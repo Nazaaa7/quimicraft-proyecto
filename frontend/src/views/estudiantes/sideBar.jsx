@@ -1,19 +1,18 @@
-// src/components/Sidebar.jsx
-
-import './assets/css/sideBar.css'
+import './assets/css/sideBar.css';
 import SidebarItem from './sideBarItem';
 import { Home, StickyNote, Calendar, Layers, Flag, LifeBuoy } from "lucide-react";
 import { Link } from 'react-router-dom';
 
-
 function Sidebar() {
   return (
-    <div className="sidebar">
-      <ul>
-
-      <Link to='/estudiantes'> <SidebarItem icon={<Home size={20} color="white" />} text="Home" /></Link>
-
-    <Link to='/projects'> <SidebarItem icon={<StickyNote size={20} color="white" />} text="Projects" /></Link>
+    <div>
+      <ul className="sidebar">
+        <Link to='/estudiantes'>
+          <SidebarItem icon={<Home size={20} color="white" />} text="Home" />
+        </Link>
+        <Link to='/projects'>
+          <SidebarItem icon={<StickyNote size={20} color="white" />} text="Projects" />
+        </Link>
         <SidebarItem icon={<Calendar size={20} />} text="Calendar" />
         <SidebarItem icon={<Layers size={20} />} text="Tabla Periodica" />
         <hr />

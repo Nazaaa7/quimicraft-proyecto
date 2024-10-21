@@ -1,43 +1,34 @@
-// src/views/Estudiantes.jsx
-import './estudiantes.css'
-import React, { useContext } from 'react';
+import './estudiantes.css';
+import React, { useContext, useState } from 'react';
 import Navbar from './navbar';
 import Banner from './banner';
 import Categories from './categories';
 import { UserContext } from '../../context/UserContext'; // Importa el contexto
 import { userType } from '../../context/userTypes'; // Importa los tipos de acción
-import Sidebar from './sideBar';
+import Sidebar from './sideBar'; 
 
 function Estudiantes() {
   const { stateDispatch } = useContext(UserContext); // Accede al dispatch
 
-
   const logOut = () => {
-    // Limpia el localStorage antes de la actualización de estado
-    localStorage.removeItem("userData");
-
-    // Actualiza el estado para reflejar el cierre de sesión
+    localStorage.removeItem("userData"); // Limpia el localStorage
     stateDispatch({
       type: userType.logOut,
     });
-
-    // Si es necesario, redirige al usuario a la pantalla de login
-    window.location.href = "/"; // O usa navigate("/")
+    window.location.href = "/"; // Redirige al login
   };
-  <button onClick={logOut} className='logOut'>Cerrar Sesión</button>
 
+ 
 
   return (
     <div className='App'>
-      <Sidebar />
+      <Sidebar/> {/* Sidebar controlada por el estado */}
       <div>
-        <Navbar />
+      <Navbar  /> 
         <Banner />
         <Categories />
-
-
+       
       </div>
-
     </div>
   );
 }
