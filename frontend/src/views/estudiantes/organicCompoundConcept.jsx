@@ -28,8 +28,8 @@ const OrganicCompoundConcept = () => {
         {/* Sidebar */}
         <Sidebar />
 
-        {/* Contenido principal: descripción de compuestos orgánicos y chat */}
-        <div className="flex-1 p-6 bg-white shadow-md rounded-md mr-4">
+             {/* Contenido principal: descripción de compuestos orgánicos y chat */}
+             <div className="flex-1 p-6 bg-white shadow-md rounded-md mt-6">
           <h1 className="text-2xl font-bold mb-4">Compuestos Orgánicos</h1>
           <p className="text-gray-700">
             Los compuestos orgánicos son sustancias químicas que contienen carbono

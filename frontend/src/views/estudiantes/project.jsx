@@ -1,59 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaFolder, FaFileAlt, FaFilePdf, FaImage, FaUserCircle } from 'react-icons/fa';
+import { Search } from 'lucide-react';
 import './assets/css/FileDashboard.css';
-import Navbar from './navbar';  // Importa el componente de navegación
-import Sidebar from './sideBar'; // Importa el componente de sidebar
+import Navbar from './navbar';
+import Sidebar from './sideBar';
 import { Link } from 'react-router-dom';
 
 const FileDashboard = () => {
+  const [searchTerm, setSearchTerm] = useState('');
   
-  const quickAccess = [
-    { name: 'Design Files', icon: <FaFolder />, users: ['user1', 'user2', 'user3'] },
-    { name: 'Google Photos', icon: <FaFolder />, users: ['user4', 'user5']},
-    { name: 'Training Materials', icon: <FaFolder />, users: ['user6', 'user7'] },
-    { name: 'English Class Summary', icon: <FaFileAlt />, users: ['user8'] },
-  ];
 
   const allFiles = [
-    { name: 'Compuestos organicos', icon: <FaFileAlt />, date: 'Sept 8, 2019', link: '/organicCompoundConcept' , },  // src/routes/AppRouter.jsx
-    { name: 'Compuestos inorganicos', icon: <FaFileAlt />, date: 'Sept 7, 2019', link: '/compuestos-inorganicos' },
-    { name: 'Estequiometria', icon: <FaFilePdf />, date: 'Sept 6, 2019', link: '/estequiometria' },
-    { name: 'Quimica transformadora', icon: <FaFileAlt />, date: 'Sept 5, 2019', link: '/quimica-transformadora' },
-    { name: 'Nomenclatura', icon: <FaImage />, date: 'Sept 4, 2019', link: '/nomenclatura' },
-    { name: 'Sistemas dispersos', icon: <FaImage />, date: 'July 15, 2019', link: '/sistemas-dispersos' },
+    { name: 'Compuestos organicos', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/organicCompoundConcept' },
+    { name: 'Balance de energía', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/compuestos-inorganicos' },
+    { name: 'Sedimentación', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/estequiometria' },
+    { name: 'Tamizado', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/quimica-transformadora' },
+    { name: 'Filtración', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/nomenclatura' },
+    { name: 'Desintegración mecánica y separación por tamaño de sólidos', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/sistemas-dispersos' },
+    { name: 'Evaporización', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/organicCompoundConcept' },
+    { name: 'Extracción ', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/compuestos-inorganicos' },
+    { name: 'Secado', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/estequiometria' },
+    { name: 'Cristalización', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/quimica-transformadora' },
+    { name: 'Balance de masas', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/nomenclatura' },
   ];
+
+  // Filtrar los archivos basado en el término de búsqueda
+  const filteredFiles = allFiles.filter(file =>
+    file.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div>
-      {/* Aquí incluimos el Navbar */}
       <Navbar />
 
+      {/* Barra de búsqueda */}
+
+
       <div className="dashboard-container">
-        {/* Sidebar */}
         <Sidebar />
 
-        {/* Contenido principal: el dashboard de archivos */}
         <div className="dashboard">
-          <div className="quick-access">
-            <h3>Archivos</h3>
-            <div className="quick-access-items">
-              {quickAccess.map((item, index) => (
-                <div key={index} className="quick-access-item">
-                  <Link to={item.link} className="quick-access-link">
-                    <div className="quick-access-icon">{item.icon}</div>
-                    <div className="quick-access-details">
-                      <span>{item.name}</span>
-                      <div className="shared-users">
-                        {item.users.map((user, index) => (
-                          <FaUserCircle key={index} className="user-icon" />
-                        ))}
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              ))}
+        <div className="search-container">
+        <form className="search-form" onSubmit={(e) => e.preventDefault()}>
+          <div className="search-input-container">
+            <div className="search-icon">
+              <Search size={20} />
             </div>
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Buscar por nombre de archivo..."
+              className="search-input"
+            />
           </div>
+        </form>
+        <button className="more-filters-button">
+          Más Filtros
+        </button>
+      </div>
+       
 
           <div className="all-files">
             <h3>Temas</h3>
@@ -65,7 +71,7 @@ const FileDashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {allFiles.map((file, index) => (
+                {filteredFiles.map((file, index) => (
                   <tr key={index}>
                     <td>
                       <Link to={file.link} className="file-link">

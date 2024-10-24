@@ -6,6 +6,9 @@
   padding: 30px;
   display: flex;
   flex-direction: column;
+  left: 0;
+  top: 0; /* Empieza desde el tope */
+  bottom: 0; /* Se extiende hasta el fondo */ 
   height:100%;
   transition: transform 0.3s ease-in-out;
 }
@@ -14,15 +17,15 @@
 .menu {
   list-style-type: none;
   padding: 0;
+
 }
 
 .sidebar li {
-  margin: 20px 0;
+  margin:15px 0;
 }
 
 .sidebar hr {
   border: 1px solid #218021;
-  margin: 150px 0;
 }
 
 /* Responsive Styles */

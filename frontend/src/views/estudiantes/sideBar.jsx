@@ -8,16 +8,15 @@ function Sidebar() {
     <div>
       <ul className="sidebar">
         <Link to='/estudiantes'>
-          <SidebarItem icon={<Home size={20} color="white" />} text="Home" />
+          <SidebarItem icon={<Home size={20} color="white" />} text="Inicio" />
         </Link>
-        <Link to='/projects'>
-          <SidebarItem icon={<StickyNote size={20} color="white" />} text="Projects" />
+        <Link to='/material'>
+          <SidebarItem icon={<StickyNote size={20} color="white" />} text="Material" />
         </Link>
-        <SidebarItem icon={<Calendar size={20} />} text="Calendar" />
+        <SidebarItem icon={<Calendar size={20} />} text="Calendario" />
         <SidebarItem icon={<Layers size={20} />} text="Tabla Periodica" />
         <hr />
-        <SidebarItem icon={<Flag size={20} />} text="Reporting" />
-        <SidebarItem icon={<LifeBuoy size={20} />} text="Help" />
+       
       </ul>
     </div>
   );

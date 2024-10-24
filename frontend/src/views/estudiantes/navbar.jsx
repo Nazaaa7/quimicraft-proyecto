@@ -18,12 +18,7 @@ function Navbar({ toggleSidebar }) {
     <nav className="navbar">
       <h1>QuimiCraft</h1>
       
-      <ul className="nav-links">
-        <li>Inicio</li>
-        <li>Categorias</li>
-        <li>Chat</li>
-        <li>Blogs</li>
-      </ul>
+      
       <button onClick={logOut} className="logOut">Cerrar Sesión</button>
     </nav>
   );

@@ -1,0 +1,137 @@
+
+.folder-card {
+  position: relative;
+  width: 280px;
+  height: 160px;
+  margin: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Pestaña del folder */
+.folder-card::before {
+  content: '';
+  position: absolute;
+  width: 40%;
+  height: 50px;
+  background-color: #10B981;
+  top: -14px;
+  left: 0px;
+  border-radius: 12px 20px 0 0;
+}
+
+
+
+/* Cuerpo principal del folder */
+.folder-content {
+  position: relative;
+  background-color: #4461EB;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  padding: 20px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Efecto de sombra y profundidad */
+.folder-content::after {
+  content: '';
+  position: absolute;
+  width: 98%;
+  height: 98%;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  left: 5px;
+  top: 5px;
+  z-index: -1;
+}
+
+/* Contenido del folder */
+.folder-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 12%;
+
+}
+h1{
+  margin-top: 10%;
+  color: #10B981;
+}
+.folder-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+
+/* Efectos hover */
+.folder-card:hover {
+  transform: translateY(-5px);
+}
+
+.folder-card:hover .folder-content::after {
+  top: 8px;
+}
+
+/* Grid para múltiples folders */
+/* Contenedor para centrar las cards */
+.folder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 20px;
+  justify-content: center; /* Centra horizontalmente las cards */
+ 
+  width: 90%;
+  margin: 5% 10% 14% 5%;
+}
+
+
+.App{
+  display: flex;
+  flex-direction: column;
+}
+
+.semester-selector {
+  display: flex;
+  gap: 32px;
+  padding: 0 20px;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.semester-button {
+  padding: 16px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  position: relative;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.semester-button:hover {
+  color: #1a73e8;
+  background-color: #10b98100;
+}
+
+.semester-button.active {
+  color: #1a73e8;
+  font-weight: 500;
+}
+
+.semester-button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #3b80dc;
+}

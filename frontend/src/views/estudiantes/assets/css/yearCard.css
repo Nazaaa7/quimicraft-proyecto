@@ -1,0 +1,111 @@
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Asegura que cubra la pantalla completa */
+  overflow-y: auto;
+  background-size: cover;
+  background-position: center;
+}
+
+
+.content-wrapper {
+  display: flex;
+  flex: 1;
+
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-top: 6%;
+}
+
+.cards-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.chemistry-event-cards {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  padding: 80px 20px 20px 30px;
+}
+
+.card {
+  background-color:#b6d99240 !important;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 450px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.241);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card-header {
+
+  border-radius: 12px;
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.date {
+  font-size: 1.2em;
+}
+
+.card-body {
+  margin-top: 15px;
+}
+
+.card-body h3 {
+  font-size: 1.5em;
+  color: #388e3c;
+  margin: 0;
+}
+
+.card-body p {
+  color: #666;
+  margin: 8px 0 0 0;
+}
+
+@media (max-width: 768px) {
+  .chemistry-event-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 90%;
+  }
+
+  .date {
+    font-size: 1em;
+  }
+
+  .card-body h3 {
+    font-size: 1.2em;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 100%;
+  }
+
+  .card-body h3 {
+    font-size: 1.1em;
+  }
+
+  .card-body p {
+    font-size: 0.9em;
+  }
+}
