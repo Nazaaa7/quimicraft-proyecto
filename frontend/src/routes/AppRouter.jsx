@@ -11,6 +11,11 @@ import Profesores from "../views/profesores/profesores";
 import Admin from "../views/admin/admin"; 
 import EventCards  from "../views/estudiantes/yearCard";
 import SubjectI from "../views/estudiantes/subjectsI";
+import BalanceEnergy from "../views/estudiantes/energyBalance";
+import Sedimentation from "../views/estudiantes/sedimentation";
+import Tamization from "../views/estudiantes/tamization";
+import Filtration from "../views/estudiantes/filtration";
+import Desintegration from "../views/estudiantes/desintegration";
 
 const AppRouter = () => {
   return (
@@ -29,9 +34,13 @@ const AppRouter = () => {
           <Route path="/admin" element={<Admin />} />
           <Route path="/organicCompoundConcept" element={<OrganicCompoundConcept />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/balanceEnergy" element={<BalanceEnergy />} />
           <Route path="/material" element={<EventCards />} />
           <Route path="/materiasI" element={<SubjectI />} />
-          
+          <Route path="/sedimentation" element={<Sedimentation />} />
+          <Route path="/tamization" element={<Tamization />} />
+          <Route path="/desintegration" element={<Desintegration />} />
+          <Route path="/filtracion" element={<Filtration />} />
         </Route>
       </Routes>
     </BrowserRouter>

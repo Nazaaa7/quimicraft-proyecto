@@ -4,10 +4,10 @@ import { Search } from 'lucide-react';
 import './assets/css/OrganicCompoundConcept.css';
 import Navbar from './navbar';
 import Sidebar from './sideBar';
-import organicCompoundBanner from './assets/img/organico.png';
+import balancee from './assets/img/balancee.jpg'
 import Chat from './chat';
 
-const OrganicCompoundConcept = () => {
+const BalanceEnergy = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('all');
   const [isChatOpen, setIsChatOpen] = useState(false); // Estado para controlar el chat modal
@@ -170,17 +170,16 @@ const OrganicCompoundConcept = () => {
         </button>
           </div>
 
-          <h1 className="text-2xl font-bold mb-4">Compuestos Orgánicos</h1>
+          <h1 className="text-2xl font-bold mb-4">Balance de energía</h1>
           <p className="text-gray-700">
-            Los compuestos orgánicos son sustancias químicas que contienen carbono
-            en su estructura. Estos compuestos son la base de la química orgánica y
-            se encuentran en todos los seres vivos.
+          Los balances de materia y energía (BMyE) son una de las herramientas más importantes con las que cuenta la ingeniería de procesos y se utilizan para contabilizar los flujos de materia y energía entre un determinado proceso industrial y los alrededores o entre las distintas operaciones que lo integran.
           </p>
 
           <div className="banner-container mb-6">
-            <img 
-              src={organicCompoundBanner} 
-              alt="Compuestos Orgánicos"
+        
+             <img 
+              src={balancee} 
+              alt="Compue"
               className="w-full object-cover rounded-lg"
             />
           </div>
@@ -243,4 +242,4 @@ const OrganicCompoundConcept = () => {
   );
 };
 
-export default OrganicCompoundConcept;
+export default BalanceEnergy;

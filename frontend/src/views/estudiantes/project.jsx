@@ -12,11 +12,11 @@ const FileDashboard = () => {
 
   const allFiles = [
     { name: 'Compuestos organicos', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/organicCompoundConcept' },
-    { name: 'Balance de energía', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/compuestos-inorganicos' },
-    { name: 'Sedimentación', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/estequiometria' },
-    { name: 'Tamizado', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/quimica-transformadora' },
-    { name: 'Filtración', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/nomenclatura' },
-    { name: 'Desintegración mecánica y separación por tamaño de sólidos', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/sistemas-dispersos' },
+    { name: 'Balance de energía', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/balanceEnergy' },
+    { name: 'Sedimentación', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/sedimentation' },
+    { name: 'Tamizado', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/tamization' },
+    { name: 'Filtración', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/filtracion' },
+    { name: 'Desintegración mecánica y separación por tamaño de sólidos', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/desintegration' },
     { name: 'Evaporización', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/organicCompoundConcept' },
     { name: 'Extracción ', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/compuestos-inorganicos' },
     { name: 'Secado', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/estequiometria' },
@@ -40,25 +40,7 @@ const FileDashboard = () => {
         <Sidebar />
 
         <div className="dashboard">
-        <div className="search-container">
-        <form className="search-form" onSubmit={(e) => e.preventDefault()}>
-          <div className="search-input-container">
-            <div className="search-icon">
-              <Search size={20} />
-            </div>
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Buscar por nombre de archivo..."
-              className="search-input"
-            />
-          </div>
-        </form>
-        <button className="more-filters-button">
-          Más Filtros
-        </button>
-      </div>
+     
        
 
           <div className="all-files">

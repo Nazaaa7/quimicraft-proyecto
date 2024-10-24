@@ -9,25 +9,25 @@ const subjectsBySemester = {
     {
       title: 'ANÁLISIS DE DATOS',
       path: '/projects',
-      color: '#10B981',
+      color: '#46ad81',
       
     },
     {
       title: 'FORMULACIÓN Y PREPARACIÓN DE MEZCLAS',
       path: '/real-estate',
-      color: '#10B981',
+      color: '#46ad81',
       
     },
     {
       title: 'OPERACIONES BÁSICAS EN LA INDUSTRIA QUÍMICA',
       path: '/social-media',
-      color: '#10B981',
+      color: '#46ad81',
       
     },
     {
       title: 'GENERACIÓN Y RECUPERACIÓN DE ENERGÍA',
       path: '/social-media',
-      color: '#10B981',
+      color: '#46ad81',
       
     }
   ],
@@ -35,31 +35,31 @@ const subjectsBySemester = {
     {
       title: 'INGLÉS TÉCNICO I',
       path: '/social-media',
-      color: '#10B981',
+      color: '#46ad81',
       
     },
     {
       title: 'ACONDICIONAMIENTO Y ALMACENAMIENTO DE PRODUCTOS QUÍMICOS',
       path: '/social-media',
-      color: '#10B981',
+      color: '#46ad81',
       
     },
     {
       title: 'REGULACIÓN Y CONTROL DE PROCESOS QUÍMICOS I',
       path: '/social-media',
-      color: '#10B981',
+      color: '#46ad81',
       
     },
     {
       title: 'MANTENIMIENTO ELECTROMECÁNICO EN INDUSTRIAS DE PROCESO',
       path: '/social-media',
-      color: '#10B981',
+      color: '#46ad81',
       
     },
     {
       title: 'PREVENCIÓN DE RIESGOS EN INDUSTRIAS QUMICAS',
       path: '/social-media',
-      color: '#10B981',
+      color: '#46ad81',
       
     },
     

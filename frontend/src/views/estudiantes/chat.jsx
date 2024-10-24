@@ -94,6 +94,7 @@ const Chat = ({ onNewMessage, newMessage, openChat }) => {
           placeholder="Escribe un mensaje..."
         />
         <button onClick={sendMessage}>Enviar</button>
+        
       </div>
     </div>
   );

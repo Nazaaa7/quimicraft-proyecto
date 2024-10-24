@@ -4,10 +4,10 @@ import { Search } from 'lucide-react';
 import './assets/css/OrganicCompoundConcept.css';
 import Navbar from './navbar';
 import Sidebar from './sideBar';
-import organicCompoundBanner from './assets/img/organico.png';
+import tamizado from './assets/img/tamizado.jpg'
 import Chat from './chat';
 
-const OrganicCompoundConcept = () => {
+const Tamization = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('all');
   const [isChatOpen, setIsChatOpen] = useState(false); // Estado para controlar el chat modal
@@ -170,17 +170,16 @@ const OrganicCompoundConcept = () => {
         </button>
           </div>
 
-          <h1 className="text-2xl font-bold mb-4">Compuestos Orgánicos</h1>
+          <h1 className="text-2xl font-bold mb-4">Tamizado</h1>
           <p className="text-gray-700">
-            Los compuestos orgánicos son sustancias químicas que contienen carbono
-            en su estructura. Estos compuestos son la base de la química orgánica y
-            se encuentran en todos los seres vivos.
+          El tamizado es un método físico para separar mezclas. Consiste en hacer pasar una mezcla de partículas de diferentes tamaños por un tamiz o cedazo. Las partículas de menor tamaño pasan por los poros del tamiz atravesándolo y las grandes quedan retenidas por el mismo.El tamizado es un método físico para separar mezclas. Consiste en hacer pasar una mezcla de partículas de diferentes tamaños por un tamiz o cedazo. Las partículas de menor tamaño pasan por los poros del tamiz atravesándolo y las grandes quedan retenidas por el mismo.
           </p>
 
           <div className="banner-container mb-6">
-            <img 
-              src={organicCompoundBanner} 
-              alt="Compuestos Orgánicos"
+        
+             <img 
+              src={ta} 
+              alt="Compue"
               className="w-full object-cover rounded-lg"
             />
           </div>
@@ -243,4 +242,4 @@ const OrganicCompoundConcept = () => {
   );
 };
 
-export default OrganicCompoundConcept;
+export default Tamization;

@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { FaFileAlt, FaFilePdf, FaYoutube, FaGamepad } from 'react-icons/fa';
+import { FaFileAlt, FaFilePdf, FaYoutube, FaGamepad, FaArrowLeft } from 'react-icons/fa';
 import { Search } from 'lucide-react';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 import './assets/css/OrganicCompoundConcept.css';
 import Navbar from './navbar';
 import Sidebar from './sideBar';
-import organicCompoundBanner from './assets/img/organico.png';
+import desintegration from './assets/img/desintagration.png'
 import Chat from './chat';
 
-const OrganicCompoundConcept = () => {
+const Desintegration = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('all');
   const [isChatOpen, setIsChatOpen] = useState(false); // Estado para controlar el chat modal
+  const navigate = useNavigate(); // Define navigate para usarlo después
 
   const materialTypes = [
     { id: 'all', label: 'Todos' },
@@ -133,6 +135,11 @@ const OrganicCompoundConcept = () => {
         <Sidebar />
 
         <div className="flex-1 p-6 bg-white shadow-md rounded-md mt-6">
+          {/* Agregar la flecha de retroceso */}
+          <button onClick={() => navigate(-1)} className="back-button">
+            <FaArrowLeft size={24} /> 
+          </button>
+
           {/* Buscador y Filtros */}
           <div className="search-container mb-6">
             <form className="search-form" onSubmit={(e) => e.preventDefault()}>
@@ -170,17 +177,15 @@ const OrganicCompoundConcept = () => {
         </button>
           </div>
 
-          <h1 className="text-2xl font-bold mb-4">Compuestos Orgánicos</h1>
+          <h1 className="text-2xl font-bold mb-4">Desintegración mecánica y separación por tamaño de sólidos</h1>
           <p className="text-gray-700">
-            Los compuestos orgánicos son sustancias químicas que contienen carbono
-            en su estructura. Estos compuestos son la base de la química orgánica y
-            se encuentran en todos los seres vivos.
+          Es una operación unitaria de 4 tipo físico mecánico que tiene por finalidad (distribuir) disminuir el tamaño de la partícula de un sólido para aumentar la superficie especifica del solido empleando algún tipo de energía.Es una operación unitaria de 4 tipo físico mecánico que tiene por finalidad (distribuir) disminuir el tamaño de la partícula de un sólido para aumentar la superficie especifica del solido empleando algún tipo de energía.
           </p>
 
           <div className="banner-container mb-6">
-            <img 
-              src={organicCompoundBanner} 
-              alt="Compuestos Orgánicos"
+             <img 
+              src={desintegration} 
+              alt="Compue"
               className="w-full object-cover rounded-lg"
             />
           </div>
@@ -194,7 +199,6 @@ const OrganicCompoundConcept = () => {
                   <th>Nombre</th>
                   <th>Tipo</th>
                   <th>Fecha</th>
-                  <th>Tags</th>
                 </tr>
               </thead>
               <tbody>
@@ -209,23 +213,12 @@ const OrganicCompoundConcept = () => {
                     </td>
                     <td>{materialTypes.find(t => t.id === file.type)?.label || 'Otro'}</td>
                     <td>{file.date}</td>
-                    <td>
-                      <div className="tags-container">
-                        {file.tags.map((tag, tagIndex) => (
-                          <span key={tagIndex} className="tag">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
         </div>
-
-      
 
         {/* Chat como modal */}
         {isChatOpen && (
@@ -243,4 +236,4 @@ const OrganicCompoundConcept = () => {
   );
 };
 
-export default OrganicCompoundConcept;
+export default Desintegration;

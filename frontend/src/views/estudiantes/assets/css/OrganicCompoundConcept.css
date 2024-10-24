@@ -1,49 +1,8 @@
-.card {
-  transition: transform 0.2s; /* Transición suave para el efecto de hover */
-  margin: 1px; /* Margen entre las cartas */
-  width: 230px; /* Ancho de las cartas */
-  height: 20px; /* Altura automática según el contenido */
-}
-.card a {
-  text-decoration: none; /* Sin subrayado en el enlace */
-  color: rgb(0, 0, 0); /* Color del texto en  */
-  display: flex; /* Asegura que el enlace ocupe todo el espacio de la carta */
-  flex-direction: column; /* Para alinear imagen y texto en columna */
-}
-.small-title {
-  font-size: 25px; /* Ajusta el tamaño de la fuente según sea necesario */
-}
-
-
-.card:hover {
-  transform: scale(1.05); /* Aumentar ligeramente el tamaño al pasar el mouse */
-}
-
-/* Asegúrate de que las imágenes mantengan su aspecto */
-.card img {
-  max-width: 90%; /* Asegura que la imagen no se desborde */
-  height: auto; /* Mantiene la relación de aspecto de la imagen */
-}
-
-/* Estilos adicionales (opcional) */
-.card h3 {
-  margin-top: 0.5rem; /* Espaciado superior para el título */
-}
-
-.card p {
-  margin-top: 0.25rem; /* Espaciado superior para la descripción */
-}
-
-
-
-
-
-/* Estilo para el contenedor de cartas */
-.grid {
-  display: grid; /* Utiliza Grid Layout */
-  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
-  gap: 1rem; /* Espacio entre las cartas */
-  margin-top: 1.5rem; /* Espacio superior para el contenedor de cartas */
+.filter-dropdown{
+  background-color: #46ad81;
+  padding: 10px;
+  border-radius: 10px;
+  color: #f1f8ff;
 }
 
 .dashboard-container {
@@ -91,4 +50,54 @@ button:hover {
 /* Estilo para el chat (se repite, se ha consolidado) */
 .chat-box {
   background-color: #f1f8ff; /* Color de fondo del cuadro de chat */
+}
+
+
+.open-chat-button {
+  padding: 10px 20px;
+  background-color: #46ad81;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.chat-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 1000;
+  width: 400px;
+  height: 550px;
+}
+
+.chat-modal-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.close-chat-button {
+  background-color: rgba(164, 9, 9, 0.885);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-bottom: 2%;
+  align-self: flex-end;
+}
+.back-button{
+  background-color: #ffffff;
+  color: #1d5300;
+}
+
+.back-button:hover{
+  background-color: #ffffff;
+  color: #1d5300;
+  height: 100px;
 }
