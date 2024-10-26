@@ -1,29 +1,9 @@
-// src/views/login/Login.jsx
 import { useState, useContext } from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
 import { UserContext } from "../../context/UserContext";
 import { Link, useNavigate } from "react-router-dom"; 
 import "./login.css";
-import ReactDOM from 'react-dom';
-// import GoogleLogin from 'react-google-login';
-// // or
-// import { GoogleLogin } from 'react-google-login';
 
-
-// const responseGoogle = (response) => {
-//   console.log(response);
-// }
-
-// ReactDOM.render(
-//   <GoogleLogin
-//     clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-//     buttonText="Login"
-//     onSuccess={responseGoogle}
-//     onFailure={responseGoogle}
-//     cookiePolicy={'single_host_origin'}
-//   />,
-//   document.getElementById('googleButton')
-// );
 const Login = () => {
   const navigate = useNavigate();
   const { stateDispatch } = useContext(UserContext);
@@ -32,6 +12,7 @@ const Login = () => {
     contrasenia: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = ({ target }) => {
     const { value, name } = target;
@@ -43,6 +24,8 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setErrorMessage("");
     
     try {
       const peticion = await fetch("http://localhost:3000/login", {
@@ -54,51 +37,56 @@ const Login = () => {
       });
   
       const response = await peticion.json();
-  
-      // Log para ver la respuesta completa del servidor
       console.log("Respuesta del servidor:", response);
   
       if (peticion.ok) {
-        // Guarda el token y los datos del usuario en localStorage
+        // Extraer el tipo de usuario del objeto usuario en la respuesta
+        const tipoUsuario = response.usuario.tipo_usuario;
+        
+        // Guardar en localStorage
         localStorage.setItem("userData", JSON.stringify({
           isLogged: true,
           token: response.token,
-          usuario: form.usuario,
-          role: response.tipo_usuario, // Cambia 'role' a 'tipo_usuario'
+          usuario: response.usuario.nombre,
+          role: tipoUsuario,
         }));
   
+        // Actualizar el contexto
         stateDispatch({
           type: "login",
           payload: {
             token: response.token,
-            usuario: form.usuario,
-            role: response.tipo_usuario, // Cambia 'role' a 'tipo_usuario'
+            usuario: response.usuario.nombre,
+            role: tipoUsuario,
           },
         });
   
-        switch (response.tipo_usuario) { // Cambia 'role' a 'tipo_usuario'
-          case "estudiante":
-            navigate("/estudiantes"); // Ruta para el dashboard de estudiantes
-            break;
-          case "profesor":
-            navigate("/profesores"); // Ruta para el dashboard de profesores
-            break;
-          case "admin":
-            navigate("/admin"); // Ruta para el dashboard de administradores
-            break;
-          default:
-            setErrorMessage("Rol no reconocido.");
-            console.error("Rol no reconocido:", response.tipo_usuario);
-            break;
-        }
-        
+    // Redireccionar según el tipo de usuario
+switch (tipoUsuario.toLowerCase()) {
+  case "estudiante":
+    navigate("/estudiantes");
+    break;
+  case "profesor":
+    navigate("/profesores");
+    break;
+  case "admin": // Asegúrate de que coincida con la base de datos
+    navigate("/admin");
+    break;
+  default:
+    setErrorMessage(`Tipo de usuario no reconocido: ${tipoUsuario}`);
+    console.error("Tipo de usuario no reconocido:", tipoUsuario);
+    break;
+}
+
       } else {
-        console.error("Error al iniciar sesión:", response.msg); // Log del error en la respuesta
+        console.error("Error al iniciar sesión:", response.msg);
         setErrorMessage(response.msg || "Error al iniciar sesión.");
       }
     } catch (error) {
-      console.error("Error de conexión:", error); // Log del error de conexión
+      console.error("Error de conexión:", error);
       setErrorMessage("Error de conexión. Inténtalo de nuevo.");
+    } finally {
+      setIsLoading(false);
     }
   };
   
@@ -106,9 +94,14 @@ const Login = () => {
     <main className="login-container">
       <div className="login-header">
         <h2 className="login-title">Inicia sesión</h2>
-        <span></span>
       </div>
-      {errorMessage && <div className="error-message">{errorMessage}</div>}
+
+      {errorMessage && (
+        <div className="alert alert-danger" role="alert">
+          {errorMessage}
+        </div>
+      )}
+
       <Form className="login-form" onSubmit={handleSubmit}>
         <FloatingLabel controlId="usuario" label="Nombre de Usuario" className="mb-3">
           <Form.Control
@@ -131,11 +124,15 @@ const Login = () => {
         </FloatingLabel>
 
         <span className="login-label">
-          ¿No tienes una cuenta? <Link to={"/register"}>Regístrate</Link>
+          ¿No tienes una cuenta? <Link to="/register">Regístrate</Link>
         </span>
 
-        <button className="button-login" type="submit">
-          Iniciar Sesión
+        <button 
+          className="button-login" 
+          type="submit"
+          disabled={isLoading}
+        >
+          {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
         </button>
       </Form>
     </main>

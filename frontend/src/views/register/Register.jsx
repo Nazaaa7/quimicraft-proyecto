@@ -1,4 +1,3 @@
-// src/views/register/Register.jsx
 import React, { useState, useEffect } from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +8,8 @@ const Register = () => {
   const [form, setForm] = useState({});
   const [tiposUsuario, setTiposUsuario] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  // Cargar los tipos de usuario desde el backend
   const cargarTiposUsuario = async () => {
     try {
       const req = await fetch("http://localhost:3000/tipos-usuario");
@@ -29,7 +28,6 @@ const Register = () => {
     cargarTiposUsuario();
   }, []);
 
-  // Actualiza el estado del formulario con los valores ingresados
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setForm((prevForm) => ({
@@ -38,13 +36,26 @@ const Register = () => {
     }));
   };
 
-  // Manejo del envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); // Resetea el mensaje de error
+    setError(null);
+    setLoading(true); // Inicia la carga
 
-    if (!form.nombre || !form.apellido || !form.usuario || !form.correo || !form.contrasenia || !form.id_rela_tipo_usuario) {
+    if (!form.nombre || !form.apellido || !form.dni || !form.usuario || !form.correo || !form.contrasenia || !form.id_rela_tipo_usuario) {
       setError("Por favor, completa todos los campos.");
+      setLoading(false); // Detén la carga
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(form.correo)) {
+      setError("Por favor, introduce un correo electrónico válido.");
+      setLoading(false);
+      return;
+    }
+
+    if (form.contrasenia.length < 4) {
+      setError("La contraseña debe tener al menos 6 caracteres.");
+      setLoading(false);
       return;
     }
 
@@ -62,11 +73,13 @@ const Register = () => {
       if (req.ok) {
         navigate("/"); // Redirige a la página de inicio o dashboard
       } else {
-        setError(res.msg); // Muestra el mensaje de error desde el servidor
+        setError(res.msg);
       }
     } catch (error) {
       console.error("Error en el registro", error);
       setError("Hubo un problema con el registro. Inténtalo más tarde.");
+    } finally {
+      setLoading(false); // Detiene la carga
     }
   };
 
@@ -80,7 +93,6 @@ const Register = () => {
       {error && <p className="error-message">{error}</p>}
 
       <Form className="register-form" onSubmit={handleSubmit}>
-        {/* Campo de nombre */}
         <FloatingLabel controlId="nombre" label="Nombre" className="mb-3">
           <Form.Control
             type="text"
@@ -90,7 +102,6 @@ const Register = () => {
           />
         </FloatingLabel>
 
-        {/* Campo de apellido */}
         <FloatingLabel controlId="apellido" label="Apellido" className="mb-3">
           <Form.Control
             type="text"
@@ -100,7 +111,16 @@ const Register = () => {
           />
         </FloatingLabel>
 
-        {/* Campo de usuario */}
+        <FloatingLabel controlId="dni" label="DNI" className="mb-3">
+          <Form.Control
+            type="text"
+            placeholder="DNI"
+            name="dni"
+            onChange={handleChange}
+            required
+          />
+        </FloatingLabel>
+
         <FloatingLabel controlId="usuario" label="Usuario" className="mb-3">
           <Form.Control
             type="text"
@@ -110,7 +130,6 @@ const Register = () => {
           />
         </FloatingLabel>
 
-        {/* Campo de correo */}
         <FloatingLabel controlId="correo" label="Correo" className="mb-3">
           <Form.Control
             type="email"
@@ -120,7 +139,6 @@ const Register = () => {
           />
         </FloatingLabel>
 
-        {/* Campo de contraseña */}
         <FloatingLabel controlId="contrasenia" label="Contraseña" className="mb-3">
           <Form.Control
             type="password"
@@ -130,14 +148,13 @@ const Register = () => {
           />
         </FloatingLabel>
 
-        {/* Selector de tipo de usuario */}
         <FloatingLabel controlId="tipo_usuario_id" label="Tipo de Usuario" className="mb-3">
           <Form.Select
             aria-label="Selecciona el tipo de usuario"
             name="id_rela_tipo_usuario"
             onChange={handleChange}
           >
-           
+            <option value="">Selecciona un tipo de usuario</option>
             {tiposUsuario.map((tipo) => (
               <option key={tipo.idTipoUsuario} value={tipo.idTipoUsuario}>
                 {tipo.descripcion}
@@ -146,8 +163,8 @@ const Register = () => {
           </Form.Select>
         </FloatingLabel>
 
-        <button className="button-register" type="submit">
-          Registrarse
+        <button className="button-register" type="submit" disabled={loading}>
+          {loading ? "Registrando..." : "Registrarse"}
         </button>
       </Form>
     </main>
