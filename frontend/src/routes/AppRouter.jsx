@@ -5,7 +5,9 @@ import Register from "../views/register/Register";
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
 import Estudiantes from "../views/estudiantes/estudiantes";
+
 import OrganicCompoundConcept from "../views/estudiantes/organicCompoundConcept";
+import Calendar from "../views/estudiantes/calendar"
 import Projects from "../views/estudiantes/project" 
 import Profesores from "../views/profesores/profesores"; 
 import Admin from "../views/admin/admin"; 
@@ -16,6 +18,7 @@ import Sedimentation from "../views/estudiantes/sedimentation";
 import Tamization from "../views/estudiantes/tamization";
 import Filtration from "../views/estudiantes/filtration";
 import Desintegration from "../views/estudiantes/desintegration";
+
 
 const AppRouter = () => {
   return (
@@ -33,6 +36,8 @@ const AppRouter = () => {
           <Route path="/profesores" element={<Profesores />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/organicCompoundConcept" element={<OrganicCompoundConcept />} />
+          <Route path="/calendar" element={<Calendar />} />
+
           <Route path="/projects" element={<Projects />} />
           <Route path="/balanceEnergy" element={<BalanceEnergy />} />
           <Route path="/material" element={<EventCards />} />
@@ -41,6 +46,7 @@ const AppRouter = () => {
           <Route path="/tamization" element={<Tamization />} />
           <Route path="/desintegration" element={<Desintegration />} />
           <Route path="/filtracion" element={<Filtration />} />
+
         </Route>
       </Routes>
     </BrowserRouter>

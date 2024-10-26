@@ -13,8 +13,10 @@ function Sidebar() {
         <Link to='/material'>
           <SidebarItem icon={<StickyNote size={20} color="white" />} text="Material" />
         </Link>
-        <SidebarItem icon={<Calendar size={20} />} text="Calendario" />
-        <SidebarItem icon={<Layers size={20} />} text="Tabla Periodica" />
+        <Link to='/calendar'>
+          <SidebarItem icon={<StickyNote size={20} color="white" />} text="Calendario" />
+        </Link>       
+         <SidebarItem icon={<Layers size={20} />} text="Tabla Periodica" />
         <hr />
        
       </ul>
