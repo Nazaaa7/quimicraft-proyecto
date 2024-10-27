@@ -3,10 +3,10 @@ import './estudiantes.css';
 import React, { useContext } from 'react';
 import Navbar from './navbar';
 import Banner from './banner';
-import Categories from './categories';
 import { UserContext } from '../../context/UserContext';
 import { userType } from '../../context/userTypes';
 import Sidebar from './sideBar';
+import Footer from './footer';
 
 function Estudiantes() {
   const { stateDispatch } = useContext(UserContext);
@@ -26,11 +26,12 @@ function Estudiantes() {
         <Sidebar />
         <div className='main-content'>
           <Banner />
-          <Categories />
         </div>
       </div>
+      <Footer /> {/* Footer al final del contenido */}
     </div>
   );
 }
+
 
 export default Estudiantes;

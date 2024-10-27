@@ -18,6 +18,7 @@ import Sedimentation from "../views/estudiantes/sedimentation";
 import Tamization from "../views/estudiantes/tamization";
 import Filtration from "../views/estudiantes/filtration";
 import Desintegration from "../views/estudiantes/desintegration";
+import Footer from "../views/estudiantes/footer";
 
 
 const AppRouter = () => {
@@ -46,6 +47,8 @@ const AppRouter = () => {
           <Route path="/tamization" element={<Tamization />} />
           <Route path="/desintegration" element={<Desintegration />} />
           <Route path="/filtracion" element={<Filtration />} />
+          <Route path="/footer" element={<Footer />} />
+
 
         </Route>
       </Routes>
