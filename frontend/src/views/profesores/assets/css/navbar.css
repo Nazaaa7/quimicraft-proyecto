@@ -5,22 +5,26 @@
   padding: 15px 30px;
   font-family: "Abel", sans-serif;
   background-color: #ebfadc;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #706666;
+
 }
 
 .navbar h1 {
   font-size: 24px;
   font-family: "Abel", sans-serif;
+  
 }
 
 .nav-links {
   list-style-type: none;
   display: flex;
+  
 }
 
 .nav-links li {
   margin: 0 15px;
   cursor: pointer;
+
 }
 
 .logOut, .post{
@@ -32,4 +36,9 @@
   margin-right: 5%;
   font-family: "Abel", sans-serif;
   cursor: pointer;
+  
+}
+
+.text{
+  color: #0d0e0d;
 }

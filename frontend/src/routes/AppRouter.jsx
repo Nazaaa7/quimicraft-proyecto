@@ -7,18 +7,25 @@ import PublicRoutes from "./PublicRoutes";
 import Estudiantes from "../views/estudiantes/estudiantes";
 
 import OrganicCompoundConcept from "../views/estudiantes/organicCompoundConcept";
-import Calendar from "../views/estudiantes/calendar"
-import Projects from "../views/estudiantes/project" 
+import OrganicCompound from "../views/profesores/organicCompound";
+
+import Calendar from "../views/estudiantes/calendar";
 import Profesores from "../views/profesores/profesores"; 
 import Admin from "../views/admin/admin"; 
 import EventCards  from "../views/estudiantes/yearCard";
+import EventCard  from "../views/profesores/yearCards";
 import SubjectI from "../views/estudiantes/subjectsI";
+import Subject from "../views/estudiantes/subjectsI";
+
 import BalanceEnergy from "../views/estudiantes/energyBalance";
 import Sedimentation from "../views/estudiantes/sedimentation";
 import Tamization from "../views/estudiantes/tamization";
 import Filtration from "../views/estudiantes/filtration";
 import Desintegration from "../views/estudiantes/desintegration";
 import Footer from "../views/estudiantes/footer";
+import Projects from "../views/profesores/projects" ;
+
+import Project from "../views/estudiantes/project"
 
 
 const AppRouter = () => {
@@ -39,7 +46,6 @@ const AppRouter = () => {
           <Route path="/organicCompoundConcept" element={<OrganicCompoundConcept />} />
           <Route path="/calendar" element={<Calendar />} />
 
-          <Route path="/projects" element={<Projects />} />
           <Route path="/balanceEnergy" element={<BalanceEnergy />} />
           <Route path="/material" element={<EventCards />} />
           <Route path="/materiasI" element={<SubjectI />} />
@@ -48,6 +54,16 @@ const AppRouter = () => {
           <Route path="/desintegration" element={<Desintegration />} />
           <Route path="/filtracion" element={<Filtration />} />
           <Route path="/footer" element={<Footer />} />
+          <Route path="/project" element={<Project />} />
+          <Route path="/projects" element={<Projects />} />
+
+          <Route path="/materiales" element={<EventCard />} />
+          <Route path="/subject" element={<Subject />} />
+          <Route path="/organicCompound" element={<OrganicCompound/>} />
+
+
+
+
 
 
         </Route>

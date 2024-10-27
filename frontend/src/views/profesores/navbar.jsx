@@ -2,7 +2,11 @@
 import React, { useContext } from 'react';
 import './assets/css/navbar.css';
 import { UserContext } from '../../context/UserContext';
+import SidebarItem from './navarItems';
 import { userType } from '../../context/userTypes';
+
+import { Link } from 'react-router-dom';
+
 
 function Navbar({ setActiveForo }) {
   const { stateDispatch } = useContext(UserContext);
@@ -16,13 +20,17 @@ function Navbar({ setActiveForo }) {
   };
 
   return (
-    <nav className="navbar">
-      <h1>QuimiCraft</h1>
-      <ul className="nav-links">
-        <li onClick={() => setActiveForo('profesores')}>Publicaciones</li>
-        <li onClick={() => setActiveForo('consultas')}>Consultas</li>
-        <li>Subir archivos</li>
-      </ul>
+  
+      <nav className="navbar">
+              <h1>QuimiCraft</h1>
+
+      <Link to='/materiales'>
+
+         <SidebarItem className='text'  text="Publicaciones" />
+       </Link>
+
+       
+
       <button onClick={logOut} className='logOut'>Cerrar Sesión</button>
     </nav>
   );

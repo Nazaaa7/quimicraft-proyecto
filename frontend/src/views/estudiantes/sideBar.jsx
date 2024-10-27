@@ -7,14 +7,14 @@ function Sidebar() {
   return (
     <div>
       <ul className="sidebar">
-        <Link to='/estudiantes'>
+        <Link className='text' to='/estudiantes'>
           <SidebarItem icon={<Home size={20} color="white" />} text="Inicio" />
         </Link>
-        <Link to='/material'>
+        <Link className='text' to='/material'>
           <SidebarItem icon={<StickyNote size={20} color="white" />} text="Material" />
         </Link>
-        <Link to='/calendar'>
-          <SidebarItem icon={<StickyNote size={20} color="white" />} text="Calendario" />
+        <Link className='text' to='/calendar'>
+          <SidebarItem icon={<Calendar size={20} color="white" />} text="Calendario" />
         </Link>       
          <SidebarItem icon={<Layers size={20} />} text="Tabla Periodica" />
         <hr />

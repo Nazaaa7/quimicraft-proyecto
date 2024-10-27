@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './assets/css/subjects.css';
+import './assets/css/subject.css';
 import Navbar from './navbar';
+import Boton from './boton';
 
 // Datos organizados por cuatrimestre
 const subjectsBySemester = {
   first: [
     {
+        path: '/projects',
+
       title: 'ANÁLISIS DE DATOS',
-      path: '/project',
+
       color: '#46ad81',
       
     },
     {
       title: 'FORMULACIÓN Y PREPARACIÓN DE MEZCLAS',
-      path: '/real-estate',
+      path: '/projects',
       color: '#46ad81',
       
     },
@@ -108,7 +111,7 @@ const SemesterSelector = ({ activeSemester, onChange }) => {
   );
 };
 
-const SubjectI = () => {
+const Subject = () => {
   const navigate = useNavigate();
   const [activeSemester, setActiveSemester] = useState('first');
 
@@ -116,10 +119,14 @@ const SubjectI = () => {
     <div className="App">
       <Navbar/>
       <SemesterSelector 
+      
         activeSemester={activeSemester}
         onChange={setActiveSemester}
       />
+
       <h1 className='h1'>Materias</h1>
+      <Boton/>
+
       <div className="folder-grid">
         {subjectsBySemester[activeSemester].map((project, index) => (
           <FolderCard
@@ -133,4 +140,4 @@ const SubjectI = () => {
   );
 };
 
-export default SubjectI;
+export default Subject;
