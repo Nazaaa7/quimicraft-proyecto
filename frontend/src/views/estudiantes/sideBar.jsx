@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 function Sidebar() {
   return (
-    <div>
       <ul className="sidebar">
         <Link className='text' to='/estudiantes'>
           <SidebarItem icon={<Home size={20} color="white" />} text="Inicio" />
@@ -20,7 +19,6 @@ function Sidebar() {
         <hr />
        
       </ul>
-    </div>
   );
 }
 

@@ -99,41 +99,48 @@ const OrganicCompoundConcept = () => {
   };
   
   return (
-    <div className="min-h-screen bg-gray-10">
+    <div className="min-h-screen bg-gray-100">
       <Navbar />
+      <div style={{
+        display: "flex",
+        flexDirection: "row"
+      }}>
+
         <Sidebar />
 
-        <div className="flex-1 p-6 ml-64">
-          <div className="bg-white rounded-lg shadow-lg mt-16">
-            <div className="p-4">
-              <h1 className="text-2xl font-bold mb-4">
-                Calendario
-              </h1>
-              <Calendar
-                localizer={localizer}
-                events={events}
-                startAccessor="start"
-                endAccessor="end"
-                style={{ height: "calc(100vh - 12rem)" }}
-                selectable={true}
-                onSelectSlot={handleSelectSlot}
-                onSelectEvent={handleSelectEvent}
-                onDoubleClickEvent={handleEventDelete}
-                popup={true}
-                messages={{
-                  today: "Hoy",
-                  previous: "Anterior",
-                  next: "Siguiente",
-                  month: "Mes",
-                  week: "Semana",
-                  day: "Día",
-                  agenda: "Agenda"
-                }}
-              />
-            </div>
+        <Calendar
+            localizer={localizer}
+            events={events}
+            startAccessor="start"
+            endAccessor="end"
+            style={{ height: "calc(100vh - 12rem)", width: "calc(100vw - 300px)" }}
+            selectable={true}
+            onSelectSlot={handleSelectSlot}
+            onSelectEvent={handleSelectEvent}
+            onDoubleClickEvent={handleEventDelete}
+            popup={true}
+            messages={{
+              today: "Hoy",
+              previous: "Anterior",
+              next: "Siguiente",
+              month: "Mes",
+              week: "Semana",
+              day: "Día",
+              agenda: "Agenda"
+            }}
+          />
+      </div>
+      <div className="flex-1 p-6 ml-64">
+        <div className="bg-white rounded-lg shadow-lg mt-16">
+          <div className="p-4">
+            <h1 className="text-2xl font-bold mb-4">
+              Calendario
+            </h1>
+            
           </div>
         </div>
-        
+      </div>
+      
 
       {isChatOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
