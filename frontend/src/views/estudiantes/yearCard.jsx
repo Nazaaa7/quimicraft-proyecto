@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "./sideBar";
 import Navbar from "./navbar";
 import './assets/css/yearCard.css';
+import Footer from "./footer";
 
 const EventCards = () => {
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ const EventCards = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

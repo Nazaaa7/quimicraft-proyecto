@@ -5,6 +5,7 @@ import 'moment/locale/es';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Navbar from './navbar';
 import Sidebar from './sideBar';
+import Footer from './footer';
 
 const localizer = momentLocalizer(moment);
 
@@ -99,21 +100,28 @@ const OrganicCompoundConcept = () => {
   };
   
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div>
       <Navbar />
       <div style={{
         display: "flex",
-        flexDirection: "row"
+        height: "664px"
       }}>
 
         <Sidebar />
+        <div style={{
+        height: "500px"
+      }}>
+          <div className="p-4">
+            <h1 className="text- font-bold mb-4">
+              Calendario
+            </h1>
 
         <Calendar
             localizer={localizer}
             events={events}
             startAccessor="start"
             endAccessor="end"
-            style={{ height: "calc(100vh - 12rem)", width: "calc(100vw - 300px)" }}
+            style={{ height: "calc(600px - 12rem)", width: "calc(100vw - 300px)" }}
             selectable={true}
             onSelectSlot={handleSelectSlot}
             onSelectEvent={handleSelectEvent}
@@ -130,14 +138,8 @@ const OrganicCompoundConcept = () => {
             }}
           />
       </div>
-      <div className="flex-1 p-6 ml-64">
-        <div className="bg-white rounded-lg shadow-lg mt-16">
-          <div className="p-4">
-            <h1 className="text-2xl font-bold mb-4">
-              Calendario
-            </h1>
+    
             
-          </div>
         </div>
       </div>
       
@@ -151,9 +153,13 @@ const OrganicCompoundConcept = () => {
             >
             </button>
           </div>
+
         </div>
       )}
+        <Footer/>
+
     </div>
+
   );
 };
 

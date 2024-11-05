@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './assets/css/subjects.css';
 import Navbar from './navbar';
+import Footer from './footer'
 
 // Datos organizados por cuatrimestre
 const subjectsBySemester = {
@@ -129,6 +130,7 @@ const SubjectI = () => {
           />
         ))}
       </div>
+      <Footer/>
     </div>
   );
 };

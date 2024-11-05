@@ -5,6 +5,7 @@ import './assets/css/FileDashboard.css';
 import Navbar from './navbar';
 import Sidebar from './sideBar';
 import { Link } from 'react-router-dom';
+import Footer from './footer';
 
 const FileDashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -70,6 +71,7 @@ const FileDashboard = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

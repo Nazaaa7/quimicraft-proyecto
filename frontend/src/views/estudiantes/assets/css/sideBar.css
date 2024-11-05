@@ -9,7 +9,7 @@
   left: 0;
   top: 0; /* Empieza desde el tope */
   bottom: 0; /* Se extiende hasta el fondo */ 
-  height:100%;
+  height:664px;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -34,6 +34,7 @@
     transform: translateX(0);
   }
 }
-.text{
-  color: #539653;
+
+.tak{
+  text-decoration: none;
 }
