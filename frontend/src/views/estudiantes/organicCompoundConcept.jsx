@@ -6,6 +6,7 @@ import Navbar from './navbar';
 import organicCompoundBanner from './assets/img/organico.png';
 import Chat from './chat';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import Footer from './footer';
 
 const OrganicCompoundConcept = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -131,15 +132,14 @@ const OrganicCompoundConcept = () => {
   return (
     <div>
       <Navbar />
-      <div className="dashboard-container flex">
-        <div className="flex-1 p-6 bg-white shadow-md rounded-md mt-6">
+      <div className="dashboard-containerr">
           {/* Botón de retroceso */}
           <button onClick={() => navigate(-1)} className="back-button">
             <FaArrowLeft size={24} />
           </button>
-<div className="">
+        <div className="container">
           {/* Buscador y Filtros */}
-          <div className="search-container mb-6">
+          <div className="search-container">
             <form className="search-form" onSubmit={(e) => e.preventDefault()}>
               <div className="search-input-container">
                 <input
@@ -175,7 +175,7 @@ const OrganicCompoundConcept = () => {
             </button>
           </div>
 
-          <h1 className="text-2xl font-bold mb-4">Compuestos Orgánicos</h1>
+          <h1 className="text-2xl font-bold mb-4 mt-4">Compuestos Orgánicos</h1>
           <p className="text-gray-700">
             Los compuestos orgánicos son sustancias químicas que contienen carbono
             en su estructura. Estos compuestos son la base de la química orgánica y
@@ -186,14 +186,14 @@ const OrganicCompoundConcept = () => {
             <img 
               src={organicCompoundBanner} 
               alt="Compuestos Orgánicos"
-              className="w-full object-cover rounded-lg"
+              className="w-full object-cover rounded-lg mb-4 size-16"
             />
           </div>
 
           {/* Tabla de Archivos */}
           <div className="all-files">
-            <h3 className="text-xl font-semibold mb-4">Recursos Disponibles</h3>
-            <table className="files-table">
+            <h3 className="text-xl font-semibold mt-6">Recursos Disponibles</h3>
+            <table className="files-table ">
               <thead>
                 <tr>
                   <th>Nombre</th>
@@ -232,8 +232,10 @@ const OrganicCompoundConcept = () => {
           </div>
         )}
       </div>
+
+      <Footer/>
       </div>
-    </div>
+   
   );
 };
 

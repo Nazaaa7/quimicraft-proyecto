@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { FaFileAlt, FaFilePdf, FaYoutube, FaGamepad } from 'react-icons/fa';
+import { FaFileAlt, FaFilePdf, FaYoutube, FaGamepad, FaArrowLeft } from 'react-icons/fa';
 import { Search } from 'lucide-react';
 import './assets/css/OrganicCompoundConcept.css';
 import Navbar from './navbar';
-import Sidebar from './sideBar';
-import filtracion from './assets/img/filtracion.jpg'
+import filtracion from './assets/img/filtracion.jpg';
 import Chat from './chat';
+import { useNavigate } from 'react-router-dom';
+import Footer from './footer';
 
 const Filtration = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('all');
-  const [isChatOpen, setIsChatOpen] = useState(false); // Estado para controlar el chat modal
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const navigate = useNavigate();
 
   const materialTypes = [
     { id: 'all', label: 'Todos' },
@@ -129,12 +131,13 @@ const Filtration = () => {
   return (
     <div>
       <Navbar />
-      <div className="dashboard-container flex">
-        <Sidebar />
+      <div className="dashboard-containerr">
+        <button onClick={() => navigate(-1)} className="back-button">
+          <FaArrowLeft size={24} />
+        </button>
 
-        <div className="flex-1 p-6 bg-white shadow-md rounded-md mt-6">
-          {/* Buscador y Filtros */}
-          <div className="search-container mb-6">
+        <div className="container">
+          <div className="search-container">
             <form className="search-form" onSubmit={(e) => e.preventDefault()}>
               <div className="search-input-container">
                 <input
@@ -149,8 +152,7 @@ const Filtration = () => {
                 </div>
               </div>
             </form>
-            
-            {/* Lista desplegable para los filtros */}
+
             <div className="dropdown">
               <select
                 value={selectedType}
@@ -164,36 +166,33 @@ const Filtration = () => {
                 ))}
               </select>
             </div>
-              {/* Botón para abrir el chat */}
-        <button className="open-chat-button" onClick={() => setIsChatOpen(true)}>
-          Consultar tema
-        </button>
+
+            <button className="open-chat-button" onClick={() => setIsChatOpen(true)}>
+              Consultar tema
+            </button>
           </div>
 
           <h1 className="text-2xl font-bold mb-4">Filtración</h1>
           <p className="text-gray-700">
-          Se denomina filtración al proceso unitario de separación de sólidos en una suspensión a través de un medio mecánico poroso, también llamados tamiz, criba, cedazo o filtro. Se denomina filtración al proceso unitario de separación de sólidos en una suspensión a través de un medio mecánico poroso, también llamados tamiz, criba, cedazo o filtro. 
+            La filtración es un proceso de separación utilizado para remover sólidos de líquidos o gases usando un medio filtrante.
           </p>
 
           <div className="banner-container mb-6">
-        
-             <img 
+            <img 
               src={filtracion} 
-              alt="Compue"
-              className="w-full object-cover rounded-lg"
+              alt="Proceso de Filtración"
+              className="w-full object-cover rounded-lg mb-4 size-16"
             />
           </div>
 
-          {/* Tabla de Archivos */}
           <div className="all-files">
-            <h3 className="text-xl font-semibold mb-4">Recursos Disponibles</h3>
+            <h3 className="text-xl font-semibold mt-6">Recursos Disponibles</h3>
             <table className="files-table">
               <thead>
                 <tr>
                   <th>Nombre</th>
                   <th>Tipo</th>
                   <th>Fecha</th>
-                  <th>Tags</th>
                 </tr>
               </thead>
               <tbody>
@@ -208,15 +207,6 @@ const Filtration = () => {
                     </td>
                     <td>{materialTypes.find(t => t.id === file.type)?.label || 'Otro'}</td>
                     <td>{file.date}</td>
-                    <td>
-                      <div className="tags-container">
-                        {file.tags.map((tag, tagIndex) => (
-                          <span key={tagIndex} className="tag">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -224,9 +214,6 @@ const Filtration = () => {
           </div>
         </div>
 
-      
-
-        {/* Chat como modal */}
         {isChatOpen && (
           <div className="chat-modal">
             <div className="chat-modal-content">
@@ -238,6 +225,8 @@ const Filtration = () => {
           </div>
         )}
       </div>
+
+      <Footer />
     </div>
   );
 };

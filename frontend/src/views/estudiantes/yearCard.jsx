@@ -34,7 +34,7 @@ const EventCards = () => {
   return (
     <div className="layout-container">
       <Navbar />
-      <div className="content-wrapper">
+      <div className="content-wrap">
         <Sidebar />
         <div className="main-content">
           <div className="cards-container">

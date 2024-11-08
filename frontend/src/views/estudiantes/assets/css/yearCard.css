@@ -8,9 +8,10 @@
 }
 
 
-.content-wrapper {
+.content-wrap{
   display: flex;
   flex: 1;
+  margin-bottom: -17px;
 
 }
 

@@ -104,7 +104,8 @@ const OrganicCompoundConcept = () => {
       <Navbar />
       <div style={{
         display: "flex",
-        height: "664px"
+        height: "664px",
+        marginBottom: "36px",
       }}>
 
         <Sidebar />

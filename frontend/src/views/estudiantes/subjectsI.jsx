@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './assets/css/subjects.css';
+import { FaArrowLeft } from 'react-icons/fa';
 import Navbar from './navbar';
-import Footer from './footer'
+import Footer from './footer';
 
 // Datos organizados por cuatrimestre
 const subjectsBySemester = {
@@ -110,8 +111,8 @@ const SemesterSelector = ({ activeSemester, onChange }) => {
 };
 
 const SubjectI = () => {
-  const navigate = useNavigate();
   const [activeSemester, setActiveSemester] = useState('first');
+  const navigate = useNavigate(); // Define navigate para usarlo después
 
   return (
     <div className="App">
@@ -121,6 +122,9 @@ const SubjectI = () => {
         onChange={setActiveSemester}
       />
       <h1 className='h1'>Materias</h1>
+      <button onClick={() => navigate(-1)} className="back">
+          <FaArrowLeft size={24} />
+        </button>
       <div className="folder-grid">
         {subjectsBySemester[activeSemester].map((project, index) => (
           <FolderCard
