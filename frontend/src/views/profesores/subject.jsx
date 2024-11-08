@@ -5,13 +5,11 @@ import Navbar from './navbar';
 import Boton from './boton';
 
 // Datos organizados por cuatrimestre
-const subjectsBySemester = {
+const Semester = {
   first: [
     {
-        path: '/projects',
-
       title: 'ANÁLISIS DE DATOS',
-
+      path: '/projects2',
       color: '#46ad81',
       
     },
@@ -69,7 +67,7 @@ const subjectsBySemester = {
   ]
 };
 
-const FolderCard = ({ project, onClick }) => {
+const Card = ({ project, onClick }) => {
 
   return (
   
@@ -111,7 +109,7 @@ const SemesterSelector = ({ activeSemester, onChange }) => {
   );
 };
 
-const Subject = () => {
+const Subjects2 = () => {
   const navigate = useNavigate();
   const [activeSemester, setActiveSemester] = useState('first');
 
@@ -128,8 +126,8 @@ const Subject = () => {
       <Boton/>
 
       <div className="folder-grid">
-        {subjectsBySemester[activeSemester].map((project, index) => (
-          <FolderCard
+        {Semester[activeSemester].map((project, index) => (
+          <Card
             key={index}
             project={project}
             onClick={() => navigate(project.path)}
@@ -140,4 +138,4 @@ const Subject = () => {
   );
 };
 
-export default Subject;
+export default Subjects2;

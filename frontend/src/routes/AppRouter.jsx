@@ -13,14 +13,14 @@ import Admin from "../views/admin/admin";
 import EventCards  from "../views/estudiantes/yearCard";
 import EventCard  from "../views/profesores/yearCards";
 import SubjectI from "../views/estudiantes/subjectsI";
-import Subject from "../views/estudiantes/subjectsI";
+import Subject from "../views/profesores/subject";
 import BalanceEnergy from "../views/estudiantes/energyBalance";
 import Sedimentation from "../views/estudiantes/sedimentation";
 import Tamization from "../views/estudiantes/tamization";
 import Filtration from "../views/estudiantes/filtration";
 import Desintegration from "../views/estudiantes/desintegration";
 import Footer from "../views/estudiantes/footer";
-import Projects from "../views/profesores/projects" ;
+import Projects2 from "../views/profesores/projects2" ;
 import Project from "../views/estudiantes/project";
 import Evaporation from "../views/estudiantes/evaporitation";
 import SecadoQuimico from "../views/estudiantes/driying";
@@ -54,8 +54,8 @@ const AppRouter = () => {
           <Route path="/desintegration" element={<Desintegration />} />
           <Route path="/filtracion" element={<Filtration />} />
           <Route path="/footer" element={<Footer />} />
+          <Route path="/projects2" element={<Projects2/>} />
           <Route path="/project" element={<Project />} />
-          <Route path="/projects" element={<Projects />} />
           <Route path="/materiales" element={<EventCard />} />
           <Route path="/subject" element={<Subject />} />
           <Route path="/organicCompound" element={<OrganicCompound/>} />
@@ -64,6 +64,7 @@ const AppRouter = () => {
           <Route path="/driying" element={<SecadoQuimico/>} />
           <Route path="/balance" element={<BalanceDeMasas/>} />
           <Route path="/extraction" element={<ExtraccionQuimica/>} />
+
 
 
 
