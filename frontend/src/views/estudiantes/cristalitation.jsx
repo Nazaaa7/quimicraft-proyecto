@@ -4,11 +4,11 @@ import { Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import './assets/css/OrganicCompoundConcept.css';
 import Navbar from './navbar';
-import desintegration from './assets/img/desintagration.png';
+import evaporation from './assets/img/cris.jpeg';
 import Chat from './chat';
 import Footer from './footer';
 
-const Desintegration = () => {
+const Cristalizacion = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('all');
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -172,15 +172,15 @@ const Desintegration = () => {
             </button>
           </div>
 
-          <h1 className="text-2xl font-bold mb-4">Desintegración</h1>
+          <h1 className="text-2xl font-bold mb-4">Evaporación</h1>
           <p className="text-gray-700">
-            La desintegración de compuestos es un proceso esencial para comprender los cambios químicos y físicos que ocurren en diversas reacciones.
+            La evaporación es un proceso físico en el que un líquido se convierte en vapor. Es fundamental en estudios de química y medio ambiente.
           </p>
 
           <div className="banner-container mb-6">
             <img 
-              src={desintegration} 
-              alt="Desintegración"
+              src={evaporation} 
+              alt="Evaporación"
               className="w-full object-cover rounded-lg mb-4 size-16"
             />
           </div>
@@ -231,4 +231,4 @@ const Desintegration = () => {
   );
 };
 
-export default Desintegration;
+export default Cristalizacion;

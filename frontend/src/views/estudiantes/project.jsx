@@ -17,11 +17,11 @@ const FileDashboard = () => {
     { name: 'Tamizado', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/tamization' },
     { name: 'Filtración', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/filtracion' },
     { name: 'Desintegración mecánica y separación por tamaño de sólidos', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/desintegration' },
-    { name: 'Evaporización', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/organicCompoundConcept' },
-    { name: 'Extracción ', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/compuestos-inorganicos' },
-    { name: 'Secado', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/estequiometria' },
-    { name: 'Cristalización', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/quimica-transformadora' },
-    { name: 'Balance de masas', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/nomenclatura' },
+    { name: 'Evaporización', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/evaporitation' },
+    { name: 'Extracción ', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/extraction' },
+    { name: 'Secado', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/driying' },
+    { name: 'Cristalización', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/cristalitation' },
+    { name: 'Balance de masas', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/balance' },
   ];
 
   // Filtrar los archivos basado en el término de búsqueda
@@ -44,7 +44,7 @@ const FileDashboard = () => {
        
 
           <div className="all-files">
-            <h3>Temas</h3>
+            <h3 className='temas   mb-4'>Temas a dar en el cuatrimestre</h3>
             <table className="files-table">
               <thead>
                 <tr>

@@ -6,10 +6,10 @@
   padding: 30px;
   display: flex;
   flex-direction: column;
-  left: 0;
+  left: 0px;
   top: 0; /* Empieza desde el tope */
+  height: 700px;
   bottom: 0; /* Se extiende hasta el fondo */ 
-  height:664px;
   transition: transform 0.3s ease-in-out;
 }
 
