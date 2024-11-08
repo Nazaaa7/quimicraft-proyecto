@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FaFolder, FaFileAlt, FaFilePdf, FaImage, FaUserCircle } from 'react-icons/fa';
-import { Search } from 'lucide-react';
 import './assets/css/FileDashboard.css';
 import Navbar from './navbar';
 import Sidebar from './sideBar';

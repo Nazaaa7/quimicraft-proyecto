@@ -16,18 +16,7 @@ const EventCard = () => {
       location: "Instituto Politécnico Formosa",
       path: "/subject"
     },
-    {
-      date: "2024",
-      title: "Química Industrial II",
-      location: "Instituto Politécnico Formosa",
-      path: "/subjects-ii"
-    },
-    {
-      date: "2024",
-      title: "Química Industrial III",
-      location: "Instituto Politécnico Formosa",
-      path: "/subjects-iii"
-    },
+  
   ];
 
   return (
