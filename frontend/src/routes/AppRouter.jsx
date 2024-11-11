@@ -27,7 +27,8 @@ import SecadoQuimico from "../views/estudiantes/driying";
 import ExtraccionQuimica from "../views/estudiantes/extraction";
 import BalanceDeMasas from "../views/estudiantes/balance";
 import Cristalizacion from "../views/estudiantes/cristalitation";
-
+import PeriodicTable from "../views/estudiantes/periodicTable";
+import ElementDetail from "../views/estudiantes/elementDetail";
 
 const AppRouter = () => {
   return (
@@ -64,6 +65,8 @@ const AppRouter = () => {
           <Route path="/driying" element={<SecadoQuimico/>} />
           <Route path="/balance" element={<BalanceDeMasas/>} />
           <Route path="/extraction" element={<ExtraccionQuimica/>} />
+          <Route path="/periodicTable" element={<PeriodicTable/>} />
+          <Route path="/elementDetail" element={<ElementDetail/>} />
 
 
 
