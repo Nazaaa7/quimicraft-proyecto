@@ -70,7 +70,6 @@ const FileDashboard = () => {
           </div>
         </div>
       </div>
-      <Footer/>
     </div>
   );
 };

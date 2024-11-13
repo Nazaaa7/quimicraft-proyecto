@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'moment/locale/es';
@@ -27,17 +27,17 @@ const OrganicCompoundConcept = () => {
     try {
       const storedEvents = localStorage.getItem('myCalendarEvents');
       console.log('Eventos almacenados (raw):', storedEvents);
-      
+
       if (storedEvents) {
         const parsedEvents = JSON.parse(storedEvents);
         console.log('Eventos parseados:', parsedEvents);
-        
+
         const eventsWithDates = parsedEvents.map(event => ({
           ...event,
           start: new Date(event.start),
           end: new Date(event.end),
         }));
-        
+
         console.log('Eventos con fechas convertidas:', eventsWithDates);
         return eventsWithDates;
       }
@@ -89,7 +89,7 @@ const OrganicCompoundConcept = () => {
     `;
     alert(eventDetails);
   };
-  
+
 
   const handleEventDelete = (event) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este evento?')) {
@@ -98,7 +98,7 @@ const OrganicCompoundConcept = () => {
       saveEventsToLocalStorage(updatedEvents);
     }
   };
-  
+
   return (
     <div>
       <Navbar />
@@ -110,45 +110,45 @@ const OrganicCompoundConcept = () => {
 
         <Sidebar />
         <div style={{
-        height: "500px"
-      }}>
+          height: "500px"
+        }}>
           <div className="p-4">
             <h1 className="text- font-bold mb-4">
               Calendario
             </h1>
 
-        <Calendar
-            localizer={localizer}
-            events={events}
-            startAccessor="start"
-            endAccessor="end"
-            style={{ height: "calc(600px - 12rem)", width: "calc(100vw - 300px)" }}
-            selectable={true}
-            onSelectSlot={handleSelectSlot}
-            onSelectEvent={handleSelectEvent}
-            onDoubleClickEvent={handleEventDelete}
-            popup={true}
-            messages={{
-              today: "Hoy",
-              previous: "Anterior",
-              next: "Siguiente",
-              month: "Mes",
-              week: "Semana",
-              day: "Día",
-              agenda: "Agenda"
-            }}
-          />
-      </div>
-    
-            
+            <Calendar
+              localizer={localizer}
+              events={events}
+              startAccessor="start"
+              endAccessor="end"
+              style={{ height: "calc(600px - 12rem)", width: "calc(100vw - 300px)" }}
+              selectable={true}
+              onSelectSlot={handleSelectSlot}
+              onSelectEvent={handleSelectEvent}
+              onDoubleClickEvent={handleEventDelete}
+              popup={true}
+              messages={{
+                today: "Hoy",
+                previous: "Anterior",
+                next: "Siguiente",
+                month: "Mes",
+                week: "Semana",
+                day: "Día",
+                agenda: "Agenda"
+              }}
+            />
+          </div>
+
+
         </div>
       </div>
-      
+
 
       {isChatOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-4 rounded-lg">
-            <button 
+            <button
               className="float-right text-gray-600 hover:text-gray-900"
               onClick={() => setIsChatOpen(false)}
             >
@@ -157,7 +157,6 @@ const OrganicCompoundConcept = () => {
 
         </div>
       )}
-        <Footer/>
 
     </div>
 

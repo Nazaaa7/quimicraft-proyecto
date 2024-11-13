@@ -1,7 +1,7 @@
 /* FileDashboard.css */
 .dashboard-container{
   padding: 0px;
-  height: 100%;
+  min-height: calc(100vh - 66px);
   width: 90%;
   background-color: #ffffff;
 }

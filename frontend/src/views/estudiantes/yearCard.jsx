@@ -59,7 +59,6 @@ const EventCards = () => {
           </div>
         </div>
       </div>
-      <Footer/>
     </div>
   );
 };
