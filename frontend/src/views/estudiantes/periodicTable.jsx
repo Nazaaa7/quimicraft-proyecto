@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./periodicTable.css";
 import Navbar from './navbar_table';
 
 const colorMap = {
-  "nonmetal": "#f0ff8f",
-  "metalloid": "#cbcc98",
-  "noble gas": "#bfffff",
-  "alkali metal": "#ff6565",
-  "alkaline earth metal": "#ffdead",
-  "transition metal": "#ffc1c0",
-  "post-transition metal": "#cccccc",
-  "lanthanide": "#ffbfff",
-  "actinide": "#ff99cc",
+  "nonmetal": "#c3df76", // Verde claro suave
+  "metalloid": "#9e9d24", // Verde oliva, más oscuro y distintivo
+  "noble gas": "#adebbb", // Un verde muy suave para gases nobles
+  "alkali metal": "#7bc67e", // Verde más fuerte para metales alcalinos
+  "alkaline earth metal": "#82c991", // Verde pasto para tierras raras alcalinas
+  "transition metal": "#64b568", // Un verde intermedio para metales de transición
+  "post-transition metal": "#98d5a3", // Verde algo más claro para metales post-transición
+  "lanthanide": "#76e2a3", // Verde pasto claro para lantánidos
+  "actinide": "#5cbf71", // Un verde más profundo para actínidos
 };
 
 const PeriodicTable = () => {
@@ -39,9 +39,10 @@ const PeriodicTable = () => {
     fetchElements();
   }, []);
 
-  const handleElementClick = (id) => {
+  const handleElementClick = (id,name) => {
     console.log("Elemento clickeado:", id); // Agrega este log para verificar el valor
     localStorage.setItem("selectedElementId", id); // Guardar el element_id en localStorage
+    localStorage.setItem("selectedName",name);
     window.location.href = "/elementDetail"; // Redirigir a la página de detalles
   };
   
@@ -62,7 +63,7 @@ const PeriodicTable = () => {
           <div
             className="element"
             key={element.name}
-            onClick={() => handleElementClick(element.id)} // Manejo de clic con element_id
+            onClick={() => handleElementClick(element.id, element.name)} // Manejo de clic con element_id
             onMouseEnter={() => setHoveredElement(element)} // Establece el elemento activo al hacer hover
             onMouseLeave={() => setHoveredElement(null)} // Limpia el estado al salir del hover
             style={{
@@ -84,7 +85,7 @@ const PeriodicTable = () => {
             className="element-hover"
             style={{
               gridRow: "1 / span 2", // Ocupa filas 1 y 2
-              gridColumn: "7 / span 2", // Ocupa columnas 7 y 8
+              gridColumn: "4 / span 2", // Ocupa columnas 7 y 8
               borderColor: colorMap[hoveredElement.category.toLowerCase()],
               backgroundColor: colorMap[hoveredElement.category.toLowerCase()],
             }}
@@ -94,6 +95,23 @@ const PeriodicTable = () => {
             <small className="name" style={{ fontSize: "14px" }}>{hoveredElement.name}</small>
           </div>
         )}
+
+        
+  {/* Glosario de colores */}
+  <div className="color-glossary" style={{
+    gridRow: "1 / span 3", // Ocupa filas 7 a 11
+    gridColumn: "7 / span 6", // Ocupa columnas 1 y 2
+  }}>
+    <h4>Glosario de Colores</h4>
+    <ul className="color-glossary">
+  <li><strong>Nonmetal:</strong> {colorMap["nonmetal"]} - Verde claro suave <strong className="text-right">Metalloid:</strong> {colorMap["metalloid"]} - Verde oliva</li>
+  <li><strong>Noble Gas:</strong> {colorMap["noble gas"]} - Verde muy suave <strong>Alkali Metal:</strong> {colorMap["alkali metal"]} - Verde más fuerte</li>
+  <li><strong>Alkaline Earth Metal:</strong> {colorMap["alkaline earth metal"]} - Verde pasto<strong>Transition Metal:</strong> {colorMap["transition metal"]} - Verde intermedio</li>
+  <li><strong>Post-Transition Metal:</strong> {colorMap["post-transition metal"]} - Verde más claro <strong>Lanthanide:</strong> {colorMap["lanthanide"]} - Verde pasto claro</li>
+  <li className="text-center"><strong>Actinide:</strong> {colorMap["actinide"]} - Verde profundo</li>
+</ul>
+
+  </div>
       </div>
     </>
   );

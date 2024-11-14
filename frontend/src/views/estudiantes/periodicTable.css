@@ -49,7 +49,7 @@ body {
 /* Estilos para el cuadro grande del elemento activo */
 .element-hover {
   grid-row: 1 / span 2; /* Ocupa filas 1 y 2 */
-  grid-column: 7 / span 2; /* Ocupa columnas 7 y 8 */
+  grid-column: 4 / span 2; /* Mueve a las columnas 4 y 5 */
   display: grid;
   grid-template-rows: auto 1fr auto; /* Tres filas para número, símbolo y nombre */
   align-items: center;
@@ -67,6 +67,7 @@ body {
   pointer-events: none; /* Desactiva los clics sobre el cuadro grande */
 }
 
+
 .element-hover .number {
   font-size: 16px;
 }
@@ -81,4 +82,30 @@ body {
   text-align: center;
   font-weight: bold;
   color: #333; /* Color más fuerte para el nombre */
+}
+
+.color-glossary {
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo transparente */
+  border-radius: 8px;
+  padding: 4px;
+  font-size: 10px;
+  color: #333;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.color-glossary h2 {
+  font-size: 18px;
+}
+
+.color-glossary ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.color-glossary li {
+  margin: 8px 0;
+}
+
+.color-glossary li strong {
+  font-weight: bold;
 }

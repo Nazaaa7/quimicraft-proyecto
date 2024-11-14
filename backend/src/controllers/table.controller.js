@@ -41,8 +41,7 @@ export const getElementDetails = async (req, res) => {
       id, element_id, discovery_description, name_origin, symbol_meaning, 
       periodic_law_description, periodic_table_evolution, electronic_configuration, 
       density, melting_point, boiling_point, conductivity, isotopes, valence, 
-      reactivity, typical_compounds, industrial_uses, everyday_uses, environmental_impact, 
-      image
+      reactivity, typical_compounds, industrial_uses, everyday_uses, environmental_impact, protons, electrons, neutrons, image
     FROM element_details 
     WHERE element_id = ?;
   `;
