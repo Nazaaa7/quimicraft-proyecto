@@ -24,10 +24,13 @@ function Navbar({ setActiveForo }) {
       <nav className="navbar">
               <h1>QuimiCraft</h1>
 
-      <Link to='/materiales'>
+             
 
-         <SidebarItem className='text'  text="Publicaciones" />
+      <Link to='/materiales'>
+         <SidebarItem className='tak'  text="Publicaciones" />
        </Link>
+       
+     
 
        
 

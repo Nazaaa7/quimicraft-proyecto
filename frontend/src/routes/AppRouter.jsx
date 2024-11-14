@@ -29,6 +29,7 @@ import BalanceDeMasas from "../views/estudiantes/balance";
 import Cristalizacion from "../views/estudiantes/cristalitation";
 
 
+
 const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -64,6 +65,8 @@ const AppRouter = () => {
           <Route path="/driying" element={<SecadoQuimico/>} />
           <Route path="/balance" element={<BalanceDeMasas/>} />
           <Route path="/extraction" element={<ExtraccionQuimica/>} />
+
+          
 
 
 
