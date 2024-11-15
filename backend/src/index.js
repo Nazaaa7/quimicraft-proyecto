@@ -5,6 +5,8 @@ import morgan from "morgan";
 import { userRouter } from "./routes/auth.routes.js";
 import { publicacionesRouter } from "./routes/publicaciones.routes.js";
 import { tableRouter } from "./routes/table.routes.js";
+import postRoutes from './routes/postRoutes.js';
+import commentRoutes from './routes/CommentRoutes.js';
 import http from 'http'; 
 import { Server } from 'socket.io'; 
 
@@ -25,6 +27,14 @@ app.use(express.json());
 app.use(userRouter);
 app.use(publicacionesRouter);
 app.use(tableRouter);
+app.use('/api/posts', postRoutes);
+app.use('/api/comments', commentRoutes);
+// server.js o en tu controlador de rutas
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store');  // No almacenar en caché
+  next();
+});
+
 
 io.on('connection', (socket) => {
   console.log('Usuario conectado:', socket.id);

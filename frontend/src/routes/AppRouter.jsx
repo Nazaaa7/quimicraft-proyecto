@@ -29,6 +29,7 @@ import BalanceDeMasas from "../views/estudiantes/balance";
 import Cristalizacion from "../views/estudiantes/cristalitation";
 import PeriodicTable from "../views/estudiantes/periodicTable";
 import ElementDetail from "../views/estudiantes/elementDetail";
+import ForoList from "../views/foro/foroList";
 
 const AppRouter = () => {
   return (
@@ -67,6 +68,7 @@ const AppRouter = () => {
           <Route path="/extraction" element={<ExtraccionQuimica/>} />
           <Route path="/periodicTable" element={<PeriodicTable/>} />
           <Route path="/elementDetail" element={<ElementDetail/>} />
+          <Route path="/foroList" element={<ForoList/>}/>
 
 
 
