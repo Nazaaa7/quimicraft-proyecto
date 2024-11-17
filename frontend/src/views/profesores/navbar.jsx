@@ -4,7 +4,6 @@ import './assets/css/navbar.css';
 import { UserContext } from '../../context/UserContext';
 import SidebarItem from './navarItems';
 import { userType } from '../../context/userTypes';
-
 import { Link } from 'react-router-dom';
 
 

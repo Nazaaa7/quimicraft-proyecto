@@ -1,3 +1,4 @@
+//backend/src/db/database.js
 // Requerimos mysql.
 import { createConnection } from "mysql2/promise";
 

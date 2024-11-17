@@ -1,103 +1,175 @@
-.filter-dropdown{
-    background-color: #46ad81;
-    padding: 10px;
-    border-radius: 10px;
-    color: #f1f8ff;
-  }
-  
-  .dashboard-container {
-    display: flex;
-    gap: 20px; /* Espacio entre la descripción y el chat */
-  }
-  
-  .chat-container {
-    height: 100%; /* Asegúrate de que ocupe toda la altura del contenedor */
-  }
-  
-  .chat-box {
-    height: 300px; /* Ajusta la altura del cuadro de chat */
-    width: 300px; /* Ajusta el ancho del cuadro de chat */
-    overflow-y: auto; /* Habilita el desplazamiento vertical */
-    border-radius: 8px; /* Bordes redondeados */
-    background-color: #46ad81; /* Color de fondo del cuadro de chat */
-  }
-  
-  .message {
-    padding: 10px;
-    background-color: #e3f2fd; /* Color de fondo del mensaje */
-    border-radius: 5px;
-    margin-bottom: 5px;
-  }
-  
-  input[type="text"] {
-    width: 80%;
-    padding: 10px;
-  }
-  
-  button {
-    padding: 10px 20px;
-    background-color: #46ad81; /* Color de fondo del botón */
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s; /* Transición suave para el cambio de color */
-  }
-  
-  button:hover {
-    background-color: #0056b3; /* Color de fondo al pasar el mouse */
-  }
-  
-  /* Estilo para el chat (se repite, se ha consolidado) */
-  .chat-box {
-    background-color: #f1f8ff; /* Color de fondo del cuadro de chat */
-  }
-  
-  
-  .open-chat-button {
-    padding: 10px 20px;
-    background-color: #46ad81;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
-  }
-  
-  .chat-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    z-index: 1000;
-    width: 400px;
-    height: 550px;
-  }
-  
-  .chat-modal-content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  
-  .close-chat-button {
-    background-color: rgba(164, 9, 9, 0.885);
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin-bottom: 2%;
-    align-self: flex-end;
-  }
-  .back-button{
-    background-color: #ffffff;
-    color: #1d5300;
-  }
-  
-  .back-button:hover{
-    background-color: #ffffff;
-    color: #1d5300;
-    height: 100px;
-  }
+/* Estilos para el dropdown de filtro */
+.filter-dropdown {
+  background-color: #46ad81;
+  padding: 10px;
+  border-radius: 10px;
+  color: #f1f8ff;
+}
+
+/* Contenedor principal del dashboard */
+.dashboard-container {
+  display: flex;
+  gap: 20px; /* Espacio entre la descripción y el chat */
+}
+
+/* Contenedor del chat */
+.chat-container {
+  height: 100%; /* Asegúrate de que ocupe toda la altura del contenedor */
+}
+
+/* Estilos para el cuadro de chat */
+.chat-box {
+  height: 300px; /* Ajusta la altura del cuadro de chat */
+  width: 300px; /* Ajusta el ancho del cuadro de chat */
+  overflow-y: auto; /* Habilita el desplazamiento vertical */
+  border-radius: 8px; /* Bordes redondeados */
+  background-color: #46ad81; /* Color de fondo del cuadro de chat */
+}
+
+/* Estilo para los mensajes del chat */
+.message {
+  padding: 10px;
+  background-color: #e3f2fd; /* Color de fondo del mensaje */
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+/* Estilos para el input de texto */
+input[type="text"] {
+  width: 80%;
+  padding: 10px;
+}
+
+/* Estilo para los botones */
+button {
+  padding: 10px 20px;
+  background-color: #46ad81; /* Color de fondo del botón */
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Transición suave para el cambio de color */
+}
+
+/* Estilo cuando se pasa el mouse sobre los botones */
+button:hover {
+  background-color: #0056b3; /* Color de fondo al pasar el mouse */
+}
+
+/* Estilo para el chat (se repite, se ha consolidado) */
+.chat-box {
+  background-color: #f1f8ff; /* Color de fondo del cuadro de chat */
+}
+
+/* Estilo para el botón de abrir el chat */
+.open-chat-button {
+  padding: 10px 20px;
+  background-color: #46ad81;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+/* Modal de chat */
+.chat-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 1000;
+  width: 400px;
+  height: 550px;
+}
+
+/* Contenido del modal de chat */
+.chat-modal-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Estilo para el botón de cerrar el chat */
+.close-chat-button {
+  background-color: rgba(164, 9, 9, 0.885);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-bottom: 2%;
+  align-self: flex-end;
+}
+
+/* Estilo para el botón de retroceder */
+.back-button {
+  background-color: #ffffff;
+  color: #1d5300;
+}
+
+.back-button:hover {
+  background-color: #ffffff;
+  color: #1d5300;
+  height: 100px;
+}
+
+/* Estilos para los botones de edición (imagen, título, descripción, recursos) */
+.edit-buttons-container {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Estilo para el botón de editar imagen */
+.edit-image-button {
+  padding: 10px 20px;
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Estilo para el botón de editar título */
+.edit-title-button {
+  padding: 10px 20px;
+  background-color: #8e44ad;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Estilo para el botón de editar descripción */
+.edit-description-button {
+  padding: 10px 20px;
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Estilo para el botón de agregar recursos */
+.add-resources-button {
+  padding: 10px 20px;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for edit and add buttons */
+.edit-image-button:hover,
+.edit-title-button:hover,
+.edit-description-button:hover,
+.add-resources-button:hover {
+  background-color: #2c3e50;
+}

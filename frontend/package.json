@@ -12,8 +12,11 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "date-fns": "^4.1.0",
+    "firebase": "^11.0.2",
+    "firebase-config": "^1.0.0",
     "lucide-react": "^0.447.0",
     "moment": "^2.30.1",
     "react": "^18.3.1",
@@ -26,7 +29,7 @@
     "react-router-dom": "^6.26.1",
     "react-toastify": "^10.0.5",
     "socket.io": "^4.8.0",
-    "socket.io-client": "^4.8.0"
+    "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

@@ -1,4 +1,4 @@
-// src/routes/AppRouter.jsxextraction
+// src/routes/AppRouter.jsx
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "../views/login/Login";
 import Register from "../views/register/Register";
@@ -27,6 +27,7 @@ import SecadoQuimico from "../views/estudiantes/driying";
 import ExtraccionQuimica from "../views/estudiantes/extraction";
 import BalanceDeMasas from "../views/estudiantes/balance";
 import Cristalizacion from "../views/estudiantes/cristalitation";
+import Vista from "../views/admin/vista"
 
 
 
@@ -65,6 +66,7 @@ const AppRouter = () => {
           <Route path="/driying" element={<SecadoQuimico/>} />
           <Route path="/balance" element={<BalanceDeMasas/>} />
           <Route path="/extraction" element={<ExtraccionQuimica/>} />
+          <Route path="/vista" element={<Vista/>}/>
 
           
 
