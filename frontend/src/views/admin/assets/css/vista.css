@@ -1,6 +1,4 @@
 
-  
-  
   .add-topic-form input {
     display: block;
     width: 100%;
@@ -20,7 +18,7 @@
   }
   
   .add-topic-form button:hover {
-    background-color: #0056b3;
+    background-color: #46ad81;
   }
   
   .search-bar input {
@@ -59,4 +57,45 @@
   .delete-button:hover {
     background-color: #ff3b3b;
   }
-    
+    .edit-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.save-edit-button {
+  background-color: #46ad81;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+input {
+  padding: 5px;
+  border: 1px solid #46ad81;
+  border-radius: 3px;
+}
+
+  
+  
+
