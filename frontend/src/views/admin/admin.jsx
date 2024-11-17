@@ -2,8 +2,6 @@
 import React, { useContext, useState } from 'react'; // Asegúrate de importar useState
 import Navbar from './navbar';
 import Banner from './banner';
-import ForoProfesores from '../foroAdmin/foroProf'; // Cambia el nombre según lo que hayas definido
-import ForoEstudiantes from '../foroAdmin/foro'; // Cambia el nombre según lo que hayas definido
 import { UserContext } from '../../context/UserContext'; // Importa el contexto
 import { userType } from '../../context/userTypes'; // Importa los tipos de acción
 

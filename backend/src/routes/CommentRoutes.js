@@ -8,6 +8,6 @@ const router = express.Router();
 router.get('/post', getCommentsByPost);
 
 // Crear un nuevo comentario
-router.post('/post', createPostComment);
+router.post('/post/:id', createPostComment);
 
 export default router;

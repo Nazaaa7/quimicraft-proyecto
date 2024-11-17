@@ -4,9 +4,33 @@ import { connectDB } from "../db/database.js";
 // Obtener todas las publicaciones
 const getPosts = async (req, res) => {
   try {
+    const { category_id } = req.query; // Obtener category_id desde la query string
+
     const connection = await connectDB();
-    const [posts] = await connection.execute("SELECT p.title, p.content, p.user_id, us.usuario, c.name FROM posts p INNER JOIN post_categories pc ON pc.post_id=p.post_id INNER JOIN categories c on pc.category_id=c.category_id INNER JOIN usuarios us ON p.user_id=us.id");
-    res.json(posts);
+
+    // Si category_id está presente, filtrar por categoría
+    let query = `
+      SELECT p.post_id, p.title, p.content, p.user_id, us.usuario, 
+             GROUP_CONCAT(c.name ORDER BY c.name ASC) AS category_names
+      FROM posts p
+      INNER JOIN post_categories pc ON pc.post_id = p.post_id
+      INNER JOIN categories c ON pc.category_id = c.category_id
+      INNER JOIN usuarios us ON p.user_id = us.id
+    `;
+    let queryParams = [];
+
+    // Si se pasa category_id, agregar el filtro a la consulta
+    if (category_id) {
+      query += " WHERE c.category_id = ?";
+      queryParams.push(category_id); // Agregar el valor de category_id a la consulta
+    }
+
+    query += " GROUP BY p.post_id"; // Agrupar por post_id para evitar duplicados
+
+    const [posts] = await connection.execute(query, queryParams);
+
+    res.json(posts); // Devolver las publicaciones en formato JSON
+    console.log(posts)
     connection.end();
   } catch (error) {
     console.error(error);

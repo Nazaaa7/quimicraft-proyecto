@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-
-const CreatePost = ({ onPostCreated }) => {
+const CreatePost = ({ onPostCreated, onClose }) => {  // Recibimos `onClose` como prop
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);  // Estado para las categorías seleccionadas
@@ -90,12 +89,28 @@ const CreatePost = ({ onPostCreated }) => {
       console.error(error);
     }
   };
-  
-  
+
+  // Desactivar el scroll global cuando el formulario está abierto
+  useEffect(() => {
+    document.body.style.overflow = "hidden"; // Desactiva el scroll
+
+    // Restaurar el scroll cuando el componente se desmonta o se cierra el formulario
+    return () => {
+      document.body.style.overflow = "auto"; // Restaura el scroll
+    };
+  }, []);
 
   return (
     <div className="flex justify-center w-full">
-      <div className="justify-center w-8/12 bg-white pt-2 pb-5 pr-5 pl-5 rounded-lg shadow-lg h-auto">
+      <div className="justify-center w-8/12 bg-white pt-2 pb-4 pr-5 pl-5 rounded-lg shadow-lg h-auto relative">
+        {/* Botón de cerrar (X) */}
+        <button
+          onClick={onClose}  // Llamar a la función `onClose` para cerrar el formulario
+          className="absolute top-2 left-2 text-2xl font-semibold text-gray-700 transform transition-all duration-300 hover:scale-110 hover:text-red-500 bg-transparent scale-105 focus:outline-none"
+        >
+          &times;
+        </button>
+
         <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">Crear Nueva Publicación</h3>
         <form onSubmit={handleSubmit}>
           <div className="mb-4 justify-center">

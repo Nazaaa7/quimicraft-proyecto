@@ -6,9 +6,10 @@ const PostDetail = ({ post, onBack }) => {
   const [comments, setComments] = useState([]);  // Comentarios de la publicación
   const [newComment, setNewComment] = useState("");  // Nuevo comentario
   const [error, setError] = useState("");  // Errores al agregar comentario
+  const [userId, setUserId] = useState(null);  // Guardar el ID del usuario
 
+  // Cargar los comentarios cuando se selecciona un post
   useEffect(() => {
-    // Función para cargar los comentarios cuando se selecciona un post
     const fetchComments = async () => {
       try {
         const response = await fetch(`http://localhost:3000/api/comments/post?post_id=${post.post_id}`);
@@ -20,6 +21,22 @@ const PostDetail = ({ post, onBack }) => {
     };
 
     fetchComments();
+
+    // Obtener el ID del usuario desde localStorage al entrar al detalle del post
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    console.log(userData)
+    if (userData && userData.token) {
+      try {
+        const decodedToken = jwt_decode(userData.token);  // Decodificar el token
+        setUserId(decodedToken.id.id);  // Obtener el userId desde el payload
+        console.log("userId:", userId);
+      } catch (error) {
+        console.error("Error al decodificar el token:", error);
+        setError("No se pudo verificar el usuario.");
+      }
+    } else {
+      setError("No se encontró el token de usuario.");
+    }
   }, [post.post_id]);
 
   // Manejar el envío de un nuevo comentario
@@ -31,11 +48,9 @@ const PostDetail = ({ post, onBack }) => {
       return;
     }
 
-    const userData = JSON.parse(localStorage.getItem("userData"));
-    const userId = userData ? userData.id : null;  // Obtener el ID del usuario
-
     if (!userId) {
       setError("No se pudo obtener el ID del usuario.");
+      console.log("Error: No se pudo obtener el ID del usuario.");
       return;
     }
 
@@ -68,47 +83,45 @@ const PostDetail = ({ post, onBack }) => {
 
   return (
     <>
-    <Navbar/>
-    <div className="justify-center flex mt-2">
-    <div className="bg-white shadow-md rounded-lg w-8/12 p-6 mb-6 border border-gray-200">
-      <h3 className="text-2xl font-bold text-gray-800">{post.usuario}</h3>
-      <h3 className="text-2xl font-bold text-center text-gray-800">{post.title}</h3>
-      <p className="text-gray-600 mt-2">{post.content}</p>
-      <p className="text-gray-500 mt-4"><strong>Categoría:</strong> {post.name}</p>
+      <Navbar />
+      <div className="justify-center flex mt-2">
+        <div className="bg-white shadow-md rounded-lg w-8/12 p-6 mb-6 border border-gray-200">
+          <h3 className="text-2xl font-bold text-gray-800">{post.usuario}</h3>
+          <h3 className="text-2xl font-bold text-center text-gray-800">{post.title}</h3>
+          <p className="text-gray-600 mt-2">{post.content}</p>
+          <p className="text-gray-500 mt-4"><strong>Categoría:</strong> {post.name}</p>
 
-      {/* Comentarios */}
-      <CommentList comments={comments} />
+          {/* Comentarios */}
+          <CommentList comments={comments} />
 
-      {/* Formulario para agregar un nuevo comentario */}
-      <div className="mt-2">
-        <textarea
-          className="w-full p-2 border border-gray-300 rounded-md"
-          rows="4"
-          placeholder="Escribe un comentario..."
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-        />
-        {error && <p className="text-red-500 mt-2">{error}</p>}
-        <button
-          onClick={handleCommentSubmit}
-          className="mt-2 bg-blue-500 text-white py-2 px-3 rounded-md hover:bg-blue-600 transition duration-300"
-        >
-          Enviar Comentario
-        </button>
+          {/* Formulario para agregar un nuevo comentario */}
+          <div className="mt-2">
+            <textarea
+              className="w-full p-2 border border-gray-300 rounded-md"
+              rows="4"
+              placeholder="Escribe un comentario..."
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+            />
+            {error && <p className="text-red-500 mt-2">{error}</p>}
+            <button
+              onClick={handleCommentSubmit}
+              className="mt-2 bg-blue-500 text-white py-2 px-3 rounded-md hover:bg-blue-600 transition duration-300"
+            >
+              Enviar Comentario
+            </button>
+          </div>
+
+          {/* Volver a la lista de publicaciones */}
+          <button
+            onClick={onBack}
+            className="mt-4 bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-300"
+          >
+            Volver a Foro
+          </button>
+        </div>
       </div>
-
-      {/* Volver a la lista de publicaciones */}
-      <button
-        onClick={onBack}
-        className="mt-4 bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-300"
-      >
-        Volver a Foro
-      </button>
-    </div>
-    </div>
-    
     </>
-
   );
 };
 
