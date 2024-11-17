@@ -2,33 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { FaFileAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Navbar from './navbar';
-import { io } from 'socket.io-client';
 import './assets/css/FileDashboard.css';
 
 const Project2Alumno = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [allFiles, setAllFiles] = useState([]);
-  const [socket, setSocket] = useState(null); // Socket connection state
 
   useEffect(() => {
-    // Conectar con el servidor de Socket.IO
-    const newSocket = io('http://localhost:3000');
-    setSocket(newSocket);
-
-    // Obtener temas desde localStorage al cargar el componente
-    const savedFiles = JSON.parse(localStorage.getItem('allFiles')) || [
-      { name: 'Compuestos organicos', iconType: 'file', date: 'Agosto 2024', link: '/organicCompound' },
-      // Otros archivos...
-    ];
+    // Cargar los temas desde localStorage al iniciar
+    const savedFiles = JSON.parse(localStorage.getItem('allFiles')) || [];
     setAllFiles(savedFiles);
 
-    // Escuchar eventos de actualización de tema
-    newSocket.on('actualizarTema', (tema) => {
-      setAllFiles((prevFiles) => [...prevFiles, tema]); // Añadir el nuevo tema
-    });
+    // Escuchar cambios en localStorage
+    const handleStorageChange = () => {
+      const updatedFiles = JSON.parse(localStorage.getItem('allFiles')) || [];
+      setAllFiles(updatedFiles);
+    };
 
+    window.addEventListener('storage', handleStorageChange);
+
+    // Limpiar el listener al desmontar el componente
     return () => {
-      newSocket.close(); // Cerrar la conexión cuando el componente se desmonte
+      window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
 
