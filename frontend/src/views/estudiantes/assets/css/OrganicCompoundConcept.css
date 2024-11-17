@@ -1,33 +1,74 @@
-.filter-dropdown{
+/* Container styles */
+.app-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.overlay-active {
+  overflow: hidden;
+}
+
+.dashboard-containerr {
+  margin-top: 20px;
+}
+
+.container {
+  background-color: #ffffff;
+  margin-left: 90%;
+}
+
+/* Search and Filter styles */
+.search-input {
+  border: 1px solid #000;
+  border-radius: 10px;
+}
+
+.filter-dropdown {
   background-color: #46ad81;
   padding: 10px;
   border-radius: 10px;
   color: #f1f8ff;
 }
 
-.dashboard-containerr{
-  margin-top: 20px;
+/* Table styles */
+.files-table {
+  margin-left: 100px;
+  margin-top: 30px;
 }
 
+/* Back button styles */
+.back-button {
+  background-color: #ffffff;
+  color: #1d5300;
+  margin-top: -100px;
+}
+
+.back-button:hover {
+  background-color: #ffffff;
+  color: #1d5300;
+}
+
+/* Chat styles */
 .chat-container {
-  height: 100%; /* Asegúrate de que ocupe toda la altura del contenedor */
+  height: 100%;
 }
 
 .chat-box {
-  height: 300px; /* Ajusta la altura del cuadro de chat */
-  width: 300px; /* Ajusta el ancho del cuadro de chat */
-  overflow-y: auto; /* Habilita el desplazamiento vertical */
-  border-radius: 8px; /* Bordes redondeados */
-  background-color: #46ad81; /* Color de fondo del cuadro de chat */
+  height: 300px;
+  width: 300px;
+  overflow-y: auto;
+  border-radius: 8px;
+  background-color: #f1f8ff;
 }
 
 .message {
   padding: 10px;
-  background-color: #e3f2fd; /* Color de fondo del mensaje */
+  background-color: #e3f2fd;
   border-radius: 5px;
   margin-bottom: 5px;
 }
 
+/* Input and Button styles */
 input[type="text"] {
   width: 80%;
   padding: 10px;
@@ -36,30 +77,28 @@ input[type="text"] {
 
 button {
   padding: 10px 20px;
-  background-color: #46ad81; /* Color de fondo del botón */
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s; /* Transición suave para el cambio de color */
-}
-
-button:hover {
-  background-color: #0056b3; /* Color de fondo al pasar el mouse */
-}
-
-/* Estilo para el chat (se repite, se ha consolidado) */
-.chat-box {
-  background-color: #f1f8ff; /* Color de fondo del cuadro de chat */
-}
-
-
-.open-chat-button {
-  padding: 10px 20px;
   background-color: #46ad81;
   color: white;
   border: none;
   cursor: pointer;
-  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Chat modal and overlay styles */
+.chat-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 999;
+  transition: all 0.3s ease;
 }
 
 .chat-modal {
@@ -80,6 +119,18 @@ button:hover {
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
+  z-index: 1001;
+}
+
+/* Chat buttons */
+.open-chat-button {
+  padding: 10px 20px;
+  background-color: #46ad81;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
 }
 
 .close-chat-button {
@@ -91,29 +142,44 @@ button:hover {
   margin-bottom: 2%;
   align-self: flex-end;
 }
-.back-button{
-  background-color: #ffffff;
-  color: #1d5300;
-  margin-top: -100px;
+
+/* Hover effects */
+.open-chat-button:hover {
+  background-color: #3d9670;
 }
 
-.back-button:hover{
-  background-color: #ffffff;
-  color: #1d5300;
+.close-chat-button:hover {
+  background-color: rgba(164, 9, 9, 1);
 }
 
-.container{
-  background-color: #ffffff;
-margin-left: 90%;
-
+/* Animation for chat modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
 }
 
-.search-input{
-  border: 1px solid #000;
-  border-radius: 10px;
+.chat-modal {
+  animation: fadeIn 0.3s ease-out;
 }
 
-.files-table{
-  margin-left: 100px;
-  margin-top: 30px;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .chat-modal {
+    width: 90%;
+    height: 80vh;
+  }
+  
+  .files-table {
+    margin-left: 20px;
+  }
+  
+  .container {
+    margin-left: 5%;
+  }
 }

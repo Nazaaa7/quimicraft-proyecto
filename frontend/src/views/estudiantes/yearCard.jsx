@@ -21,13 +21,13 @@ const EventCards = () => {
       date: "2024",
       title: "Química Industrial II",
       location: "Instituto Politécnico Formosa",
-      path: "/subjects-ii"
+      path: "/materiasI"
     },
     {
       date: "2024",
       title: "Química Industrial III",
       location: "Instituto Politécnico Formosa",
-      path: "/subjects-iii"
+      path: "/materiasI"
     },
   ];
 

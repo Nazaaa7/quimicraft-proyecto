@@ -129,7 +129,7 @@ const Cristalizacion = () => {
   });
 
   return (
-    <div>
+    <div className={`app-container ${isChatOpen ? 'overlay-active' : ''}`}>
       <Navbar />
       <div className="dashboard-containerr">
         <button onClick={() => navigate(-1)} className="back-button">
@@ -214,18 +214,21 @@ const Cristalizacion = () => {
           </div>
         </div>
 
+
         {isChatOpen && (
-          <div className="chat-modal">
-            <div className="chat-modal-content">
-              <button className="close-chat-button" onClick={() => setIsChatOpen(false)}>
-                X
-              </button>
-              <Chat />
+          <>
+            <div className="chat-overlay" onClick={() => setIsChatOpen(false)}></div>
+            <div className="chat-modal">
+              <div className="chat-modal-content">
+                <button className="close-chat-button" onClick={() => setIsChatOpen(false)}>
+                  X
+                </button>
+                <Chat />
+              </div>
             </div>
-          </div>
+          </>
         )}
       </div>
-
       <Footer />
     </div>
   );

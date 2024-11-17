@@ -55,6 +55,9 @@
 .quick-access-link:hover, .file-link:hover {
   text-decoration: underline;
 }
+.temas{
+  margin-top: -40px;
+}
 
 .quick-access-item, .files-table td {
   padding: 10px;

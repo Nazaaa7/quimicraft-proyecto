@@ -44,7 +44,7 @@ const FileDashboard = () => {
        
 
           <div className="all-files">
-            <h3 className='temas   mb-4'>Temas a dar en el cuatrimestre</h3>
+            <h3 className='temas'>Temas a dar en el cuatrimestre</h3>
             <table className="files-table">
               <thead>
                 <tr>
