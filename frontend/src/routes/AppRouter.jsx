@@ -1,4 +1,3 @@
-// src/routes/AppRouter.jsx
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "../views/login/Login";
 import Register from "../views/register/Register";
@@ -27,11 +26,11 @@ import SecadoQuimico from "../views/estudiantes/driying";
 import ExtraccionQuimica from "../views/estudiantes/extraction";
 import BalanceDeMasas from "../views/estudiantes/balance";
 import Cristalizacion from "../views/estudiantes/cristalitation";
-import Vista from "../views/admin/vista"
-import DynamicTopicPage from '../views/estudiantes/DynamicTopicPage';
+import Vista from "../views/admin/vista";
+import DynamicTopicPage from '../views/profesores/DynamicTopicPage';
 import PeriodicTable from "../views/estudiantes/periodicTable";
 import ElementDetail from "../views/estudiantes/elementDetail";
-
+import ViewResourcesPage from "../views/estudiantes/viewResourcesPage";
 
 const AppRouter = () => {
   return (
@@ -69,15 +68,14 @@ const AppRouter = () => {
           <Route path="/balance" element={<BalanceDeMasas/>} />
           <Route path="/extraction" element={<ExtraccionQuimica/>} />
           <Route path="/vista" element={<Vista/>}/>
-          <Route path="/topic/:topicName" element={<DynamicTopicPage />} />
           <Route path="/periodicTable" element={<PeriodicTable/>} />
           <Route path="/elementDetail" element={<ElementDetail/>} />
-
-
-
-
-
-
+          
+          {/* Ruta dinámica para el tema */}
+          <Route path="/resources/:topicName" element={<ViewResourcesPage />} />
+          
+          {/* Ruta dinámica para los temas de profesores */}
+          <Route path="/topic/:topicName" element={<DynamicTopicPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
