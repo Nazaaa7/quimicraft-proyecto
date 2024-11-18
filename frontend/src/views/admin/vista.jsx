@@ -117,7 +117,7 @@ const Project2 = () => {
               </tbody>
             </table>
           </div>
-          <Footer /> {/* Agregado el Footer al final */}
+      
 
         </div>
       </div>

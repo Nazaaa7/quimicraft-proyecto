@@ -26,7 +26,7 @@ function Navbar({ setActiveForo }) {
              
 
       <Link to='/materiales'>
-         <SidebarItem className='tak'  text="Publicaciones" />
+         <SidebarItem className='tak'  text="Subir archivos " />
        </Link>
        
      

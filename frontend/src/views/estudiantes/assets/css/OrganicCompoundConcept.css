@@ -117,3 +117,177 @@ margin-left: 90%;
   margin-left: 100px;
   margin-top: 30px;
 }
+/* Estilos para el overlay y modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-container {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.modal-overlay.active .modal-container {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Header del modal */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: #333;
+  background-color: #005c2f;
+  border-radius: 15px;
+}
+
+/* Contenido del formulario */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #008736;
+  outline: none;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.submit-button {
+  background-color: #005c2f;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 1rem;
+}
+
+.submit-button:hover {
+  background-color: #065922;
+}
+
+/* Botón para abrir el modal */
+.open-modal-button {
+  background-color: #23913f;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin: 1rem;
+}
+
+.open-modal-button:hover {
+  background-color: #005529;
+}
+
+
+.button-container {
+
+  margin: 10px;
+  justify-content: space-around;
+}
+
+.submit-button, .cancel-button {
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  margin-left: 8%;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.submit-button {
+  background-color: #46ad81;
+  color: white;
+  height: 50px;
+  width: 150px;
+}
+
+.submit-button:hover {
+  background-color: #016439;
+}
+
+.cancel-button {
+  background-color: #c4341a;
+  color: #ffffff;
+  height: 50px;
+  width: 150px;
+}
+
+.cancel-button:hover {
+  background-color: #cbd5e1;
+  color: #000;
+}

@@ -40,7 +40,10 @@
 }
 
 .tak{
-  text-decoration: none;
-  color: black;
+  text-decoration: none !important;
+  color: rgb(0, 0, 0);
 
+}
+.tak:hover{
+  background-color: #46ad8000;
 }

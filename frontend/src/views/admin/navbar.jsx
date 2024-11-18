@@ -3,7 +3,6 @@ import './assets/css/navbar.css';
 import { UserContext } from '../../context/UserContext'; // Importa el contexto
 import { userType } from '../../context/userTypes'; // Importa los tipos de acción
 import { Link } from 'react-router-dom';
-import SidebarItem from '../estudiantes/SidebarItem';
 
 
 function Navbar({ setActiveForo }) { // Recibe la función para cambiar el foro activo
@@ -24,7 +23,7 @@ function Navbar({ setActiveForo }) { // Recibe la función para cambiar el foro 
         <li onClick={() => setActiveForo('profesores')}>Profesores</li>
         <li onClick={() => setActiveForo('estudiantes')}>Estudiantes</li>
         <Link to='/vista'>
-         <SidebarItem className='tak'  text="Vista" />
+         <li className='tak' >Vista</li>
        </Link>
       </ul>
       <button onClick={logOut} className='logOut'>Cerrar Sesión</button>

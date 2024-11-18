@@ -1,4 +1,3 @@
-// Project2.jsx
 import React, { useState, useEffect } from 'react';
 import { FaFileAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -14,7 +13,7 @@ const Project2 = () => {
     link: '',
     description: '',
     image: '',
-    resources: [], // Inicializar recursos como un array vacío
+    resources: [],
   });
   const [isAddTopicVisible, setIsAddTopicVisible] = useState(false);
   const [error, setError] = useState('');
@@ -37,7 +36,7 @@ const Project2 = () => {
       type: 'pdf',
       description: newTopic.description,
       image: newTopic.image,
-      resources: [], // Inicializar recursos como un array vacío
+      resources: [],
     };
 
     const updatedFiles = [...allFiles, newFile];
@@ -47,6 +46,7 @@ const Project2 = () => {
     window.dispatchEvent(new Event('storage'));
 
     setNewTopic({ name: '', date: '', link: '', description: '', image: '', resources: [] });
+    setIsAddTopicVisible(false); // Cerrar el modal al agregar el tema
     setError('');
   };
 
@@ -62,44 +62,49 @@ const Project2 = () => {
           onClick={() => setIsAddTopicVisible(!isAddTopicVisible)}
           className="toggle-topic-button"
         >
-          {isAddTopicVisible ? 'Ocultar Caja de Nuevo Tema' : 'Más Materia'}
+          Nuevo tema
         </button>
 
         {isAddTopicVisible && (
-          <div className="add-topic">
-            <h3>Agregar Nuevo Tema</h3>
-            <input
-              type="text"
-              placeholder="Nombre del Tema"
-              value={newTopic.name}
-              onChange={(e) => setNewTopic({ ...newTopic, name: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Fecha"
-              value={newTopic.date}
-              onChange={(e) => setNewTopic({ ...newTopic, date: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Descripción"
-              value={newTopic.description}
-              onChange={(e) => setNewTopic({ ...newTopic, description: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="URL de la Imagen"
-              value={newTopic.image}
-              onChange={(e) => setNewTopic({ ...newTopic, image: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Enlace del Tema"
-              value={newTopic.link}
-              onChange={(e) => setNewTopic({ ...newTopic, link: e.target.value })}
-            />
-            {error && <div className="error-message">{error}</div>}
-            <button onClick={handleAddTopic}>Agregar Tema</button>
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h3>Agregar Nuevo Tema</h3>
+              <input
+                type="text"
+                placeholder="Nombre del Tema por ej: Componente Orgánico"
+                value={newTopic.name}
+                onChange={(e) => setNewTopic({ ...newTopic, name: e.target.value })}
+              />
+              <input
+                type="text"
+                placeholder="Fecha por ej: Noviembre 2024"
+                value={newTopic.date}
+                onChange={(e) => setNewTopic({ ...newTopic, date: e.target.value })}
+              />
+              <input
+                type="text"
+                placeholder="Descripción"
+                value={newTopic.description}
+                onChange={(e) => setNewTopic({ ...newTopic, description: e.target.value })}
+              />
+              <input
+                type="text"
+                placeholder="URL de la Imagen"
+                value={newTopic.image}
+                onChange={(e) => setNewTopic({ ...newTopic, image: e.target.value })}
+              />
+              <input
+                type="text"
+                placeholder="Enlace del Tema por ej: ComponenteOrganico"
+                value={newTopic.link}
+                onChange={(e) => setNewTopic({ ...newTopic, link: e.target.value })}
+              />
+              {error && <div className="error-message">{error}</div>}
+              <div className="modal-buttons">
+                <button onClick={handleAddTopic}>Agregar Tema</button>
+                <button onClick={() => setIsAddTopicVisible(false)}>Cancelar</button>
+              </div>
+            </div>
           </div>
         )}
 
