@@ -44,7 +44,6 @@
 
 /* Input y botón de envío */
 .input-group {
-  display: flex;
   width: 100%; /* Ocupa el ancho completo */
 }
 
@@ -54,6 +53,7 @@ input[type="text"] {
   border: 1px solid #ddd; /* Borde gris */
   border-radius: 8px 0 0 8px; /* Bordes redondeados en la izquierda */
   outline: none; /* Sin borde de enfoque */
+  max-width: 70%;
 }
 
 button {
@@ -62,7 +62,7 @@ button {
   color: white; /* Color del texto */
   border: none;
   cursor: pointer;
-  border-radius: 0 8px 8px 0; /* Bordes redondeados en la derecha */
+  border-radius: 20px; /* Bordes redondeados en la derecha */
   transition: background-color 0.3s; /* Transición suave */
 }
 

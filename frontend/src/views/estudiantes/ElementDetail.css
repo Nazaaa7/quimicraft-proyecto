@@ -1,0 +1,328 @@
+:root {
+    --primary-green: #b5d992;
+    --primary-light: rgba(181, 217, 146, 0.07);
+    --primary-hover: rgba(181, 217, 146, 0.15);
+    --border-light: rgba(181, 217, 146, 0.2);
+    --text-dark: #2d3748;
+    --text-gray: #4a5568;
+    --white: #ffffff;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --radius: 12px;
+  }
+  
+  /* Base */
+  .element-detail-container {
+    min-height: 100vh;
+    background-color: var(--white);
+  }
+  
+  .content-wrapper {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  
+  /* Cards base */
+  .card {
+    background-color: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    padding: 1.5rem;
+    height: fit-content;
+  }
+  
+  /* Descripción del elemento */
+  .element-description {
+    background-color: var(--white);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .element-description p {
+    color: var(--text-dark);
+    font-size: 1.25rem;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Layout principal */
+  .main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  @media (min-width: 1024px) {
+    .main-grid {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    }
+  }
+  
+  /* Contenido principal */
+  .main-content {
+    display: grid;
+    gap: 2rem;
+  }
+  
+  /* Configuración electrónica */
+  .electronic-config {
+    background-color: var(--white);
+  }
+  
+  .electronic-config h2 {
+    color: var(--text-dark);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+  
+  .config-text {
+    font-family: monospace;
+    background-color: var(--primary-light);
+    padding: 1rem;
+    border-radius: 8px;
+    color: var(--text-dark);
+    text-align: center;
+    font-size: 1.125rem;
+  }
+  
+  /* Secciones de información */
+  .info-sections section {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  
+  .info-sections section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  
+  .info-sections h2 {
+    color: var(--text-dark);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  .info-sections p {
+    color: var(--text-gray);
+    line-height: 1.6;
+  }
+  
+  /* Sidebar */
+  .sidebar-content {
+    display: grid;
+    gap: 2rem;
+  }
+  
+  /* Imagen del elemento */
+  .element-image {
+    padding: 0.75rem;
+  }
+  
+  .element-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+  }
+  
+  /* Propiedades físicas */
+  .physical-properties h3,
+  .chemical-properties h3 {
+    color: var(--text-dark);
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+  
+  .properties-grid {
+    display: grid;
+    gap: 0.75rem;
+  }
+  
+  .property-item {
+    background-color: var(--primary-light);
+    padding: 0.875rem;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s;
+  }
+  
+  .property-item:hover {
+    background-color: var(--primary-hover);
+  }
+  
+  .property-label {
+    color: var(--text-dark);
+    font-weight: 500;
+  }
+  
+  .property-value {
+    color: var(--text-gray);
+    font-weight: 400;
+  }
+  
+  /* Características químicas */
+  .chemical-grid {
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .chemical-item {
+    background-color: var(--primary-light);
+    padding: 1rem;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+  }
+  
+  .chemical-item:hover {
+    background-color: var(--primary-hover);
+  }
+  
+  .chemical-label {
+    color: var(--text-dark);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .chemical-item p {
+    color: var(--text-gray);
+    line-height: 1.5;
+  }
+  
+  /* Datos interesantes */
+  .interesting-data {
+    background-color: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-light);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .interesting-data h2 {
+    color: var(--text-dark);
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+  
+  .data-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  
+  .data-item {
+    background-color: var(--primary-light);
+    padding: 1.5rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  
+  .data-item:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+  }
+  
+  .data-item h3 {
+    color: var(--text-dark);
+    font-size: 1.125rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+  
+  .data-item p {
+    color: var(--text-gray);
+    line-height: 1.5;
+  }
+  
+  /* Estados de carga y error */
+  .loading-container,
+  .error-container,
+  .not-found-container {
+    min-height: calc(100vh - 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  .loading-message,
+  .error-message,
+  .not-found-message {
+    background-color: var(--white);
+    padding: 1.5rem 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    font-weight: 500;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  .loading-message {
+    color: var(--text-dark);
+    border: 1px solid var(--border-light);
+  }
+  
+  .error-message {
+    color: #e53e3e;
+    border: 1px solid #feb2b2;
+    background-color: #fff5f5;
+  }
+  
+  .not-found-message {
+    color: var(--text-dark);
+    border: 1px solid var(--border-light);
+  }
+  
+  /* Mejoras de responsividad */
+  @media (max-width: 768px) {
+    .content-wrapper {
+      padding: 1rem;
+    }
+  
+    .element-description {
+      margin-bottom: 1.5rem;
+    }
+  
+    .element-description p {
+      font-size: 1.125rem;
+    }
+  
+    .card {
+      padding: 1.25rem;
+    }
+  
+    .data-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .property-item {
+      grid-template-columns: 1fr;
+    }
+  
+    .property-value {
+      color: var(--text-gray);
+    }
+  }

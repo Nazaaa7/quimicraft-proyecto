@@ -1,14 +1,17 @@
 /* Estilos para el sidebar */
 .sidebar {
   width: 250px;
+  min-width: 250px;
   background-color: #539653;
+  min-height: 100%;
   color: white;
   padding: 30px;
   display: flex;
+  margin-bottom: 0px;
   flex-direction: column;
   left: 0px;
   top: 0; /* Empieza desde el tope */
-  height: 700px;
+  /* height: 700px; */
   bottom: 0; /* Se extiende hasta el fondo */ 
   transition: transform 0.3s ease-in-out;
 }

@@ -5,7 +5,7 @@ import Register from "../views/register/Register";
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
 import Estudiantes from "../views/estudiantes/estudiantes";
-import OrganicCompoundConcept from "../views/estudiantes/OrganicCompoundConcept";
+import OrganicCompoundConcept from "../views/estudiantes/organicCompoundConcept";
 import OrganicCompound from "../views/profesores/organicCompound";
 import Calendar from "../views/estudiantes/calendar";
 import Profesores from "../views/profesores/profesores"; 
@@ -29,7 +29,8 @@ import BalanceDeMasas from "../views/estudiantes/balance";
 import Cristalizacion from "../views/estudiantes/cristalitation";
 import Vista from "../views/admin/vista"
 import DynamicTopicPage from '../views/estudiantes/DynamicTopicPage';
-
+import PeriodicTable from "../views/estudiantes/periodicTable";
+import ElementDetail from "../views/estudiantes/elementDetail";
 
 
 const AppRouter = () => {
@@ -69,9 +70,8 @@ const AppRouter = () => {
           <Route path="/extraction" element={<ExtraccionQuimica/>} />
           <Route path="/vista" element={<Vista/>}/>
           <Route path="/topic/:topicName" element={<DynamicTopicPage />} />
-
-
-          
+          <Route path="/periodicTable" element={<PeriodicTable/>} />
+          <Route path="/elementDetail" element={<ElementDetail/>} />
 
 
 

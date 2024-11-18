@@ -14,6 +14,8 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "firebase": "^11.0.2",
     "firebase-config": "^1.0.0",
@@ -29,7 +31,9 @@
     "react-router-dom": "^6.26.1",
     "react-toastify": "^10.0.5",
     "socket.io": "^4.8.0",
-    "socket.io-client": "^4.8.1"
+    "socket.io-client": "^4.8.1",
+    "tailwind-merge": "^2.5.4",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

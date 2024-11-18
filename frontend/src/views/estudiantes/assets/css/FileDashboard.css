@@ -1,7 +1,7 @@
 /* FileDashboard.css */
 .dashboard-container{
   padding: 0px;
-  height: 100%;
+  min-height: calc(100vh - 66px);
   width: 90%;
   background-color: #ffffff;
 }
@@ -54,6 +54,9 @@
 
 .quick-access-link:hover, .file-link:hover {
   text-decoration: underline;
+}
+.temas{
+  margin-top: -130px;
 }
 
 .quick-access-item, .files-table td {

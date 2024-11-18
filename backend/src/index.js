@@ -4,6 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import { userRouter } from "./routes/auth.routes.js";
 import { publicacionesRouter } from "./routes/publicaciones.routes.js";
+import { tableRouter } from "./routes/table.routes.js";
 import http from 'http'; 
 import { Server } from 'socket.io'; 
 
@@ -23,6 +24,7 @@ app.use(express.json());
 
 app.use(userRouter);
 app.use(publicacionesRouter);
+app.use(tableRouter);
 
 io.on('connection', (socket) => {
   console.log('Usuario conectado:', socket.id);

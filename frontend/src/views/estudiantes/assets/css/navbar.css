@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 105px 30px;
+  height: 75px;
   font-family: "Abel", sans-serif;
   background-color: #b5d992;
 }
