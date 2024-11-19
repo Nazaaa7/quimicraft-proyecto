@@ -87,10 +87,8 @@ body {
 .color-glossary {
   background-color: rgba(255, 255, 255, 0.9); /* Fondo transparente */
   border-radius: 8px;
-  padding: 4px;
   font-size: 10px;
   color: #333;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .color-glossary h2 {

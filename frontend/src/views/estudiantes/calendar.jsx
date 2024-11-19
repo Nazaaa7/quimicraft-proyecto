@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import moment from 'moment';
 import Navbar from './navbar_table';
 
@@ -10,6 +10,24 @@ const CalendarComponent = () => {
   const [newEvent, setNewEvent] = useState({ title: '', description: '', date: '' });
   const [newNote, setNewNote] = useState({ content: '', date: '' });
   const [isEventMode, setIsEventMode] = useState(true);
+  const [userId, setUserId] = useState(null);  // Estado para almacenar el user_id del token
+
+  // Cargar userId desde localStorage
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("userData"));  // Obtener los datos de usuario desde localStorage
+
+    if (userData && userData.token) {
+      try {
+        const decodedToken = jwt_decode(userData.token);  // Decodificar el token
+        setUserId(decodedToken.id.id);  // Obtener el userId desde el payload
+      } catch (error) {
+        console.error("Error al decodificar el token:", error);
+        setError("No se pudo verificar el usuario.");
+      }
+    } else {
+      setError("No se encontró el token de usuario.");
+    }
+  }, []);  // Solo se ejecuta una vez al montar el componente
 
   const daysOfWeek = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
 
@@ -27,6 +45,88 @@ const CalendarComponent = () => {
     }
 
     return days;
+  };
+
+  const createEvent = async (eventData) => {
+    try {
+      const response = await fetch('/api/events', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(eventData)
+      });
+      const result = await response.json();
+      if (response.ok) {
+        setEvents([...events, { ...eventData, id: result.eventId }]);
+      } else {
+        console.error(result.message);
+      }
+    } catch (error) {
+      console.error('Error al crear el evento:', error);
+    }
+  };
+
+  // Fetch: Crear nota
+  const createNote = async (noteData) => {
+    try {
+      const response = await fetch('/api/notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(noteData)
+      });
+      const result = await response.json();
+      if (response.ok) {
+        setNotes([...notes, { ...noteData, id: result.noteId }]);
+      } else {
+        console.error(result.message);
+      }
+    } catch (error) {
+      console.error('Error al crear la nota:', error);
+    }
+  };
+
+  // Fetch: Obtener eventos por mes y usuario
+  const fetchEvents = async (year, month) => {
+    try {
+      const response = await fetch(`/api/events/${year}/${month}/${userId}`);
+      const result = await response.json();
+      if (response.ok) {
+        setEvents(result);
+      } else {
+        console.error(result.message);
+      }
+    } catch (error) {
+      console.error('Error al cargar los eventos:', error);
+    }
+  };
+
+  // Fetch: Obtener notas por mes y usuario
+  const fetchNotes = async (year, month) => {
+    try {
+      const response = await fetch(`/api/notes/${year}/${month}/${userId}`);
+      const result = await response.json();
+      if (response.ok) {
+        setNotes(result);
+      } else {
+        console.error(result.message);
+      }
+    } catch (error) {
+      console.error('Error al cargar las notas:', error);
+    }
+  };
+
+  // Fetch: Obtener días con contenido
+  const fetchDaysWithContent = async (year, month) => {
+    try {
+      const response = await fetch(`/api/days-with-content/${year}/${month}/${userId}`);
+      const result = await response.json();
+      if (response.ok) {
+        console.log('Días con contenido:', result);
+      } else {
+        console.error(result.message);
+      }
+    } catch (error) {
+      console.error('Error al cargar los días con contenido:', error);
+    }
   };
 
   const handleDayClick = (day) => {
@@ -66,6 +166,8 @@ const CalendarComponent = () => {
   const toggleMode = () => {
     setIsEventMode(!isEventMode);
   };
+
+  
 
   return (
     <div>

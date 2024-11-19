@@ -103,7 +103,7 @@ const PostDetail = ({ post, onBack }) => {
 
   const handleUpdateComment = async (commentId, newContent) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/comments/${commentId}`, {
+      const response = await fetch(`http://localhost:3000/api/comments/edit/${commentId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

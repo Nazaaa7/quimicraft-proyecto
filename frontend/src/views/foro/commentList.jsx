@@ -1,6 +1,6 @@
 // CommentList.jsx
 import { useState } from 'react';
-import CommentItem from './CommentItem';
+import CommentItem from './commentItem';
 
 const CommentList = ({ comments, currentUserId, onDelete, onUpdate }) => {
   return (

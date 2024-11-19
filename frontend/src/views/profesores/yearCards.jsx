@@ -2,7 +2,7 @@
 // EventCards.js
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "./navbar";
+import Navbar from '../estudiantes/navbar_table';
 import Boton from "./boton";
 
 

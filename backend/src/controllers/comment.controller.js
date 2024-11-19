@@ -75,4 +75,37 @@ const deleteComment = async (req, res) => {
   }
 };
 
-export { getCommentsByPost, createPostComment, deleteComment };
+// Editar un comentario
+const editComment = async (req, res) => {
+  const { commentId } = req.params; // Obtener el commentId desde los parámetros de la URL
+  const { content } = req.body; // Obtener el contenido actualizado desde el cuerpo de la solicitud
+
+  if (!content) {
+    return res.status(400).json({ message: "El contenido del comentario es requerido" });
+  }
+
+  try {
+    const connection = await connectDB();
+
+    // Actualizar el comentario en la base de datos
+    const [result] = await connection.execute(
+      "UPDATE post_comments SET content = ? WHERE comment_id = ?",
+      [content, commentId]
+    );
+
+    // Verificar si se actualizó algún comentario
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Comentario no encontrado" });
+    }
+
+    // Enviar una respuesta exitosa
+    res.status(200).json({ message: "Comentario actualizado exitosamente" });
+
+    connection.end();
+  } catch (error) {
+    console.error("Error al editar el comentario:", error.message);
+    res.status(500).json({ message: "Error al editar el comentario", error: error.message });
+  }
+};
+
+export { getCommentsByPost, createPostComment, deleteComment, editComment };

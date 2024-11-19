@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './assets/css/subjects.css';
 import { FaArrowLeft } from 'react-icons/fa';
-import Navbar from './navbar';
+import Navbar from './navbar_table';
 import Footer from './footer';
 
 // Datos organizados por cuatrimestre

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaFileAlt, FaFilePdf, FaYoutube, FaGamepad, FaArrowLeft } from 'react-icons/fa';
 import { Search } from 'lucide-react';
 import './assets/css/OrganicCompoundConcept.css';
-import Navbar from './navbar';
+import Navbar from './navbar_table';
 import sedimentacion from './assets/img/sedimentacion.WEBP';
 import Chat from './chat';
 import Footer from './footer';
