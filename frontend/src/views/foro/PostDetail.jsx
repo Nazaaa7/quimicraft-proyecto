@@ -1,35 +1,35 @@
 import { useState, useEffect } from "react";
-import CommentList from "./CommentList";  // Componente para listar comentarios
+import CommentList from "./CommentList";
 import Navbar from "../estudiantes/navbar_table";
 
 const PostDetail = ({ post, onBack }) => {
-  const [comments, setComments] = useState([]);  // Comentarios de la publicación
-  const [newComment, setNewComment] = useState("");  // Nuevo comentario
-  const [error, setError] = useState("");  // Errores al agregar comentario
-  const [userId, setUserId] = useState(null);  // Guardar el ID del usuario
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+  const [error, setError] = useState("");
+  const [userId, setUserId] = useState(null);
 
-  // Cargar los comentarios cuando se selecciona un post
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await fetch(`http://localhost:3000/api/comments/post?post_id=${post.post_id}`);
-        const data = await response.json();
-        setComments(data);  // Establecer los comentarios
-      } catch (error) {
-        console.error("Error al obtener los comentarios:", error);
+  const fetchComments = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/comments/post?post_id=${post.post_id}`);
+      if (!response.ok) {
+        throw new Error('Error al cargar comentarios');
       }
-    };
+      const data = await response.json();
+      setComments(data);
+    } catch (error) {
+      console.error("Error al obtener los comentarios:", error);
+      setError("Error al cargar los comentarios");
+    }
+  };
 
+  useEffect(() => {
     fetchComments();
 
-    // Obtener el ID del usuario desde localStorage al entrar al detalle del post
     const userData = JSON.parse(localStorage.getItem("userData"));
-    console.log(userData)
     if (userData && userData.token) {
       try {
-        const decodedToken = jwt_decode(userData.token);  // Decodificar el token
-        setUserId(decodedToken.id.id);  // Obtener el userId desde el payload
-        console.log("userId:", userId);
+        const decodedToken = jwt_decode(userData.token);
+        setUserId(decodedToken.id.id);
       } catch (error) {
         console.error("Error al decodificar el token:", error);
         setError("No se pudo verificar el usuario.");
@@ -39,9 +39,9 @@ const PostDetail = ({ post, onBack }) => {
     }
   }, [post.post_id]);
 
-  // Manejar el envío de un nuevo comentario
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     if (!newComment.trim()) {
       setError("El comentario no puede estar vacío.");
@@ -50,12 +50,11 @@ const PostDetail = ({ post, onBack }) => {
 
     if (!userId) {
       setError("No se pudo obtener el ID del usuario.");
-      console.log("Error: No se pudo obtener el ID del usuario.");
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/comments", {
+      const response = await fetch("http://localhost:3000/api/comments/new", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,15 +70,60 @@ const PostDetail = ({ post, onBack }) => {
         throw new Error("Error al agregar el comentario");
       }
 
-      const addedComment = await response.json();
-      setComments((prevComments) => [addedComment, ...prevComments]);
-      setNewComment("");  // Limpiar el campo de texto
-      setError("");  // Limpiar cualquier error
+      setNewComment("");
+      await fetchComments();
+      
     } catch (error) {
       console.error("Error al agregar el comentario:", error);
-      setError("Hubo un error al agregar el comentario.");
+      setError("Hubo un error al agregar el comentario. Por favor, intente nuevamente.");
     }
   };
+
+  const handleDeleteComment = async (commentId) => {
+    if (window.confirm('¿Estás seguro de que deseas eliminar este comentario?')) {
+      try {
+        const response = await fetch(`http://localhost:3000/api/comments/${commentId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Error al eliminar el comentario');
+        }
+
+        await fetchComments(); // Recargar comentarios después de eliminar
+      } catch (error) {
+        console.error('Error al eliminar el comentario:', error);
+        setError('No se pudo eliminar el comentario');
+      }
+    }
+  };
+
+  const handleUpdateComment = async (commentId, newContent) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/comments/${commentId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          content: newContent,
+          is_edited: true
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al actualizar el comentario');
+      }
+
+      await fetchComments(); // Recargar comentarios después de actualizar
+    } catch (error) {
+      console.error('Error al actualizar el comentario:', error);
+      setError('No se pudo actualizar el comentario');
+    }
+  };  
 
   return (
     <>
@@ -91,10 +135,13 @@ const PostDetail = ({ post, onBack }) => {
           <p className="text-gray-600 mt-2">{post.content}</p>
           <p className="text-gray-500 mt-4"><strong>Categoría:</strong> {post.name}</p>
 
-          {/* Comentarios */}
-          <CommentList comments={comments} />
+          <CommentList 
+        comments={comments}
+        currentUserId={userId}
+        onDelete={handleDeleteComment}  // Asegúrate de que estas funciones estén definidas
+        onUpdate={handleUpdateComment}  // y pasadas correctamente
+      />
 
-          {/* Formulario para agregar un nuevo comentario */}
           <div className="mt-2">
             <textarea
               className="w-full p-2 border border-gray-300 rounded-md"
@@ -103,16 +150,17 @@ const PostDetail = ({ post, onBack }) => {
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
             />
-            {error && <p className="text-red-500 mt-2">{error}</p>}
+            {error && (
+              <p className="text-red-500 mt-2 text-sm">{error}</p>
+            )}
             <button
               onClick={handleCommentSubmit}
-              className="mt-2 bg-blue-500 text-white py-2 px-3 rounded-md hover:bg-blue-600 transition duration-300"
+              className="mt-2 bg-green-500 text-white py-2 px-3 rounded-md hover:bg-green-600 transition duration-300"
             >
               Enviar Comentario
             </button>
           </div>
 
-          {/* Volver a la lista de publicaciones */}
           <button
             onClick={onBack}
             className="mt-4 bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-300"

@@ -9,6 +9,8 @@ import postRoutes from './routes/postRoutes.js';
 import commentRoutes from './routes/CommentRoutes.js';
 import http from 'http'; 
 import { Server } from 'socket.io'; 
+import LikeRouter from './routes/likes.routes.js';
+import calendarRouter from "./routes/calendar.routes.js";
 
 const app = express();
 const server = http.createServer(app);
@@ -29,6 +31,11 @@ app.use(publicacionesRouter);
 app.use(tableRouter);
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
+app.use('/api/likes', LikeRouter);
+
+// Ruta para el calendario
+
+app.use('/events',calendarRouter);
 // server.js o en tu controlador de rutas
 app.use((req, res, next) => {
   res.setHeader('Cache-Control', 'no-store');  // No almacenar en caché

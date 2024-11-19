@@ -8,15 +8,19 @@ const getPosts = async (req, res) => {
 
     const connection = await connectDB();
 
-    // Si category_id está presente, filtrar por categoría
+    // Consulta SQL para obtener los posts y la cantidad de likes
     let query = `
       SELECT p.post_id, p.title, p.content, p.user_id, us.usuario, 
-             GROUP_CONCAT(c.name ORDER BY c.name ASC) AS category_names
+             GROUP_CONCAT(c.name ORDER BY c.name ASC) AS category_names,
+             COALESCE(COUNT(pl.post_id), 0) AS likes_count,  -- Contar la cantidad de likes para cada post
+             p.created_at  -- Añadir la fecha de creación del post
       FROM posts p
       INNER JOIN post_categories pc ON pc.post_id = p.post_id
       INNER JOIN categories c ON pc.category_id = c.category_id
       INNER JOIN usuarios us ON p.user_id = us.id
+      LEFT JOIN post_likes pl ON p.post_id = pl.post_id  -- Realizamos un LEFT JOIN con la tabla de likes
     `;
+
     let queryParams = [];
 
     // Si se pasa category_id, agregar el filtro a la consulta
@@ -29,14 +33,15 @@ const getPosts = async (req, res) => {
 
     const [posts] = await connection.execute(query, queryParams);
 
-    res.json(posts); // Devolver las publicaciones en formato JSON
-    console.log(posts)
+    res.json(posts); // Devolver las publicaciones con la cantidad de likes y la fecha de creación en formato JSON
+    console.log(posts);
     connection.end();
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error al obtener las publicaciones" });
   }
 };
+
 
 // Crear una nueva publicación
 const createPost = async (req, res) => {

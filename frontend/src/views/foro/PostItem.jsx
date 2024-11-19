@@ -1,8 +1,19 @@
-import { useState } from "react";
+import { ThumbsUp, ThumbsDown } from "lucide-react";  // Asumiendo que importas los iconos de Lucid
 
-const PostItem = ({ post, onClick }) => {
+const PostItem = ({ post, onClick, likedPosts, handleLike, handleUnlike }) => {
   // Convertimos las categorías separadas por comas en un array
-  const categories = post.category_names.split(','); 
+  const categories = post.category_names.split(",");
+
+  // Comprobamos si este post está "liked" por el usuario
+  const isLiked = likedPosts.has(post.post_id);
+
+  // Formatear la fecha de creación del post
+  const formattedDate = new Date(post.created_at).toLocaleDateString("es-ES", {
+    weekday: "short", // Día de la semana (ejemplo: lun, mar)
+    year: "numeric", // Año completo
+    month: "short",  // Mes abreviado (ejemplo: Ene, Feb)
+    day: "numeric",  // Día del mes
+  });
 
   return (
     <div
@@ -33,20 +44,39 @@ const PostItem = ({ post, onClick }) => {
         {post.title}
       </h3>
 
+      {/* Fecha de creación */}
+      <p className="text-sm text-gray-500 text-center mb-3">{formattedDate}</p>
+
       {/* Contenido */}
       <p className="text-gray-600 text-sm md:text-base mt-2 mb-4 line-clamp-3">
         {post.content}
       </p>
 
-      {/* Detalles */}
-      <div className="flex justify-between items-center text-gray-500 text-sm">
-        <p className="flex items-center">
-          <strong className="text-gray-700">Categoría:</strong> {categories.join(", ")}
+      {/* Mostrar la cantidad de likes */}
+      <div className="mt-4 flex items-center justify-between">
+        <p className="text-sm text-gray-600">
+          Likes: {post.likes_count || 0}
         </p>
-        <p className="text-right text-gray-400">
-          {/* Agregar la fecha si está disponible */}
-          {post.created_at && new Date(post.created_at).toLocaleDateString()}
-        </p>
+
+        {/* Botón de Like */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation(); // Para evitar que se dispare el onClick del post
+            if (isLiked) {
+              handleUnlike(post.post_id); // Si ya está likeado, eliminar like
+            } else {
+              handleLike(post.post_id); // Si no está likeado, agregar like
+            }
+          }}
+          className={`flex items-center space-x-2 p-2 rounded-md transition-colors duration-300 ${isLiked ? "text-blue-300" : "text-gray-500"} hover:text-blue-600`}
+        >
+          {isLiked ? (
+            <ThumbsDown className="text-xl" />
+          ) : (
+            <ThumbsUp className="text-xl" />
+          )}
+          <span>{isLiked ? "Unlike" : "Like"}</span>
+        </button>
       </div>
     </div>
   );

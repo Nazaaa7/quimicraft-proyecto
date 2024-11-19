@@ -1,168 +1,271 @@
-import  { useState, useEffect } from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { useState } from 'react';
 import moment from 'moment';
-import 'moment/locale/es';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-import Navbar from './navbar';
-import Sidebar from './sideBar';
-import Footer from './footer';
+import Navbar from './navbar_table';
 
-const localizer = momentLocalizer(moment);
-
-const OrganicCompoundConcept = () => {
+const CalendarComponent = () => {
+  const [selectedDate, setSelectedDate] = useState(moment());
+  const [showModal, setShowModal] = useState(false);
   const [events, setEvents] = useState([]);
-  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [notes, setNotes] = useState([]);
+  const [newEvent, setNewEvent] = useState({ title: '', description: '', date: '' });
+  const [newNote, setNewNote] = useState({ content: '', date: '' });
+  const [isEventMode, setIsEventMode] = useState(true);
 
-  const saveEventsToLocalStorage = (eventsToSave) => {
-    try {
-      const eventsString = JSON.stringify(eventsToSave);
-      localStorage.setItem('myCalendarEvents', eventsString);
-      console.log('Eventos guardados:', eventsToSave);
-    } catch (error) {
-      console.error('Error al guardar eventos:', error);
+  const daysOfWeek = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+
+  const createCalendarDays = () => {
+    const days = [];
+    const startDay = selectedDate.clone().startOf('month').day();
+    const daysInMonth = selectedDate.daysInMonth();
+
+    for (let i = 0; i < startDay; i++) {
+      days.push(null);
     }
-  };
 
-  const loadEventsFromLocalStorage = () => {
-    try {
-      const storedEvents = localStorage.getItem('myCalendarEvents');
-      console.log('Eventos almacenados (raw):', storedEvents);
-      
-      if (storedEvents) {
-        const parsedEvents = JSON.parse(storedEvents);
-        console.log('Eventos parseados:', parsedEvents);
-        
-        const eventsWithDates = parsedEvents.map(event => ({
-          ...event,
-          start: new Date(event.start),
-          end: new Date(event.end),
-        }));
-        
-        console.log('Eventos con fechas convertidas:', eventsWithDates);
-        return eventsWithDates;
-      }
-      return [];
-    } catch (error) {
-      console.error('Error al cargar eventos:', error);
-      return [];
+    for (let i = 1; i <= daysInMonth; i++) {
+      days.push(i);
     }
+
+    return days;
   };
 
-  useEffect(() => {
-    const loadedEvents = loadEventsFromLocalStorage();
-    setEvents(loadedEvents);
-  }, []);
-
-  useEffect(() => {
-    if (events.length > 0) {
-      saveEventsToLocalStorage(events);
-    }
-  }, [events]);
-
-  const handleSelectSlot = ({ start, end }) => {
-    const title = window.prompt('Nombre del evento:');
-    if (!title) return;
-
-    const description = window.prompt('Descripción del evento:');
-    if (!description) return;
-
-    const newEvent = {
-      id: `event-${Date.now()}`,
-      title,
-      description,
-      start,
-      end,
-      created: new Date().toISOString()
-    };
-
-    const updatedEvents = [...events, newEvent];
-    setEvents(updatedEvents);
-    saveEventsToLocalStorage(updatedEvents);
+  const handleDayClick = (day) => {
+    const selected = selectedDate.clone().date(day);
+    setSelectedDate(selected);
+    setShowModal(true);
   };
 
-  const handleSelectEvent = (event) => {
-    const eventDetails = `
-      Evento: ${event.title}
-      Descripción: ${event.description}
-      Inicio: ${moment(event.start).format('DD/MM/YYYY HH:mm')}
-      Fin: ${moment(event.end).format('DD/MM/YYYY HH:mm')}
-    `;
-    alert(eventDetails);
+  const handlePreviousMonth = () => {
+    setSelectedDate(selectedDate.clone().subtract(1, 'month'));
   };
-  
 
-  const handleEventDelete = (event) => {
-    if (window.confirm('¿Estás seguro de que deseas eliminar este evento?')) {
-      const updatedEvents = events.filter(e => e.id !== event.id);
-      setEvents(updatedEvents);
-      saveEventsToLocalStorage(updatedEvents);
-    }
+  const handleNextMonth = () => {
+    setSelectedDate(selectedDate.clone().add(1, 'month'));
   };
-  
+
+  const handleEventChange = (e) => {
+    setNewEvent({ ...newEvent, [e.target.name]: e.target.value });
+  };
+
+  const handleNoteChange = (e) => {
+    setNewNote({ ...newNote, [e.target.name]: e.target.value });
+  };
+
+  const addEvent = () => {
+    setEvents([...events, { ...newEvent, date: selectedDate.format('YYYY-MM-DD') }]);
+    setShowModal(false);
+    setNewEvent({ title: '', description: '', date: '' });
+  };
+
+  const addNote = () => {
+    setNotes([...notes, { ...newNote, date: selectedDate.format('YYYY-MM-DD') }]);
+    setShowModal(false);
+    setNewNote({ content: '', date: '' });
+  };
+
+  const toggleMode = () => {
+    setIsEventMode(!isEventMode);
+  };
+
   return (
     <div>
       <Navbar />
-      <div style={{
-        display: "flex",
-        height: "664px",
-        marginBottom: "36px",
-      }}>
+      <div className="p-6 bg-gray-50 min-h-screen">
+        <div className="flex items-center justify-center mb-6">
+          {/* Botón de mes anterior */}
+          <button
+            className="text-gray-600 hover:text-gray-800 mr-4 p-2 rounded-full transition-all duration-300 transform hover:bg-green-300 scale-110"
+            onClick={handlePreviousMonth}
+          >
+            <i className="fas fa-chevron-left"></i>
+          </button>
 
-        <Sidebar />
-        <div style={{
-        height: "500px"
-      }}>
-          <div className="p-4">
-            <h1 className="text- font-bold mb-4">
-              Calendario
-            </h1>
+          {/* Nombre del mes con el año */}
+          <h1 className="text-4xl font-bold text-green-600">{selectedDate.format('MMMM YYYY')}</h1>
 
-        <Calendar
-            localizer={localizer}
-            events={events}
-            startAccessor="start"
-            endAccessor="end"
-            style={{ height: "calc(600px - 12rem)", width: "calc(100vw - 300px)" }}
-            selectable={true}
-            onSelectSlot={handleSelectSlot}
-            onSelectEvent={handleSelectEvent}
-            onDoubleClickEvent={handleEventDelete}
-            popup={true}
-            messages={{
-              today: "Hoy",
-              previous: "Anterior",
-              next: "Siguiente",
-              month: "Mes",
-              week: "Semana",
-              day: "Día",
-              agenda: "Agenda"
-            }}
-          />
-      </div>
-    
-            
+          {/* Botón de mes siguiente */}
+          <button
+            className="text-gray-600 hover:text-gray-800 ml-4 p-2 rounded-full transition-all duration-300 transform hover:bg-green-300 scale-110"
+            onClick={handleNextMonth}
+          >
+            <i className="fas fa-chevron-right"></i>
+          </button>
         </div>
-      </div>
-      
 
-      {isChatOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-4 rounded-lg">
-            <button 
-              className="float-right text-gray-600 hover:text-gray-900"
-              onClick={() => setIsChatOpen(false)}
+        {/* Calendar Grid */}
+        <div className="grid grid-cols-7 gap-2 p-4">
+          {daysOfWeek.map((day) => (
+            <div key={day} className="text-center text-sm font-semibold text-gray-600">{day}</div>
+          ))}
+
+          {createCalendarDays().map((day, index) => (
+          <div
+            key={index}
+            className={`h-14 flex items-center justify-center cursor-pointer rounded-md 
+              ${
+                day === moment().date() &&
+                selectedDate.isSame(moment(), 'month') // Verifica que sea el día actual y el mes actual
+                  ? 'bg-green-100'
+                  : 'bg-white'
+              } 
+              ${day !== null ? 'hover:bg-green-200' : 'opacity-0'}`}
+            onClick={() => day !== null && handleDayClick(day)}
+          >
+            <div
+              className={`text-base font-medium ${
+                day === moment().date() &&
+                selectedDate.isSame(moment(), 'month') // Misma lógica para el texto
+                  ? 'text-green-600'
+                  : 'text-gray-700'
+              }`}
             >
-            </button>
+              {day || ''}
+            </div>
           </div>
+        ))}
 
         </div>
-      )}
-        <Footer/>
 
+        {/* Modal for Events and Notes */}
+          {showModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+              <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+                {/* Encabezado dinámico */}
+                <h2 className="text-xl font-semibold text-green-600 text-center mb-4">
+                  {isEventMode ? 'Agregar Evento' : 'Agregar Nota'}
+                </h2>
+
+                {/* Botones de alternancia */}
+                <div className="flex justify-center gap-3 mb-4">
+                  <button
+                    className={`flex-1 py-2 text-sm font-medium rounded-md transition 
+                      ${isEventMode ? 'bg-green-500 text-white hover:bg-green-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+                    onClick={() => setIsEventMode(true)}
+                  >
+                    Evento
+                  </button>
+                  <button
+                    className={`flex-1 py-2 text-sm font-medium rounded-md transition 
+                      ${!isEventMode ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+                    onClick={() => setIsEventMode(false)}
+                  >
+                    Nota
+                  </button>
+                </div>
+
+                {/* Contenido del formulario */}
+                <div>
+                  {isEventMode ? (
+                    <div className="space-y-3">
+                      {/* Título del evento */}
+                      <input
+                        type="text"
+                        name="title"
+                        placeholder="Título del evento"
+                        value={newEvent.title}
+                        onChange={handleEventChange}
+                        className="w-100 p-2 border rounded border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-500"
+                      />
+
+                      {/* Descripción del evento */}
+                      <textarea
+                        name="description"
+                        placeholder="Descripción del evento"
+                        value={newEvent.description}
+                        onChange={handleEventChange}
+                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
+                      ></textarea>
+
+                      {/* Hora de inicio y fin */}
+                      <div className="flex gap-3">
+                        <input
+                          type="datetime-local"
+                          name="start"
+                          value={newEvent.start}
+                          onChange={handleEventChange}
+                          className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
+                        />
+                        <input
+                          type="datetime-local"
+                          name="end"
+                          value={newEvent.end}
+                          onChange={handleEventChange}
+                          className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
+                        />
+                      </div>
+
+                      {/* Botón para guardar */}
+                      <button
+                        className="w-full bg-green-500 text-white py-2 rounded-md font-medium hover:bg-green-600 transition"
+                        onClick={addEvent}
+                      >
+                        Guardar Evento
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {/* Nota */}
+                      <textarea
+                        name="content"
+                        placeholder="Escribe tu nota"
+                        value={newNote.content}
+                        onChange={handleNoteChange}
+                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      ></textarea>
+
+                      {/* Botón para guardar */}
+                      <button
+                        className="w-full bg-blue-500 text-white py-2 rounded-md font-medium hover:bg-blue-600 transition"
+                        onClick={addNote}
+                      >
+                        Guardar Nota
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* Botón de cierre */}
+                <div className="flex justify-end mt-4">
+                  <button
+                    className="bg-gray-400 text-white py-2 px-4 rounded-md hover:bg-gray-500 transition"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Cerrar
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+
+
+        {/* List of Events and Notes */}
+        <div className="mt-8">
+          <h3 className="text-xl font-semibold text-gray-700 mb-4">Eventos y Notas</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {events
+              .filter((event) => moment(event.date).isSame(selectedDate, 'month'))
+              .map((event, index) => (
+                <div key={index} className="p-4 border border-gray-200 rounded-lg shadow-md">
+                  <h4 className="font-semibold text-green-600 mb-2">{event.title}</h4>
+                  <p className="text-gray-700 mb-2">{event.description}</p>
+                  <p className="text-sm text-gray-500">{moment(event.date).format('DD/MM/YYYY')}</p>
+                </div>
+              ))}
+
+            {notes
+              .filter((note) => moment(note.date).isSame(selectedDate, 'month'))
+              .map((note, index) => (
+                <div key={index} className="p-4 border border-gray-200 rounded-lg shadow-md">
+                  <p className="text-gray-700">{note.content}</p>
+                  <p className="text-sm text-gray-500">{moment(note.date).format('DD/MM/YYYY')}</p>
+                </div>
+              ))}
+          </div>
+        </div>
+      </div>
     </div>
-
   );
 };
 
-
-export default OrganicCompoundConcept;
+export default CalendarComponent;
