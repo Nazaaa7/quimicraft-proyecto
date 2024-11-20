@@ -84,90 +84,132 @@ const Register = () => {
   };
 
   return (
-    <main className="register-container">
-      <div className="register-header">
-        <h2 className="register-title">Registrarse</h2>
-        <span>Complete los datos para crear un usuario</span>
-      </div>
-      
-      {error && <p className="error-message">{error}</p>}
+    <div className="min-h-screen bg-gradient-to-br from-green-100 to-custom-green flex items-center justify-center px-4 py-8">
+      <div className="bg-white shadow-2xl rounded-2xl w-full max-w-md p-8 space-y-6 transform transition-all hover:scale-105 duration-300">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-green-600 mb-4">Crear Cuenta</h2>
+          <p className="text-gray-500">Regístrate y comienza a estudiar</p>
+        </div>
 
-      <Form className="register-form" onSubmit={handleSubmit}>
-        <FloatingLabel controlId="nombre" label="Nombre" className="mb-3">
-          <Form.Control
-            type="text"
-            placeholder="Nombre"
-            name="nombre"
-            onChange={handleChange}
-          />
-        </FloatingLabel>
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            {error}
+          </div>
+        )}
 
-        <FloatingLabel controlId="apellido" label="Apellido" className="mb-3">
-          <Form.Control
-            type="text"
-            placeholder="Apellido"
-            name="apellido"
-            onChange={handleChange}
-          />
-        </FloatingLabel>
+        <Form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <FloatingLabel controlId="nombre" label="Nombre">
+              <Form.Control
+                placeholder="Nombre"
+                name="nombre"
+                onChange={handleChange}
+                className="rounded-lg focus:ring-2 focus:ring-green-500"
+                required
+              />
+            </FloatingLabel>
 
-        <FloatingLabel controlId="dni" label="DNI" className="mb-3">
-          <Form.Control
-            type="text"
-            placeholder="DNI"
-            name="dni"
-            onChange={handleChange}
-            required
-          />
-        </FloatingLabel>
+            <FloatingLabel controlId="apellido" label="Apellido">
+              <Form.Control
+                placeholder="Apellido"
+                name="apellido"
+                onChange={handleChange}
+                className="rounded-lg focus:ring-2 focus:ring-green-500"
+                required
+              />
+            </FloatingLabel>
+          </div>
 
-        <FloatingLabel controlId="usuario" label="Usuario" className="mb-3">
-          <Form.Control
-            type="text"
-            placeholder="Usuario"
-            name="usuario"
-            onChange={handleChange}
-          />
-        </FloatingLabel>
+          <FloatingLabel controlId="dni" label="DNI">
+            <Form.Control
+              placeholder="DNI"
+              name="dni"
+              onChange={handleChange}
+              className="rounded-lg focus:ring-2 focus:ring-green-500"
+              required
+            />
+          </FloatingLabel>
 
-        <FloatingLabel controlId="correo" label="Correo" className="mb-3">
-          <Form.Control
-            type="email"
-            placeholder="Correo"
-            name="correo"
-            onChange={handleChange}
-          />
-        </FloatingLabel>
+          <FloatingLabel controlId="usuario" label="Usuario">
+            <Form.Control
+              placeholder="Usuario"
+              name="usuario"
+              onChange={handleChange}
+              className="rounded-lg focus:ring-2 focus:ring-green-500"
+              required
+            />
+          </FloatingLabel>
 
-        <FloatingLabel controlId="contrasenia" label="Contraseña" className="mb-3">
-          <Form.Control
-            type="password"
-            placeholder="Contraseña"
-            name="contrasenia"
-            onChange={handleChange}
-          />
-        </FloatingLabel>
+          <FloatingLabel controlId="correo" label="Correo">
+            <Form.Control
+              type="email"
+              placeholder="Correo"
+              name="correo"
+              onChange={handleChange}
+              className="rounded-lg focus:ring-2 focus:ring-green-500"
+              required
+            />
+          </FloatingLabel>
 
-        <FloatingLabel controlId="tipo_usuario_id" label="Tipo de Usuario" className="mb-3">
-          <Form.Select
-            aria-label="Selecciona el tipo de usuario"
-            name="id_rela_tipo_usuario"
-            onChange={handleChange}
+          <FloatingLabel controlId="contrasenia" label="Contraseña">
+            <Form.Control
+              type="password"
+              placeholder="Contraseña"
+              name="contrasenia"
+              onChange={handleChange}
+              className="rounded-lg focus:ring-2 focus:ring-green-500"
+              required
+            />
+          </FloatingLabel>
+
+          <FloatingLabel controlId="tipo_usuario_id" label="Tipo de Usuario">
+            <Form.Select
+              name="id_rela_tipo_usuario"
+              onChange={handleChange}
+              className="rounded-lg focus:ring-2 focus:ring-green-500"
+              required
+            >
+              <option value="">Selecciona un tipo de usuario</option>
+              {tiposUsuario.map((tipo) => (
+                <option key={tipo.idTipoUsuario} value={tipo.idTipoUsuario}>
+                  {tipo.descripcion}
+                </option>
+              ))}
+            </Form.Select>
+          </FloatingLabel>
+
+          <button 
+            type="submit" 
+            disabled={loading}
+            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-colors duration-300 flex items-center justify-center space-x-2"
           >
-            <option value="">Selecciona un tipo de usuario</option>
-            {tiposUsuario.map((tipo) => (
-              <option key={tipo.idTipoUsuario} value={tipo.idTipoUsuario}>
-                {tipo.descripcion}
-              </option>
-            ))}
-          </Form.Select>
-        </FloatingLabel>
+            {loading ? (
+              <>
+                <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Registrando...
+              </>
+            ) : (
+              "Crear Cuenta"
+            )}
+          </button>
+        </Form>
 
-        <button className="button-register" type="submit" disabled={loading}>
-          {loading ? "Registrando..." : "Registrarse"}
-        </button>
-      </Form>
-    </main>
+        <div className="text-center">
+          <p className="text-gray-600 text-sm">
+            ¿Ya tienes una cuenta? 
+            <a 
+              href="/" 
+              className="text-green-600 hover:text-green-800 ml-2 font-semibold"
+            >
+              Iniciar Sesión
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 

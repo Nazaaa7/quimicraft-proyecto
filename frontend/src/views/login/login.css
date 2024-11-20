@@ -26,20 +26,22 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  background-color: #ffffff00;
+  background-color: #445f414d;
   border-radius: 10px;
   border: 2px solid rgb(0, 54, 10);
   padding: 20px; 
- height: 50%;
  padding-top: 4%;
+ width:450px
 }
 
 .login-form .mb-3 input {
-  background-color: transparent;
-  width: 280px !important;
+  background-color: #91c0a327;
   color: #000000;
   border-radius: 10px !important;
   border-color: #003e06;
+  width:100%;
+
+
 }
 
 .login-form label {

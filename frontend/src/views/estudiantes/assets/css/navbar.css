@@ -2,23 +2,28 @@
 
 .navbar {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  height: 75px;
   font-family: "Abel", sans-serif;
-  background-color: #b5d992;
 }
 
 .navbar h1 {
   font-size: 24px;
   font-family: "Abel", sans-serif;
+  margin: 0;
 }
 
-/* Estilos para el menú */
+.navbar-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 .nav-links {
   list-style-type: none;
   display: flex;
   margin: 0;
+  padding: 0;
 }
 
 .nav-links li {
@@ -27,23 +32,44 @@
 }
 
 .logOut {
-  padding: 10px 200px;
-  margin-right: 5%;
+  padding: 10px 20px;
   background-color: #46ad81;
   color: white;
   border: none;
   border-radius: 5px;
   font-family: "Abel", sans-serif;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-/* Estilos responsive */
+.logOut:hover {
+  background-color: #3a8f6a;
+}
+
+/* Styles for file upload link */
+.tak {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
-  .hamburger {
-    display: block;
+  .navbar {
+    flex-direction: column;
+    padding: 10px 5%;
   }
 
-  .nav-links {
-    display: none;
+  .navbar-content {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .logOut {
+    width: 100%;
+    margin-top: 10px;
   }
 }

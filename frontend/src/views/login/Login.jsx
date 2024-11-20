@@ -1,8 +1,7 @@
-import { useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
 import { UserContext } from "../../context/UserContext";
-import { Link, useNavigate } from "react-router-dom"; 
-import "./login.css";
+import { useNavigate } from "react-router-dom"; 
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,22 +10,29 @@ const Login = () => {
     usuario: "",
     contrasenia: "",
   });
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = ({ target }) => {
     const { value, name } = target;
-    setForm({
-      ...form,
+    setForm((prevForm) => ({
+      ...prevForm,
       [name]: value,
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    setErrorMessage("");
-    
+    setError(null);
+    setLoading(true);
+
+    // Basic validation
+    if (!form.usuario || !form.contrasenia) {
+      setError("Por favor, completa todos los campos.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const peticion = await fetch("http://localhost:3000/login", {
         method: "POST",
@@ -37,13 +43,10 @@ const Login = () => {
       });
   
       const response = await peticion.json();
-      console.log("Respuesta del servidor:", response);
-  
+
       if (peticion.ok) {
-        // Extraer el tipo de usuario del objeto usuario en la respuesta
         const tipoUsuario = response.usuario.tipo_usuario;
         
-        // Guardar en localStorage
         localStorage.setItem("userData", JSON.stringify({
           isLogged: true,
           token: response.token,
@@ -51,7 +54,6 @@ const Login = () => {
           role: tipoUsuario,
         }));
   
-        // Actualizar el contexto
         stateDispatch({
           type: "login",
           payload: {
@@ -61,81 +63,98 @@ const Login = () => {
           },
         });
   
-    // Redireccionar según el tipo de usuario
-switch (tipoUsuario.toLowerCase()) {
-  case "estudiante":
-    navigate("/estudiantes");
-    break;
-  case "profesor":
-    navigate("/profesores");
-    break;
-  case "admin": // Asegúrate de que coincida con la base de datos
-    navigate("/admin");
-    break;
-  default:
-    setErrorMessage(`Tipo de usuario no reconocido: ${tipoUsuario}`);
-    console.error("Tipo de usuario no reconocido:", tipoUsuario);
-    break;
-}
-
+        switch (tipoUsuario.toLowerCase()) {
+          case "estudiante":
+            navigate("/estudiantes");
+            break;
+          case "profesor":
+            navigate("/profesores");
+            break;
+          case "admin":
+            navigate("/admin");
+            break;
+          default:
+            setError(`Tipo de usuario no reconocido: ${tipoUsuario}`);
+            break;
+        }
       } else {
-        console.error("Error al iniciar sesión:", response.msg);
-        setErrorMessage(response.msg || "Error al iniciar sesión.");
+        setError(response.msg || "Error al iniciar sesión.");
       }
     } catch (error) {
-      console.error("Error de conexión:", error);
-      setErrorMessage("Error de conexión. Inténtalo de nuevo.");
+      setError("Hubo un problema con el inicio de sesión. Inténtalo más tarde.");
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
   
   return (
-    <main className="login-container">
-      <div className="login-header">
-        <h2 className="login-title">Inicia sesión</h2>
-      </div>
-
-      {errorMessage && (
-        <div className="alert alert-danger" role="alert">
-          {errorMessage}
+    <div className="min-h-screen bg-gradient-to-br from-green-100 to-custom-green flex items-center justify-center px-4 py-8">
+      <div className="bg-white shadow-2xl rounded-2xl w-full max-w-md p-8 space-y-6 transform transition-all hover:scale-105 duration-300">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-green-600 mb-4">Iniciar Sesión</h2>
+          <p className="text-gray-500">Accede a tu cuenta</p>
         </div>
-      )}
 
-      <Form className="login-form" onSubmit={handleSubmit}>
-        <FloatingLabel controlId="usuario" label="Nombre de Usuario" className="mb-3">
-          <Form.Control
-            type="text"
-            placeholder="example123"
-            name="usuario"
-            onChange={handleChange}
-            required
-          />
-        </FloatingLabel>
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            {error}
+          </div>
+        )}
 
-        <FloatingLabel controlId="contrasenia" label="Contraseña" className="mb-3 password-input">
-          <Form.Control
-            type="password"
-            placeholder="name12312"
-            name="contrasenia"
-            onChange={handleChange}
-            required
-          />
-        </FloatingLabel>
+        <Form onSubmit={handleSubmit} className="space-y-4">
+          <FloatingLabel controlId="usuario" label="Usuario">
+            <Form.Control
+              placeholder="Usuario"
+              name="usuario"
+              onChange={handleChange}
+              className="rounded-lg focus:ring-2 focus:ring-green-500"
+              required
+            />
+          </FloatingLabel>
 
-        <span className="login-label">
-          ¿No tienes una cuenta? <Link to="/register">Regístrate</Link>
-        </span>
+          <FloatingLabel controlId="contrasenia" label="Contraseña">
+            <Form.Control
+              type="password"
+              placeholder="Contraseña"
+              name="contrasenia"
+              onChange={handleChange}
+              className="rounded-lg focus:ring-2 focus:ring-green-500"
+              required
+            />
+          </FloatingLabel>
 
-        <button 
-          className="button-login" 
-          type="submit"
-          disabled={isLoading}
-        >
-          {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
-        </button>
-      </Form>
-    </main>
+          <button 
+            type="submit" 
+            disabled={loading}
+            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-colors duration-300 flex items-center justify-center space-x-2"
+          >
+            {loading ? (
+              <>
+                <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Iniciando sesión...
+              </>
+            ) : (
+              "Iniciar Sesión"
+            )}
+          </button>
+        </Form>
+
+        <div className="text-center">
+          <p className="text-gray-600 text-sm">
+            ¿No tienes una cuenta? 
+            <a 
+              href="/register" 
+              className="text-green-600 hover:text-green-800 ml-2 font-semibold"
+            >
+              Regístrate
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 

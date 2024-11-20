@@ -19,21 +19,14 @@ function Navbar({ setActiveForo }) {
   };
 
   return (
-  
-      <nav className="navbar">
-              <h1>QuimiCraft</h1>
-
-             
-
-      <Link to='/materiales'>
-         <SidebarItem className='tak'  text="Subir archivos " />
-       </Link>
-       
-     
-
-       
-
-      <button onClick={logOut} className='logOut'>Cerrar Sesión</button>
+    <nav className="navbar">
+      <h1>QuimiCraft</h1>
+      <div className="navbar-content">
+        <Link to='/materiales' className="tak">
+          <SidebarItem text="Subir archivos" />
+        </Link>
+        <button onClick={logOut} className='logOut'>Cerrar Sesión</button>
+      </div>
     </nav>
   );
 }

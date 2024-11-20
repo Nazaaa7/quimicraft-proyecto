@@ -6,7 +6,8 @@ import Banner from './banner';
 import { UserContext } from '../../context/UserContext';
 import { userType } from '../../context/userTypes';
 import Sidebar from './sideBar';
-import Footer from './footer';
+import { Link } from 'react-router-dom';
+
 
 function Estudiantes() {
   const { stateDispatch } = useContext(UserContext);
@@ -24,12 +25,9 @@ function Estudiantes() {
       <Navbar />
       <div className='content-wrapper'>
         <Sidebar />
-        <div className='main-content'>
           <Banner />
         </div>
       </div>
-      <Footer /> {/* Footer al final del contenido */}
-    </div>
   );
 }
 

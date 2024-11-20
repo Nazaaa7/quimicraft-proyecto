@@ -356,6 +356,7 @@ button:hover {
   
   .files-table {
     margin-left: 20px;
+    width: 200px;
   }
   
   .container {
