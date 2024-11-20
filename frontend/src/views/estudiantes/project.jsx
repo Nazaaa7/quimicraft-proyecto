@@ -1,51 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { FaFileAlt } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import './assets/css/FileDashboard.css';
-import Navbar from './navbar';
-import Sidebar from './sideBar';
-import Footer from './footer';
+import React, { useState, useEffect } from "react";
+import { FaFileAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import "./assets/css/FileDashboard.css";
+import Navbar from "./navbar";
+import Sidebar from "./sideBar";
 
 const Project2Alumno = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [allFiles, setAllFiles] = useState([]);
-
-  // Temas predeterminados
-  const defaultFiles = [
-    { name: 'Compuestos orgánicos', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/resources/compuestos-organicos' },
-    { name: 'Balance de energía', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/resources/balance-de-energia' },
-    { name: 'Sedimentación', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/resources/sedimentacion' },
-    { name: 'Tamizado', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/resources/tamizado' },
-    { name: 'Filtración', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/resources/filtracion' },
-    { name: 'Desintegración mecánica y separación por tamaño de sólidos', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/resources/desintegracion' },
-    { name: 'Evaporización', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/resources/evaporacion' },
-    { name: 'Extracción', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/resources/extraccion' },
-    { name: 'Secado', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/resources/secado' },
-    { name: 'Cristalización', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/resources/cristalizacion' },
-    { name: 'Balance de masas', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/resources/balance-de-masas' },
-  ];
 
   useEffect(() => {
     // Cargar los temas desde localStorage al iniciar
-    const savedFiles = JSON.parse(localStorage.getItem('allFiles')) || [];
-    setAllFiles([...defaultFiles, ...savedFiles]);
+    const savedFiles = JSON.parse(localStorage.getItem("allFiles")) || [];
+    setAllFiles([...savedFiles]);
 
     // Escuchar cambios en localStorage
     const handleStorageChange = () => {
-      const updatedFiles = JSON.parse(localStorage.getItem('allFiles')) || [];
-      setAllFiles([...defaultFiles, ...updatedFiles]);
+      const updatedFiles = JSON.parse(localStorage.getItem("allFiles")) || [];
+      setAllFiles([...updatedFiles]);
     };
 
-    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener("storage", handleStorageChange);
 
     // Limpiar el listener al desmontar el componente
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
 
   // Filtrar los archivos basado en el término de búsqueda
-  const filteredFiles = allFiles.filter(file =>
+  const filteredFiles = allFiles.filter((file) =>
     file.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -72,9 +56,12 @@ const Project2Alumno = () => {
                     {filteredFiles.map((file, index) => (
                       <tr key={index}>
                         <td>
-                          <Link to={file.link} className="file-link">
+                          <Link
+                            to={`/resources/${file.name}`} // Ruta dinámica corregida
+                            className="file-link"
+                          >
                             <div className="file-name">
-                              {file.icon} <span>{file.name}</span>
+                              <FaFileAlt /> <span>{file.name}</span>
                             </div>
                           </Link>
                         </td>

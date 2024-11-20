@@ -230,6 +230,7 @@
   width: 900px;
   overflow: auto;  /* Permite el scroll, pero oculta las barras de desplazamiento */
   scrollbar-width: none;  /* Para navegadores Firefox */
+ 
 }
 
 .files-table-container::-webkit-scrollbar {
