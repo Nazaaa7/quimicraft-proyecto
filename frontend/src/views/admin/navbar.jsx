@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import './assets/css/navbar.css';
 import { UserContext } from '../../context/UserContext'; // Importa el contexto
 import { userType } from '../../context/userTypes'; // Importa los tipos de acción
+import { Link } from 'react-router-dom';
+
 
 function Navbar({ setActiveForo }) { // Recibe la función para cambiar el foro activo
   const { stateDispatch } = useContext(UserContext); // Accede al dispatch
@@ -20,6 +22,9 @@ function Navbar({ setActiveForo }) { // Recibe la función para cambiar el foro 
       <ul className="nav-links">
         <li onClick={() => setActiveForo('profesores')}>Profesores</li>
         <li onClick={() => setActiveForo('estudiantes')}>Estudiantes</li>
+        <Link to='/vista'>
+         <li className='tak' >Vista</li>
+       </Link>
       </ul>
       <button onClick={logOut} className='logOut'>Cerrar Sesión</button>
     </nav>

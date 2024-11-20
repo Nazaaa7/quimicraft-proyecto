@@ -1,80 +1,138 @@
-import React, { useState } from 'react';
-import { FaFolder, FaFileAlt, FaFilePdf, FaImage, FaUserCircle } from 'react-icons/fa';
-import './assets/css/FileDashboard.css';
-import Navbar from './navbar';
-import Boton from './boton';
-
+import React, { useState, useEffect } from 'react';
+import { FaFileAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import Navbar from './navbar';
+import './assets/css/FileDashboard.css';
 
-const File= () => {
+const Project2 = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  
+  const [allFiles, setAllFiles] = useState([]);
+  const [newTopic, setNewTopic] = useState({
+    name: '',
+    date: '',
+    link: '',
+    description: '',
+    image: '',
+    resources: [],
+  });
+  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [error, setError] = useState('');
 
-  const allFiles = [
-    { name: 'Compuestos organicos', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/organicCompound' },
-    { name: 'Balance de energía', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/balanceEnergy' },
-    { name: 'Sedimentación', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/sedimentation' },
-    { name: 'Tamizado', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/tamization' },
-    { name: 'Filtración', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/filtracion' },
-    { name: 'Desintegración mecánica y separación por tamaño de sólidos', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/desintegration' },
-    { name: 'Evaporización', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/organicCompoundConcept' },
-    { name: 'Extracción ', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/compuestos-inorganicos' },
-    { name: 'Secado', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/estequiometria' },
-    { name: 'Cristalización', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/quimica-transformadora' },
-    { name: 'Balance de masas', icon: <FaFileAlt />, date: 'Agosto 2024', link: '/nomenclatura' },
-  ];
+  useEffect(() => {
+    const savedFiles = JSON.parse(localStorage.getItem('allFiles')) || [];
+    setAllFiles(savedFiles);
+  }, []);
 
-  // Filtrar los archivos basado en el término de búsqueda
-  const filteredFiles = allFiles.filter(file =>
+  const handleAddTopic = () => {
+    if (!newTopic.name || !newTopic.date || !newTopic.link || !newTopic.image || !newTopic.description) {
+      setError('Por favor, complete todos los campos.');
+      return;
+    }
+
+    const newFile = {
+      name: newTopic.name,
+      date: newTopic.date,
+      link: `/topic/${newTopic.name.replace(/\s+/g, '-').toLowerCase()}`,
+      type: 'pdf',
+      description: newTopic.description,
+      image: newTopic.image,
+      resources: [],
+    };
+
+    const updatedFiles = [...allFiles, newFile];
+    setAllFiles(updatedFiles);
+    localStorage.setItem('allFiles', JSON.stringify(updatedFiles));
+
+    // Limpiar estado y ocultar formulario
+    setNewTopic({ name: '', date: '', link: '', description: '', image: '', resources: [] });
+    setIsFormVisible(false);
+    setError('');
+  };
+
+  const filteredFiles = allFiles.filter((file) =>
     file.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
     <div>
-      <Navbar/>
-
-
-      {/* Barra de búsqueda */}
-      <Boton />
-
-
+      <Navbar />
       <div className="dashboard-container">
+        <button
+          onClick={() => setIsFormVisible(!isFormVisible)}
+          className="toggle-topic-button"
+        >
+          {isFormVisible ? 'Cerrar Formulario' : 'Nuevo Tema'}
+        </button>
 
-        <div className="dashboard">
-
-     
-
-
-          <div className="all-files">
-            <h3>Temas</h3>
-            <table className="files-table">
-              <thead>
-                <tr>
-                  <th>nombre</th>
-                  <th>Fecha</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredFiles.map((file, index) => (
-                  <tr key={index}>
-                    <td>
-                      <Link to={file.link} className="file-link">
-                        <div className="file-name">
-                          {file.icon} <span>{file.name}</span>
-                        </div>
-                      </Link>
-                    </td>
-                    <td>{file.date}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        {/* Formulario siempre disponible */}
+        {isFormVisible && (
+          <div className="form-container">
+            <h3>Agregar Nuevo Tema</h3>
+            <input
+              type="text"
+              placeholder="Nombre del Tema por ej: Componente Orgánico"
+              value={newTopic.name}
+              onChange={(e) => setNewTopic({ ...newTopic, name: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Fecha por ej: Noviembre 2024"
+              value={newTopic.date}
+              onChange={(e) => setNewTopic({ ...newTopic, date: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Descripción"
+              value={newTopic.description}
+              onChange={(e) => setNewTopic({ ...newTopic, description: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="URL de la Imagen"
+              value={newTopic.image}
+              onChange={(e) => setNewTopic({ ...newTopic, image: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Enlace del Tema por ej: ComponenteOrganico"
+              value={newTopic.link}
+              onChange={(e) => setNewTopic({ ...newTopic, link: e.target.value })}
+            />
+            {error && <div className="error-message">{error}</div>}
+            <div className="form-buttons">
+              <button onClick={handleAddTopic}>Agregar Tema</button>
+            </div>
           </div>
+        )}
+
+        <div className="all-files">
+          <h3>Temas</h3>
+          <table className="files-table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Fecha</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredFiles.map((file, index) => (
+                <tr key={index}>
+                  <td>
+                    <Link to={file.link} className="file-link">
+                      <div className="file-name">
+                        <FaFileAlt /> <span>{file.name}</span>
+                      </div>
+                    </Link>
+                  </td>
+                  <td>{file.date}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-
   );
 };
 
-export default File;
+export default Project2;

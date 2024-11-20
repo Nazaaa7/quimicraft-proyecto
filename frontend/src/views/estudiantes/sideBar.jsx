@@ -18,8 +18,8 @@ function Sidebar() {
         <Link className='tak' to='/calendar'>
           <SidebarItem icon={<Calendar size={20} color="white" />} text="Calendario" />
         </Link>
-        <Link  className='tak' to='/periodicTable'>
-        <SidebarItem icon={<Atom size={20} color='white' textDecoration={null} />} text="Tabla Periodica" />
+        <Link className='tak' to='/periodicTable'>
+        <SidebarItem icon={<Layers size={20} color='white' textDecoration={null} />} text="Tabla Periodica" />
         </Link>       
         <hr />
        

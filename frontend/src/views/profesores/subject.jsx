@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './assets/css/subject.css';
 import Navbar from './navbar';
-import Boton from './boton';
+import { FaArrowLeft } from 'react-icons/fa';
+
 
 // Datos organizados por cuatrimestre
 const Semester = {
@@ -11,80 +12,43 @@ const Semester = {
       title: 'ANÁLISIS DE DATOS',
       path: '/projects2',
       color: '#46ad81',
-      
     },
     {
       title: 'FORMULACIÓN Y PREPARACIÓN DE MEZCLAS',
       path: '/projects',
       color: '#46ad81',
-      
     },
-    {
-      title: 'OPERACIONES BÁSICAS EN LA INDUSTRIA QUÍMICA',
-      path: '/social-media',
-      color: '#46ad81',
-      
-    },
-    {
-      title: 'GENERACIÓN Y RECUPERACIÓN DE ENERGÍA',
-      path: '/social-media',
-      color: '#46ad81',
-      
-    }
   ],
   second: [
-    {
-      title: 'INGLÉS TÉCNICO I',
-      path: '/social-media',
-      color: '#46ad81',
-      
-    },
     {
       title: 'ACONDICIONAMIENTO Y ALMACENAMIENTO DE PRODUCTOS QUÍMICOS',
       path: '/social-media',
       color: '#46ad81',
-      
     },
     {
       title: 'REGULACIÓN Y CONTROL DE PROCESOS QUÍMICOS I',
       path: '/social-media',
       color: '#46ad81',
-      
     },
-    {
-      title: 'MANTENIMIENTO ELECTROMECÁNICO EN INDUSTRIAS DE PROCESO',
-      path: '/social-media',
-      color: '#46ad81',
-      
-    },
-    {
-      title: 'PREVENCIÓN DE RIESGOS EN INDUSTRIAS QUMICAS',
-      path: '/social-media',
-      color: '#46ad81',
-      
-    },
-    
   ]
 };
 
 const Card = ({ project, onClick }) => {
-
   return (
-  
     <div className="container">
-    <div 
-      className="folder-card"
-      onClick={onClick}
-    >
-      <div 
-        className="folder-content"
-        style={{ backgroundColor: project.color }}
+      <div
+        className="folder-card"
+        onClick={onClick}
       >
-        <h3 className="folder-title">{project.title}</h3>
-        <div className="folder-footer">
-          <span className="status-dot"></span>
+        <div
+          className="folder-content"
+          style={{ backgroundColor: project.color }}
+        >
+          <h3 className="folder-title">{project.title}</h3>
+          <div className="folder-footer">
+            <span className="status-dot"></span>
+          </div>
         </div>
-      </div>
       </div>
     </div>
   );
@@ -93,13 +57,13 @@ const Card = ({ project, onClick }) => {
 const SemesterSelector = ({ activeSemester, onChange }) => {
   return (
     <div className="semester-selector">
-      <button 
+      <button
         className={`semester-button ${activeSemester === 'first' ? 'active' : ''}`}
         onClick={() => onChange('first')}
       >
         Primer Cuatrimestre
       </button>
-      <button 
+      <button
         className={`semester-button ${activeSemester === 'second' ? 'active' : ''}`}
         onClick={() => onChange('second')}
       >
@@ -116,15 +80,14 @@ const Subjects2 = () => {
   return (
     <div className="App">
       <Navbar/>
-      <SemesterSelector 
-      
+      <SemesterSelector
         activeSemester={activeSemester}
         onChange={setActiveSemester}
       />
-
       <h1 className='h1'>Materias</h1>
-      <Boton/>
-
+      <button onClick={() => navigate(-1)} className="back-button">
+        <FaArrowLeft size={24} />
+      </button>
       <div className="folder-grid">
         {Semester[activeSemester].map((project, index) => (
           <Card

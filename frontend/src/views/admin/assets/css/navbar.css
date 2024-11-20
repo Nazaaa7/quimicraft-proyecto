@@ -19,11 +19,13 @@
 .nav-links {
   list-style-type: none;
   display: flex;
+  text-decoration: none !important;
 }
 
 .nav-links li {
   margin: 0 15px;
   cursor: pointer;
+  text-decoration: none !important;
 }
 
 .logOut {
@@ -35,4 +37,8 @@
   border-radius: 5px;
   font-family: "Abel", sans-serif;
   cursor: pointer;
+}
+.tak{
+  color: #000000;
+  text-decoration: none !important;
 }

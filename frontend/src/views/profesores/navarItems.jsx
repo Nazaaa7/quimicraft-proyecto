@@ -4,7 +4,7 @@
 function navarItems({  text, active }) {
   return (
     <li className={`sidebar-item ${active ? "active" : ""}`}>
-      <span className="text">{text}</span>
+      <span className="tak">{text}</span>
 
     </li>
   );

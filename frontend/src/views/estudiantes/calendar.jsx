@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import moment from 'moment';
 import Navbar from './navbar_table';
 
+
 const CalendarComponent = () => {
   const [selectedDate, setSelectedDate] = useState(moment());
   const [showModal, setShowModal] = useState(false);
@@ -14,7 +15,6 @@ const CalendarComponent = () => {
   const [selectedDayEvents, setSelectedDayEvents] = useState([]);
   const [selectedDayNotes, setSelectedDayNotes] = useState([]);
   const [showUpcomingEvents, setShowUpcomingEvents] = useState(false);
-
 
   // Cargar userId desde localStorage
   useEffect(() => {
@@ -130,9 +130,12 @@ const CalendarComponent = () => {
       }
     } catch (error) {
       console.error('Error al cargar los días con contenido:', error);
+
+      return [];
     }
   };
 
+  // Efecto para cargar eventos al montar el componente
   useEffect(() => {
     if (userId) {
       fetchEvents(selectedDate.year(), selectedDate.month() + 1); // Cargar eventos para el mes actual

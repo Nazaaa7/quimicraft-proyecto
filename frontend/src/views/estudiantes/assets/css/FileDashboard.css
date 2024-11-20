@@ -1,18 +1,16 @@
 /* FileDashboard.css */
 .dashboard-container{
   padding: 0px;
-  height: 100%;
+  min-height: calc(100vh - 66px);
   width: 90%;
   background-color: #ffffff;
 }
 
 .dashboard{
-  margin: 4%;
+  margin: 3%;
 }
 
-.quick-access, .all-files {
-  margin-bottom: 20px;
-}
+
 
 .files-table {
   width: 980px;
@@ -54,6 +52,9 @@
 
 .quick-access-link:hover, .file-link:hover {
   text-decoration: underline;
+}
+.temas{
+  margin-top: -130px;
 }
 
 .quick-access-item, .files-table td {
@@ -223,4 +224,29 @@
   .more-filters-button:hover {
     background-color: #333333b7;
   }
+}/* Estilos para la tabla de archivos con scroll oculto */
+.files-table-container {
+  max-height: 600px; /* Ajusta el valor según la altura deseada */
+  width: 900px;
+  overflow: auto;  /* Permite el scroll, pero oculta las barras de desplazamiento */
+  scrollbar-width: none;  /* Para navegadores Firefox */
+ 
+}
+
+.files-table-container::-webkit-scrollbar {
+  display: none;  /* Para navegadores Webkit como Chrome */
+}
+
+.files-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.files-table th, .files-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.files-table th, .files-table td {
+  margin-bottom: 70px; /* Ajusta según lo necesario */
 }

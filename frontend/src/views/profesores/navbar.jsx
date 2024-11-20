@@ -4,7 +4,6 @@ import './assets/css/navbar.css';
 import { UserContext } from '../../context/UserContext';
 import SidebarItem from './navarItems';
 import { userType } from '../../context/userTypes';
-
 import { Link } from 'react-router-dom';
 
 
@@ -24,10 +23,13 @@ function Navbar({ setActiveForo }) {
       <nav className="navbar">
               <h1>QuimiCraft</h1>
 
-      <Link to='/materiales'>
+             
 
-         <SidebarItem className='text'  text="Publicaciones" />
+      <Link to='/materiales'>
+         <SidebarItem className='tak'  text="Subir archivos " />
        </Link>
+       
+     
 
        
 

@@ -1,0 +1,46 @@
+/* Archivo CSS: FileDashboard.css */
+
+.toggle-topic-button {
+  padding: 10px 20px;
+  background-color: #4CAF50; /* Verde para el botón */
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.toggle-topic-button:hover {
+  background-color: #45a049;
+}
+
+.add-topic {
+  margin-bottom: 20px;
+}
+
+.add-topic input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.add-topic button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.add-topic button:hover {
+  background-color: #45a049;
+}
+
+/* Opcionalmente, puedes agregar más estilos para mejorar la apariencia de la interfaz */
+.tak{
+  text-decoration: none;
+}

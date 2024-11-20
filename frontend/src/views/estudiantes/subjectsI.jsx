@@ -16,19 +16,19 @@ const subjectsBySemester = {
     },
     {
       title: 'FORMULACIÓN Y PREPARACIÓN DE MEZCLAS',
-      path: '/real-estate',
+      path: '/project',
       color: '#46ad81',
       
     },
     {
       title: 'OPERACIONES BÁSICAS EN LA INDUSTRIA QUÍMICA',
-      path: '/social-media',
+      path: '/project',
       color: '#46ad81',
       
     },
     {
       title: 'GENERACIÓN Y RECUPERACIÓN DE ENERGÍA',
-      path: '/social-media',
+      path: '/project',
       color: '#46ad81',
       
     }
@@ -36,31 +36,31 @@ const subjectsBySemester = {
   second: [
     {
       title: 'INGLÉS TÉCNICO I',
-      path: '/social-media',
+      path: '/project',
       color: '#46ad81',
       
     },
     {
       title: 'ACONDICIONAMIENTO Y ALMACENAMIENTO DE PRODUCTOS QUÍMICOS',
-      path: '/social-media',
+      path: '/project',
       color: '#46ad81',
       
     },
     {
       title: 'REGULACIÓN Y CONTROL DE PROCESOS QUÍMICOS I',
-      path: '/social-media',
+      path: '/project',
       color: '#46ad81',
       
     },
     {
       title: 'MANTENIMIENTO ELECTROMECÁNICO EN INDUSTRIAS DE PROCESO',
-      path: '/social-media',
+      path: '/project',
       color: '#46ad81',
       
     },
     {
       title: 'PREVENCIÓN DE RIESGOS EN INDUSTRIAS QUMICAS',
-      path: '/social-media',
+      path: '/project',
       color: '#46ad81',
       
     },
@@ -134,7 +134,7 @@ const SubjectI = () => {
           />
         ))}
       </div>
-      <Footer/>
+      
     </div>
   );
 };

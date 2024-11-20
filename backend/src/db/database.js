@@ -1,3 +1,4 @@
+//backend/src/db/database.js
 // Requerimos mysql.
 import { createConnection } from "mysql2/promise";
 
@@ -8,7 +9,7 @@ const connectDB = async () => {
       host: "localhost",
       user: "root",
       password: "",
-      database: "quimicraft",
+      database: "quimicraftt",
     });
   } catch (error) {
     console.log(error);

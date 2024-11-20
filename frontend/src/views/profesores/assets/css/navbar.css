@@ -39,6 +39,11 @@
   
 }
 
-.text{
-  color: #0d0e0d;
+.tak{
+  text-decoration: none !important;
+  color: rgb(0, 0, 0);
+
+}
+.tak:hover{
+  background-color: #46ad8000;
 }
