@@ -48,7 +48,13 @@ const PeriodicTable = () => {
   
 
   if (loading) {
-    return <div>Loading...</div>;
+    return(
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-custom-green to-white-50">
+    <div className="p-6 bg-white rounded-xl shadow-lg text-gray-700">
+      Cargando tabla periodica...
+    </div>
+  </div>
+    );
   }
 
   if (error) {

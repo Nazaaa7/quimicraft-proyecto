@@ -92,4 +92,38 @@ const getCategories = async (req, res) => {
   }
 };
 
-export { getPosts, createPost, getCategories };
+
+// Eliminar una publicación por su ID
+ const deletePost = async (req, res) => {
+  const { postId } = req.params;
+
+  try {
+    const connection = await connectDB();
+
+    // Verificar si el post existe
+    const [post] = await connection.query(
+      "SELECT * FROM posts WHERE post_id = ?",
+      [postId]
+    );
+
+    if (post.length === 0) {
+      return res.status(404).json({ message: "Publicación no encontrada." });
+    }
+
+    // Eliminar registros relacionados (post_categories, post_likes y comentarios)
+    await connection.query("DELETE FROM post_categories WHERE post_id = ?", [postId]);
+    await connection.query("DELETE FROM post_likes WHERE post_id = ?", [postId]);
+    await connection.query("DELETE FROM post_comments WHERE post_id = ?", [postId]); // Eliminar comentarios relacionados
+
+    // Eliminar el post
+    await connection.query("DELETE FROM posts WHERE post_id = ?", [postId]);
+
+    res.status(200).json({ message: "Publicación y sus relaciones eliminadas exitosamente." });
+  } catch (error) {
+    console.error("Error al eliminar el post:", error);
+    res.status(500).json({ message: "Error al eliminar la publicación." });
+  }
+};
+
+
+export { getPosts, createPost, getCategories, deletePost };

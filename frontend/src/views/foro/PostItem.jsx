@@ -1,33 +1,50 @@
-import { ThumbsUp, ThumbsDown } from "lucide-react";  // Asumiendo que importas los iconos de Lucid
+import { ThumbsUp, ThumbsDown, Trash2 } from "lucide-react";
 
-const PostItem = ({ post, onClick, likedPosts, handleLike, handleUnlike }) => {
+const PostItem = ({ 
+  post, 
+  onClick, 
+  likedPosts, 
+  handleLike, 
+  handleUnlike, 
+  userId,  // Add userId prop
+  handleDeletePost  // Add delete handler prop
+}) => {
   // Convertimos las categorías separadas por comas en un array
-  const categories = post.category_names.split(",");
+// Convertimos las categorías separadas por comas en un array
+const categories = post.category_names ? post.category_names.split(",") : [];
 
   // Comprobamos si este post está "liked" por el usuario
   const isLiked = likedPosts.has(post.post_id);
 
+  // Verificamos si el usuario actual es el dueño del post
+  const isPostOwner = userId === post.user_id;
+
   // Formatear la fecha de creación del post
   const formattedDate = new Date(post.created_at).toLocaleDateString("es-ES", {
-    weekday: "short", // Día de la semana (ejemplo: lun, mar)
-    year: "numeric", // Año completo
-    month: "short",  // Mes abreviado (ejemplo: Ene, Feb)
-    day: "numeric",  // Día del mes
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
   });
+
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    if (window.confirm("¿Estás seguro de que quieres eliminar esta publicación?")) {
+      handleDeletePost(post.post_id);
+    }
+  };
 
   return (
     <div
       className="bg-white shadow-lg rounded-lg p-6 mb-6 border border-gray-200 hover:border-green-400 transition-all duration-300 ease-in-out cursor-pointer hover:scale-105"
-      onClick={() => onClick(post)} // Dispara la acción cuando se hace clic
+      onClick={() => onClick(post)}
     >
       <div className="flex justify-between items-center mb-4">
-        {/* Nombre del usuario */}
         <h3 className="text-xl font-semibold text-gray-800 hover:text-green-600 transition-colors duration-200">
           {post.usuario}
         </h3>
 
-        {/* Categorías en un pequeño tag */}
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           {categories.map((category, index) => (
             <span
               key={index}
@@ -36,36 +53,42 @@ const PostItem = ({ post, onClick, likedPosts, handleLike, handleUnlike }) => {
               {category}
             </span>
           ))}
+          
+          {/* Botón de eliminar solo visible para el dueño del post */}
+          {isPostOwner && (
+            <button
+              onClick={handleDelete}
+              className="text-red-500 hover:text-red-700 transition-colors duration-300"
+              title="Eliminar publicación"
+            >
+              <Trash2 size={20} />
+            </button>
+          )}
         </div>
       </div>
 
-      {/* Título */}
       <h3 className="text-3xl font-bold text-center text-gray-800 hover:text-green-600 transition-colors duration-200 mb-3">
         {post.title}
       </h3>
 
-      {/* Fecha de creación */}
       <p className="text-sm text-gray-500 text-center mb-3">{formattedDate}</p>
 
-      {/* Contenido */}
       <p className="text-gray-600 text-sm md:text-base mt-2 mb-4 line-clamp-3">
         {post.content}
       </p>
 
-      {/* Mostrar la cantidad de likes */}
       <div className="mt-4 flex items-center justify-between">
         <p className="text-sm text-gray-600">
           Likes: {post.likes_count || 0}
         </p>
 
-        {/* Botón de Like */}
         <button
           onClick={(e) => {
-            e.stopPropagation(); // Para evitar que se dispare el onClick del post
+            e.stopPropagation();
             if (isLiked) {
-              handleUnlike(post.post_id); // Si ya está likeado, eliminar like
+              handleUnlike(post.post_id);
             } else {
-              handleLike(post.post_id); // Si no está likeado, agregar like
+              handleLike(post.post_id);
             }
           }}
           className={`flex items-center space-x-2 p-2 rounded-md transition-colors duration-300 ${isLiked ? "text-blue-300" : "text-gray-500"} hover:text-blue-600`}

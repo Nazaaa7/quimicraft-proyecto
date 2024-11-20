@@ -216,6 +216,30 @@ const ForoList = () => {
     return sortedPosts;
   };
 
+  const handleDeletePost = async (postId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/posts/eliminar/${postId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        // Eliminar el post de los estados
+        setPosts((prevPosts) => prevPosts.filter(post => post.post_id !== postId));
+        setFilteredPosts((prevPosts) => prevPosts.filter(post => post.post_id !== postId));
+      } else {
+        const errorData = await response.json();
+        console.error("Error al eliminar el post:", errorData);
+        alert("No se pudo eliminar la publicación. Inténtalo de nuevo.");
+      }
+    } catch (error) {
+      console.error("Error al eliminar el post:", error);
+      alert("Ocurrió un error al intentar eliminar la publicación.");
+    }
+  };
+
   useEffect(() => {
     const sortedPosts = sortPosts(posts);
     setFilteredPosts(sortedPosts);
@@ -227,17 +251,38 @@ const ForoList = () => {
   };
 
   // Manejar la creación de un nuevo post
-  const handlePostCreated = (newPost) => {
-    setPosts((prevPosts) => [newPost, ...prevPosts]);
-    setIsCreatePostOpen(false);
-  };
-
   const handleCreatePostClick = () => {
     setIsCreatePostOpen(true);
   };
 
   const handleCloseForm = () => {
     setIsCreatePostOpen(false);
+  };
+
+  const handlePostCreated = async (newPost) => {
+    try {
+      // Fetch full post details including likes count
+      const likesResponse = await fetch(
+        `http://localhost:3000/api/likes/${newPost.post_id}/likes_count`,
+        {
+          headers: {
+            "Cache-Control": "no-cache",
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      const likesData = await likesResponse.json();
+  
+      const completePost = {
+        ...newPost,
+        likes_count: likesData.likes_count
+      };
+  
+      setPosts((prevPosts) => [completePost, ...prevPosts]);
+      setIsCreatePostOpen(false);
+    } catch (error) {
+      console.error("Error fetching post details:", error);
+    }
   };
 
   const handlePostSelect = (post) => {
@@ -268,10 +313,10 @@ const ForoList = () => {
                   </option>
                 ))}
               </select>
-              <div className="mb-6">
+              <div className="mb-1">
             <button
               onClick={handleLikedFirstClick}
-              className={`p-2 rounded-md transition-colors duration-300 ${likedFirst ? "bg-green-400 text-white" : "bg-gray-400 text-gray-700"}`}
+              className={`p-2 ml-4 rounded-md transition-colors duration-300 ${likedFirst ? "bg-green-400 text-white" : "bg-gray-400 text-gray-700"}`}
             >
               Likeados Primero
             </button>
@@ -288,19 +333,43 @@ const ForoList = () => {
             </div>
           </div>
 
+         
           {filteredPosts.length === 0 ? (
             <p className="text-gray-600 text-center">No hay publicaciones disponibles.</p>
           ) : (
             filteredPosts.map((post) => (
-              <PostItem
+               <PostItem
                 key={post.post_id}
                 post={post}
                 onClick={() => handlePostSelect(post)}
                 likedPosts={likedPosts}
                 handleLike={handleLike}
                 handleUnlike={handleUnlike}
+                userId={userId}  // Pass the userId
+                handleDeletePost={handleDeletePost}  // Pass the delete handler
               />
             ))
+          )}
+
+          {/* Animated Overlay for CreatePost */}
+          {isCreatePostOpen && (
+            <div 
+              className="fixed w-100 inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 
+                         animate-fade-in"
+            >
+
+                <button 
+                  onClick={handleCloseForm} 
+                  className="absolute top-4 right-4 text-gray-600 hover:text-gray-900"
+                >
+                  ✕
+                </button>
+                <CreatePost 
+                onPostCreated={handlePostCreated}
+                onClose={handleCloseForm}
+                />  
+
+            </div>
           )}
         </div>
       </>

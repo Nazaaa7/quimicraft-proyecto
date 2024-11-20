@@ -1,6 +1,6 @@
 // routes/postRoutes.js
 import express from 'express';
-import { getPosts, createPost, getCategories } from '../controllers/foro.controller.js';
+import { getPosts, createPost, getCategories, deletePost } from '../controllers/foro.controller.js';
 
 const router = express.Router();
 
@@ -9,8 +9,10 @@ router.get('/', getPosts);
 
 router.get('/categories', getCategories);
 
-
 // Crear una nueva publicación
 router.post('/cargar', createPost);
+
+router.delete("/eliminar/:postId", deletePost);
+
 
 export default router;

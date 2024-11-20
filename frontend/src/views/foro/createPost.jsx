@@ -1,102 +1,113 @@
 import React, { useState, useEffect } from "react";
-const CreatePost = ({ onPostCreated, onClose }) => {  // Recibimos `onClose` como prop
+
+const CreatePost = ({ onPostCreated, onClose }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState([]);  // Estado para las categorías seleccionadas
-  const [categories, setCategories] = useState([]);  // Estado para las categorías
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [error, setError] = useState("");
-  const [userId, setUserId] = useState(null);  // Estado para almacenar el user_id del token
+  const [userId, setUserId] = useState(null);
 
-  // Cargar userId desde localStorage
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("userData"));  // Obtener los datos de usuario desde localStorage
+    const userData = JSON.parse(localStorage.getItem("userData"));
 
     if (userData && userData.token) {
       try {
-        const decodedToken = jwt_decode(userData.token);  // Decodificar el token
-        setUserId(decodedToken.id.id);  // Obtener el userId desde el payload
+        const decodedToken = jwt_decode(userData.token);
+        setUserId(decodedToken.id.id);
       } catch (error) {
-        console.error("Error al decodificar el token:", error);
-        setError("No se pudo verificar el usuario.");
+        console.error("Error decoding token:", error);
+        setError("Could not verify user.");
       }
     } else {
-      setError("No se encontró el token de usuario.");
+      setError("User token not found.");
     }
-  }, []);  // Solo se ejecuta una vez al montar el componente
+  }, []);
 
-  // Cargar las categorías desde la base de datos
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await fetch("http://localhost:3000/api/posts/categories");
         const data = await response.json();
-        setCategories(data);  // Almacenar las categorías en el estado
+        setCategories(data);
       } catch (error) {
-        console.error("Error al obtener las categorías:", error);
-        setError("No se pudieron cargar las categorías.");
+        console.error("Error fetching categories:", error);
+        setError("Could not load categories.");
       }
     };
     fetchCategories();
   }, []);
 
   const handleCategoryClick = (categoryId) => {
-    setSelectedCategories((prevSelectedCategories) => {
-      if (prevSelectedCategories.includes(categoryId)) {
-        return prevSelectedCategories.filter((id) => id !== categoryId);  // Desmarcar si ya está seleccionada
-      } else {
-        return [...prevSelectedCategories, categoryId];  // Marcar la categoría
-      }
-    });
+    setSelectedCategories((prevSelectedCategories) => 
+      prevSelectedCategories.includes(categoryId)
+        ? prevSelectedCategories.filter((id) => id !== categoryId)
+        : [...prevSelectedCategories, categoryId]
+    );
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Validación simple
+    
     if (!title.trim() || !content.trim() || selectedCategories.length === 0) {
-      setError("Por favor, completa todos los campos.");
+      setError("Please complete all fields.");
       return;
     }
-  
+    
     try {
+      const userData = JSON.parse(localStorage.getItem("userData"));
+      const token = userData.token;
+  
       const response = await fetch("http://localhost:3000/api/posts/cargar", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",  // Asegura que el servidor espera JSON
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
           title: title,
           content: content,
-          category_ids: selectedCategories,  // Enviar las categorías seleccionadas como un array
-          user_id: userId,  // Enviar el user_id obtenido del token
+          category_ids: selectedCategories,
+          user_id: userId,
         }),
       });
-  
+    
       if (!response.ok) {
-        throw new Error("Error al crear la publicación");
+        const errorData = await response.text();
+        throw new Error(errorData || "Error creating post");
       }
-  
-      const newPost = await response.json();  // Obtener la nueva publicación creada
-      onPostCreated(newPost);  // Pasar la nueva publicación al componente padre
-  
-      // Limpiar los campos del formulario después de enviar
+    
+      const newPost = await response.json();
+      
+      // Fetch additional post details
+      const detailResponse = await fetch(`http://localhost:3000/api/posts/${newPost.post_id}`);
+      const postDetails = await detailResponse.json();
+      
+      // Call onPostCreated with full post details
+      if (onPostCreated) {
+        onPostCreated(postDetails);
+      }
+    
+      // Reset form
       setTitle("");
       setContent("");
       setSelectedCategories([]);
-      setError("");  // Limpiar cualquier error
+      setError("");
+      
+      // Close the create post form
+      if (onClose) {
+        onClose();
+      }
     } catch (error) {
-      setError("Hubo un error al crear la publicación.");
-      console.error(error);
+      console.error("Post creation error:", error);
+      setError(error.message || "There was an error creating the post.");
     }
   };
 
-  // Desactivar el scroll global cuando el formulario está abierto
   useEffect(() => {
-    document.body.style.overflow = "hidden"; // Desactiva el scroll
-
-    // Restaurar el scroll cuando el componente se desmonta o se cierra el formulario
+    document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = "auto"; // Restaura el scroll
+      document.body.style.overflow = "auto";
     };
   }, []);
 

@@ -10,7 +10,11 @@ const CalendarComponent = () => {
   const [newEvent, setNewEvent] = useState({ title: '', description: '', date: '' });
   const [newNote, setNewNote] = useState({ content: '', date: '' });
   const [isEventMode, setIsEventMode] = useState(true);
-  const [userId, setUserId] = useState(null);  // Estado para almacenar el user_id del token
+  const [userId, setUserId] = useState(null);
+  const [selectedDayEvents, setSelectedDayEvents] = useState([]);
+  const [selectedDayNotes, setSelectedDayNotes] = useState([]);
+  const [showUpcomingEvents, setShowUpcomingEvents] = useState(false);
+
 
   // Cargar userId desde localStorage
   useEffect(() => {
@@ -129,11 +133,14 @@ const CalendarComponent = () => {
     }
   };
 
-  const handleDayClick = (day) => {
-    const selected = selectedDate.clone().date(day);
-    setSelectedDate(selected);
-    setShowModal(true);
-  };
+  useEffect(() => {
+    if (userId) {
+      fetchEvents(selectedDate.year(), selectedDate.month() + 1); // Cargar eventos para el mes actual
+      fetchNotes(selectedDate.year(), selectedDate.month() + 1);  // Cargar notas para el mes actual
+      fetchDaysWithContent(selectedDate.year(), selectedDate.month() + 1);  // Cargar días con contenido
+    }
+  }, [userId, selectedDate]); // Dependencias: se vuelve a cargar cuando cambia el mes o el userId
+  
 
   const handlePreviousMonth = () => {
     setSelectedDate(selectedDate.clone().subtract(1, 'month'));
@@ -167,11 +174,84 @@ const CalendarComponent = () => {
     setIsEventMode(!isEventMode);
   };
 
+  const handleDayClick = (day) => {
+    const selected = selectedDate.clone().date(day);
+    setSelectedDate(selected);
+    
+    const dayEvents = events.filter(event => 
+      moment(event.date).isSame(selected, 'day')
+    );
+    const dayNotes = notes.filter(note => 
+      moment(note.date).isSame(selected, 'day')
+    );
   
+    setSelectedDayEvents(dayEvents);
+    setSelectedDayNotes(dayNotes);
+    setShowModal(true);
+  };
+
+  const toggleUpcomingEvents = () => {
+    setShowUpcomingEvents(!showUpcomingEvents);
+  };
+
+  const getUpcomingEvents = () => {
+    const today = moment();
+    return events
+      .filter(event => moment(event.date).isAfter(today))
+      .sort((a, b) => moment(a.date).diff(moment(b.date)))
+      .slice(0, 5);  // Limit to 5 upcoming events
+  };
+  
+  const renderDayContent = () => {
+    if (selectedDayEvents.length === 0 && selectedDayNotes.length === 0) {
+      return (
+        <div className="text-center space-y-4">
+          <p className="text-gray-500">No hay eventos o notas para esta fecha</p>
+          <div className="flex justify-center gap-3">
+            <button
+              className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600"
+              onClick={() => {
+                setIsEventMode(true);
+                setNewEvent({ title: '', description: '', date: selectedDate.format('YYYY-MM-DD') });
+              }}
+            >
+              Agregar Evento
+            </button>
+            <button
+              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+              onClick={() => {
+                setIsEventMode(false);
+                setNewNote({ content: '', date: selectedDate.format('YYYY-MM-DD') });
+              }}
+            >
+              Agregar Nota
+            </button>
+          </div>
+        </div>
+      );
+    }
+  
+    return (
+      <div className="space-y-4">
+        {selectedDayEvents.map((event, index) => (
+          <div key={`event-${index}`} className="p-4 border border-green-200 rounded-lg">
+            <h4 className="font-semibold text-green-600">{event.title}</h4>
+            <p className="text-gray-700">{event.description}</p>
+          </div>
+        ))}
+        {selectedDayNotes.map((note, index) => (
+          <div key={`note-${index}`} className="p-4 border border-blue-200 rounded-lg">
+            <p className="text-gray-700">{note.content}</p>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div>
       <Navbar />
+      
       <div className="p-6 bg-gray-50 min-h-screen">
         <div className="flex items-center justify-center mb-6">
           {/* Botón de mes anterior */}
@@ -193,7 +273,7 @@ const CalendarComponent = () => {
             <i className="fas fa-chevron-right"></i>
           </button>
         </div>
-
+        
         {/* Calendar Grid */}
         <div className="grid grid-cols-7 gap-2 p-4">
           {daysOfWeek.map((day) => (
@@ -229,132 +309,151 @@ const CalendarComponent = () => {
         </div>
 
         {/* Modal for Events and Notes */}
-          {showModal && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-              <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
-                {/* Encabezado dinámico */}
-                <h2 className="text-xl font-semibold text-green-600 text-center mb-4">
-                  {isEventMode ? 'Agregar Evento' : 'Agregar Nota'}
-                </h2>
+        
+        {showModal && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+      {/* Encabezado dinámico basado en la selección */}
+      <h2 className="text-xl font-semibold text-green-600 text-center mb-4">
+        {selectedDate.format('DD MMMM YYYY')} - {isEventMode ? 'Agregar Evento' : 'Agregar Nota'}
+      </h2>
 
-                {/* Botones de alternancia */}
-                <div className="flex justify-center gap-3 mb-4">
-                  <button
-                    className={`flex-1 py-2 text-sm font-medium rounded-md transition 
-                      ${isEventMode ? 'bg-green-500 text-white hover:bg-green-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
-                    onClick={() => setIsEventMode(true)}
-                  >
-                    Evento
-                  </button>
-                  <button
-                    className={`flex-1 py-2 text-sm font-medium rounded-md transition 
-                      ${!isEventMode ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
-                    onClick={() => setIsEventMode(false)}
-                  >
-                    Nota
-                  </button>
-                </div>
+      {/* Botones de alternancia */}
+      <div className="flex justify-center gap-3 mb-4">
+        <button
+          className={`flex-1 py-2 text-sm font-medium rounded-md transition 
+            ${isEventMode ? 'bg-green-500 text-white hover:bg-green-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+          onClick={() => setIsEventMode(true)}
+        >
+          Evento
+        </button>
+        <button
+          className={`flex-1 py-2 text-sm font-medium rounded-md transition 
+            ${!isEventMode ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+          onClick={() => setIsEventMode(false)}
+        >
+          Nota
+        </button>
+      </div>
 
-                {/* Contenido del formulario */}
-                <div>
-                  {isEventMode ? (
-                    <div className="space-y-3">
-                      {/* Título del evento */}
-                      <input
-                        type="text"
-                        name="title"
-                        placeholder="Título del evento"
-                        value={newEvent.title}
-                        onChange={handleEventChange}
-                        className="w-100 p-2 border rounded border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-500"
-                      />
+      {/* Contenido del modal basado en la selección */}
+      <div>
+        {isEventMode ? (
+          <div className="space-y-3">
+            {/* Título del evento */}
+            <input
+              type="text"
+              name="title"
+              placeholder="Título del evento"
+              value={newEvent.title}
+              onChange={handleEventChange}
+              className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-500"
+            />
 
-                      {/* Descripción del evento */}
-                      <textarea
-                        name="description"
-                        placeholder="Descripción del evento"
-                        value={newEvent.description}
-                        onChange={handleEventChange}
-                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
-                      ></textarea>
+            {/* Descripción del evento */}
+            <textarea
+              name="description"
+              placeholder="Descripción del evento"
+              value={newEvent.description}
+              onChange={handleEventChange}
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
+            ></textarea>
 
-                      {/* Hora de inicio y fin */}
-                      <div className="flex gap-3">
-                        <input
-                          type="datetime-local"
-                          name="start"
-                          value={newEvent.start}
-                          onChange={handleEventChange}
-                          className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
-                        />
-                        <input
-                          type="datetime-local"
-                          name="end"
-                          value={newEvent.end}
-                          onChange={handleEventChange}
-                          className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
-                        />
-                      </div>
-
-                      {/* Botón para guardar */}
-                      <button
-                        className="w-full bg-green-500 text-white py-2 rounded-md font-medium hover:bg-green-600 transition"
-                        onClick={addEvent}
-                      >
-                        Guardar Evento
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
-                      {/* Nota */}
-                      <textarea
-                        name="content"
-                        placeholder="Escribe tu nota"
-                        value={newNote.content}
-                        onChange={handleNoteChange}
-                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-                      ></textarea>
-
-                      {/* Botón para guardar */}
-                      <button
-                        className="w-full bg-blue-500 text-white py-2 rounded-md font-medium hover:bg-blue-600 transition"
-                        onClick={addNote}
-                      >
-                        Guardar Nota
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                {/* Botón de cierre */}
-                <div className="flex justify-end mt-4">
-                  <button
-                    className="bg-gray-400 text-white py-2 px-4 rounded-md hover:bg-gray-500 transition"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Cerrar
-                  </button>
-                </div>
-              </div>
+            {/* Hora de inicio y fin */}
+            <div className="flex gap-3">
+              <input
+                type="datetime-local"
+                name="start"
+                value={newEvent.start}
+                onChange={handleEventChange}
+                className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
+              />
+              <input
+                type="datetime-local"
+                name="end"
+                value={newEvent.end}
+                onChange={handleEventChange}
+                className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
+              />
             </div>
-          )}
+
+            {/* Botón para guardar */}
+            <button
+              className="w-full bg-green-500 text-white py-2 rounded-md font-medium hover:bg-green-600 transition"
+              onClick={addEvent}
+            >
+              Guardar Evento
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {/* Nota */}
+            <textarea
+              name="content"
+              placeholder="Escribe tu nota"
+              value={newNote.content}
+              onChange={handleNoteChange}
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+            ></textarea>
+
+            {/* Botón para guardar */}
+            <button
+              className="w-full bg-blue-500 text-white py-2 rounded-md font-medium hover:bg-blue-600 transition"
+              onClick={addNote}
+            >
+              Guardar Nota
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Botón de cierre */}
+      <div className="flex justify-end mt-4">
+        <button
+          className="bg-gray-400 text-white py-2 px-4 rounded-md hover:bg-gray-500 transition"
+          onClick={() => setShowModal(false)}
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
 
 
 
         {/* List of Events and Notes */}
         <div className="mt-8">
+        
           <h3 className="text-xl font-semibold text-gray-700 mb-4">Eventos y Notas</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {events
-              .filter((event) => moment(event.date).isSame(selectedDate, 'month'))
-              .map((event, index) => (
-                <div key={index} className="p-4 border border-gray-200 rounded-lg shadow-md">
-                  <h4 className="font-semibold text-green-600 mb-2">{event.title}</h4>
-                  <p className="text-gray-700 mb-2">{event.description}</p>
-                  <p className="text-sm text-gray-500">{moment(event.date).format('DD/MM/YYYY')}</p>
-                </div>
-              ))}
+          {/* Upcoming Events Button */}
+<div className="mb-4 text-right">
+  {/* Botón para mostrar próximos eventos */}
+<button
+  className="bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 mb-6"
+  onClick={toggleUpcomingEvents}
+>
+  {showUpcomingEvents ? 'Ocultar Próximos Eventos' : 'Ver Próximos Eventos'}
+</button>
 
+</div>
+
+{/* Upcoming Events List */}
+{/* Lista de próximos eventos */}
+{showUpcomingEvents && (
+  <div className="mt-6">
+    <h2 className="text-2xl font-semibold text-green-600 mb-4">Próximos Eventos</h2>
+    <ul className="space-y-3">
+      {getUpcomingEvents().map((event, index) => (
+        <li key={index} className="p-4 border border-yellow-200 rounded-lg">
+          <h4 className="font-semibold text-yellow-600">{event.title}</h4>
+          <p className="text-gray-700">{moment(event.date).format('DD MMMM YYYY')}</p>
+        </li> 
+      ))}
+    </ul>
+    <h3 className='text-cyan-400 text-2xl font-semibold mb-4'>notas</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {notes
               .filter((note) => moment(note.date).isSame(selectedDate, 'month'))
               .map((note, index) => (
@@ -364,6 +463,9 @@ const CalendarComponent = () => {
                 </div>
               ))}
           </div>
+  </div>
+  
+)}
         </div>
       </div>
     </div>
