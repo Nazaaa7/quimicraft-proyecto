@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaFileAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./assets/css/FileDashboard.css";
-import Navbar from "./navbar";
-import Sidebar from "./sideBar";
+import Navbar from "./navbar_table";
 
 const Project2Alumno = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -38,8 +37,6 @@ const Project2Alumno = () => {
       <Navbar />
 
       <div className="dashboard-container">
-        <Sidebar />
-
         <div className="dashboard">
           <div className="all-files">
             <h3 className="temas">Temas a dar en el cuatrimestre</h3>

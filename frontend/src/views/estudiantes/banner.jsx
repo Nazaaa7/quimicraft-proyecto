@@ -24,7 +24,7 @@ function Banner() {
       <img 
         src={bannerImage} 
         alt="Banner" 
-        className="max-w-md w-4/12 rounded-xl shadow-lg transform hover:scale-105 transition duration-300 ease-in-out" 
+        className="max-w-md w-4/12 rounded-xl mt-4 shadow-lg transform hover:scale-105 transition duration-300 ease-in-out" 
       />
     </div>
   );

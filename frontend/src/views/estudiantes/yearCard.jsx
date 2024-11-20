@@ -3,9 +3,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./sideBar";
-import Navbar from "./navbar";
+import Navbar from "./navbar_table";
 import './assets/css/yearCard.css';
-import Footer from "./footer";
 
 const EventCards = () => {
   const navigate = useNavigate();
