@@ -13,7 +13,10 @@ const ForoList = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [userId, setUserId] = useState(null);
+  const [userRole, setUserRole] = useState(null);
   const [likedFirst, setLikedFirst] = useState(false); // Para activar/desactivar el filtro de "likeados primero"
+  const [loading, setLoading] = useState(true); // Estado para manejar la carga de publicaciones y categorías
+
 
   // Obtener el ID del usuario del localStorage
   useEffect(() => {
@@ -22,6 +25,7 @@ const ForoList = () => {
       try {
         const decodedToken = jwt_decode(userData.token);
         setUserId(decodedToken.id.id);
+        setUserRole(userData.role); // Añadir esto para obtener el rol del usuario
       } catch (error) {
         console.error("Error al decodificar el token:", error);
       }
@@ -95,11 +99,40 @@ const ForoList = () => {
         setCategories(dataCategories);
       } catch (error) {
         console.error("Error al obtener las publicaciones o categorías:", error);
+      } finally {
+        setLoading(false); // Termina la carga
       }
     };
 
     fetchPostsAndCategories();
   }, [selectedCategory]);
+
+  const handleDeleteSelectedPost = async () => {
+    if (!selectedPost) return;
+    
+    try {
+      const response = await fetch(`http://localhost:3000/api/posts/eliminar/${selectedPost.post_id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        // Eliminar el post de los estados
+        setPosts((prevPosts) => prevPosts.filter(post => post.post_id !== selectedPost.post_id));
+        setFilteredPosts((prevPosts) => prevPosts.filter(post => post.post_id !== selectedPost.post_id));
+        setSelectedPost(null); // Volver a la lista de posts
+      } else {
+        const errorData = await response.json();
+        console.error("Error al eliminar el post:", errorData);
+        alert("No se pudo eliminar la publicación. Inténtalo de nuevo.");
+      }
+    } catch (error) {
+      console.error("Error al eliminar el post:", error);
+      alert("Ocurrió un error al intentar eliminar la publicación.");
+    }
+  };
 
   const handleLike = async (postId) => {
     if (!userId) return;
@@ -259,38 +292,73 @@ const ForoList = () => {
     setIsCreatePostOpen(false);
   };
 
-  const handlePostCreated = async (newPost) => {
-    try {
-      // Fetch full post details including likes count
-      const likesResponse = await fetch(
-        `http://localhost:3000/api/likes/${newPost.post_id}/likes_count`,
-        {
-          headers: {
-            "Cache-Control": "no-cache",
-            "Content-Type": "application/json"
-          }
-        }
-      );
-      const likesData = await likesResponse.json();
+  const handlePostCreated = async (newPost) => {  
+    try {  
+      // Fetch full post details including likes count  
+      const likesResponse = await fetch(  
+        `http://localhost:3000/api/likes/${newPost.post_id}/likes_count`,  
+        {  
+          headers: {  
+            "Cache-Control": "no-cache",  
+            "Content-Type": "application/json"  
+          }  
+        }  
+      );  
+      const likesData = await likesResponse.json();  
   
-      const completePost = {
-        ...newPost,
-        likes_count: likesData.likes_count
-      };
+      const completePost = {  
+        ...newPost,  
+        likes_count: likesData.likes_count  
+      };  
   
-      setPosts((prevPosts) => [completePost, ...prevPosts]);
-      setIsCreatePostOpen(false);
-    } catch (error) {
-      console.error("Error fetching post details:", error);
-    }
-  };
+      // Usar función de actualización para garantizar la inmutabilidad  
+      setPosts((prevPosts) => [completePost, ...prevPosts]);  
+      
+      // Cerrar el formulario de creación  
+      setIsCreatePostOpen(false);  
+    } catch (error) {  
+      console.error("Error fetching post details:", error);  
+    }  
+  };  
+  
+  // Efecto para manejar la actualización de posts  
+  useEffect(() => {  
+    // Aplicar sorting y filtrado cada vez que cambian los posts  
+    const sortedPosts = sortPosts(posts);  
+    setFilteredPosts(sortedPosts);  
+  }, [posts, likedPosts, likedFirst]);
+  useEffect(() => {
+    const sortedPosts = sortPosts(posts);
+    setFilteredPosts(sortedPosts);
+  }, [posts, likedPosts, likedFirst]); // Este efecto se activará cada vez que posts, likedPosts o likedFirst cambien
+  
+  
 
   const handlePostSelect = (post) => {
     setSelectedPost(post);
   };
   
-  // Renderizar el componente
-  if (!selectedPost) {
+  if (selectedPost) {
+    return (
+      <PostDetail
+        post={selectedPost}
+        onBack={() => setSelectedPost(null)}
+        onPostCreated={handlePostCreated}
+        renderAdminDelete={
+          userRole === "admin" && (
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={handleDeleteSelectedPost}
+                className="bg-red-500 text-white px-6 py-2 rounded-md hover:bg-red-600 transition duration-300"
+              >
+                Eliminar Publicación
+              </button>
+            </div>
+          )
+        }
+      />
+    );
+  }
     return (
       <>
         <Navbar />
@@ -333,23 +401,30 @@ const ForoList = () => {
             </div>
           </div>
 
+          
          
-          {filteredPosts.length === 0 ? (
-            <p className="text-gray-600 text-center">No hay publicaciones disponibles.</p>
-          ) : (
-            filteredPosts.map((post) => (
-               <PostItem
-                key={post.post_id}
-                post={post}
-                onClick={() => handlePostSelect(post)}
-                likedPosts={likedPosts}
-                handleLike={handleLike}
-                handleUnlike={handleUnlike}
-                userId={userId}  // Pass the userId
-                handleDeletePost={handleDeletePost}  // Pass the delete handler
-              />
-            ))
-          )}
+          {loading ? (
+          <div className="flex justify-center items-center">
+            <div className="animate-spin rounded-full h-10 mr-2 w-10 border-b-4 border-green-500"></div>
+            <div className="text-2xl font-bold tracking-wide flex items-center text-green-700">cargando publicaciones...</div>
+          </div>
+        ) : filteredPosts.length === 0 ? (
+          <p className="text-gray-600 text-center">No hay publicaciones disponibles.</p>
+        ) : (
+          filteredPosts.map((post) => (
+            <PostItem
+              key={post.post_id}
+              post={post}
+              onClick={() => handlePostSelect(post)}
+              likedPosts={likedPosts}
+              handleLike={handleLike}
+              handleUnlike={handleUnlike}
+              userId={userId}  
+              handleDeletePost={handleDeletePost}  
+            />
+          ))
+        )}
+          
 
           {/* Animated Overlay for CreatePost */}
           {isCreatePostOpen && (
@@ -375,8 +450,5 @@ const ForoList = () => {
       </>
     );
   }
-
-  return <PostDetail post={selectedPost} onBack={() => setSelectedPost(null)} />;
-};
 
 export default ForoList;

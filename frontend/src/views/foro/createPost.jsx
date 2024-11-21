@@ -8,6 +8,7 @@ const CreatePost = ({ onPostCreated, onClose }) => {
   const [error, setError] = useState("");
   const [userId, setUserId] = useState(null);
 
+
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
 
@@ -48,12 +49,12 @@ const CreatePost = ({ onPostCreated, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+  
     if (!title.trim() || !content.trim() || selectedCategories.length === 0) {
       setError("Please complete all fields.");
       return;
     }
-    
+  
     try {
       const userData = JSON.parse(localStorage.getItem("userData"));
       const token = userData.token;
@@ -62,7 +63,6 @@ const CreatePost = ({ onPostCreated, onClose }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
           title: title,
@@ -71,38 +71,27 @@ const CreatePost = ({ onPostCreated, onClose }) => {
           user_id: userId,
         }),
       });
-    
+  
       if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(errorData || "Error creating post");
+        throw new Error("Error al crear la publicación");
       }
-    
-      const newPost = await response.json();
-      
-      // Fetch additional post details
-      const detailResponse = await fetch(`http://localhost:3000/api/posts/${newPost.post_id}`);
-      const postDetails = await detailResponse.json();
-      
-      // Call onPostCreated with full post details
-      if (onPostCreated) {
-        onPostCreated(postDetails);
-      }
-    
-      // Reset form
+  
+      const newPost = await response.json();  // Obtener la nueva publicación creada
+      console.log(newPost);  // Imprime el nuevo post para verificar que tiene la estructura correcta
+      onPostCreated(newPost);  // Pasar la nueva publicación al componente padre
+  
+      // Limpiar los campos del formulario después de enviar
       setTitle("");
       setContent("");
       setSelectedCategories([]);
-      setError("");
-      
-      // Close the create post form
-      if (onClose) {
-        onClose();
-      }
+      setError("");  // Limpiar cualquier error
     } catch (error) {
-      console.error("Post creation error:", error);
-      setError(error.message || "There was an error creating the post.");
+      setError("Hubo un error al crear la publicación.");
+      console.error(error);
     }
   };
+  
+  
 
   useEffect(() => {
     document.body.style.overflow = "hidden";

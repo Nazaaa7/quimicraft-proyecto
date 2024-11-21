@@ -6,7 +6,7 @@ import {
   UserPlusIcon 
 } from 'lucide-react';
 
-function AddUserForm({ editUser, setIsFormVisible, setUsers, userType }) {
+function AddUserForm({ editUser, setIsFormVisible, setUsers, userType, setFilteredUsers, }) {
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -111,6 +111,19 @@ function AddUserForm({ editUser, setIsFormVisible, setUsers, userType }) {
             : user
         )
       );
+      if (setFilteredUsers) {
+        setFilteredUsers((prevFilteredUsers) =>
+          prevFilteredUsers.map((user) =>
+            userType === 'estudiante'
+              ? user.id_estudiante === result.id_estudiante
+                ? result
+                : user
+              : user.id_profesor === result.id_profesor
+              ? result
+              : user
+          )
+        );
+      }
       setIsFormVisible(false);
     } catch (error) {
       console.error('Error al actualizar el usuario:', error);

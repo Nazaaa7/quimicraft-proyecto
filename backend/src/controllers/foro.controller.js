@@ -43,12 +43,11 @@ const getPosts = async (req, res) => {
 };
 
 
-// Crear una nueva publicación
 const createPost = async (req, res) => {
   const { title, content, category_ids, user_id } = req.body;  // Usamos category_ids como array
   try {
     const connection = await connectDB();
-
+    
     // Insertar la nueva publicación en la tabla 'posts'
     const [result] = await connection.execute(
       "INSERT INTO posts(title, content, user_id) VALUES (?, ?, ?)",
@@ -56,7 +55,7 @@ const createPost = async (req, res) => {
     );
     
     const post_id = result.insertId;  // Obtener el ID del nuevo post creado
-
+    
     // Insertar las categorías asociadas a este post en la tabla 'post_categories'
     if (category_ids && category_ids.length > 0) {
       const categoryInsertPromises = category_ids.map(category_id =>
@@ -65,19 +64,35 @@ const createPost = async (req, res) => {
           [post_id, category_id]
         )
       );
-
       // Esperar a que todas las inserciones en 'post_categories' se completen
       await Promise.all(categoryInsertPromises);
     }
 
-    // Responder con el mensaje y el nuevo post_id
-    res.status(201).json({ message: "Publicación creada", post_id });
+    // Obtener el post completo con las categorías asociadas
+    const [postData] = await connection.execute(
+      "SELECT p.*, GROUP_CONCAT(c.name) AS categories FROM posts p " +
+      "LEFT JOIN post_categories pc ON p.post_id = pc.post_id " +
+      "LEFT JOIN categories c ON pc.category_id = c.category_id " +
+      "WHERE p.post_id = ? GROUP BY p.post_id",
+      [post_id]
+    );
+
+    // Verificar que se obtuvo el post
+    if (postData.length > 0) {
+      const post = postData[0];  // El primer (y único) post de la consulta
+      post.category_ids = category_ids;  // Aseguramos que las categorías también estén en la respuesta
+      res.status(201).json(post);  // Devolvemos todo el post creado
+    } else {
+      res.status(500).json({ message: "Error al obtener el post creado" });
+    }
+
     connection.end();
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error al crear la publicación" });
   }
 };
+
 
 // Obtener todas las categorías
 const getCategories = async (req, res) => {
