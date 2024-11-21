@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaFileAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import "./assets/css/FileDashboard.css";
 import Navbar from "./navbar_table";
 
 const Project2Alumno = () => {
@@ -9,25 +8,10 @@ const Project2Alumno = () => {
   const [allFiles, setAllFiles] = useState([]);
 
   useEffect(() => {
-    // Cargar los temas desde localStorage al iniciar
     const savedFiles = JSON.parse(localStorage.getItem("allFiles")) || [];
-    setAllFiles([...savedFiles]);
-
-    // Escuchar cambios en localStorage
-    const handleStorageChange = () => {
-      const updatedFiles = JSON.parse(localStorage.getItem("allFiles")) || [];
-      setAllFiles([...updatedFiles]);
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    // Limpiar el listener al desmontar el componente
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
+    setAllFiles(savedFiles);
   }, []);
 
-  // Filtrar los archivos basado en el término de búsqueda
   const filteredFiles = allFiles.filter((file) =>
     file.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -36,42 +20,39 @@ const Project2Alumno = () => {
     <div>
       <Navbar />
 
-      <div className="dashboard-container">
-        <div className="dashboard">
-          <div className="all-files">
-            <h3 className="temas">Temas a dar en el cuatrimestre</h3>
-            {filteredFiles.length > 0 ? (
-              <div className="files-table-container">
-                <table className="files-table">
-                  <thead>
-                    <tr>
-                      <th>Nombre</th>
-                      <th>Fecha</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredFiles.map((file, index) => (
-                      <tr key={index}>
-                        <td>
-                          <Link
-                            to={`/resources/${file.name}`} // Ruta dinámica corregida
-                            className="file-link"
-                          >
-                            <div className="file-name">
-                              <FaFileAlt /> <span>{file.name}</span>
-                            </div>
-                          </Link>
-                        </td>
-                        <td>{file.date}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <p>No se encontraron temas que coincidan con tu búsqueda.</p>
-            )}
-          </div>
+      <div className="p-4">
+        <div className="bg-white shadow rounded p-4 w-1/2 mx-auto">
+          <h3 className="text-lg font-bold mb-4">Temas Disponibles</h3>
+          <input
+            type="text"
+            placeholder="Buscar..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full p-2 mb-4 border rounded"
+          />
+          <table className="w-full table-auto border-collapse">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="p-2 border">Nombre</th>
+                <th className="p-2 border">Fecha</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredFiles.map((file, index) => (
+                <tr key={index} className="text-center">
+                  <td className="p-2 border">
+                    <Link
+                      to={`/resources/${file.name.replace(/\s+/g, "-").toLowerCase()}`}
+                      className="text-blue-500 hover:underline flex items-center"
+                    >
+                      <FaFileAlt className="mr-2" /> {file.name}
+                    </Link>
+                  </td>
+                  <td className="p-2 border">{file.date}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

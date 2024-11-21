@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../estudiantes/navbar';
 import Footer from '../estudiantes/footer';
-import './assets/css/OrganicCompoundConcept.css'; 
 
 const DynamicTopicPage = () => {
   const { topicName } = useParams();
@@ -71,123 +70,146 @@ const DynamicTopicPage = () => {
   };
 
   if (!topic) {
-    return <p>Cargando...</p>;
+    return <p className="text-center text-gray-500">Cargando...</p>;
   }
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col bg-gray-100">
       <Navbar />
-      <div className="topic-banner">
-        <h1>{topic.name}</h1>
-        {topic.description && <p>{topic.description}</p>}
-        {topic.image && <img src={topic.image} alt={topic.name} className="topic-image" />}
+      <div className="bg-white shadow p-4 mb-6 text-center">
+        <h1 className="text-2xl font-bold">{topic.name}</h1>
+        {topic.description && <p className="text-gray-600">{topic.description}</p>}
+        {topic.image && <img src={topic.image} alt={topic.name} className="mx-auto mt-4 w-1/2" />}
       </div>
 
-      <button className="open-modal-button" onClick={() => setIsModalOpen(true)}>
-        Agregar Nuevo Recurso
-      </button>
+      <div className="container mx-auto px-4 mb-20 bg-white-100 p-10  rounded">
+        <button
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-blue-600 transition mb-6"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Agregar Nuevo Recurso
+        </button>
 
-      {isModalOpen && (
-        <div className="modal-overlay active">
-          <div className="modal-container">
-            <div className="modal-header">
-              <h3>Agregar Nuevo Recurso</h3>
-              <button className="modal-close" onClick={handleCancel}>
-                ×
-              </button>
-            </div>
-            <form className="modal-form">
-              <input
-                type="text"
-                placeholder="Nombre del Recurso"
-                value={newResource.name}
-                onChange={(e) => setNewResource({ ...newResource, name: e.target.value })}
-              />
-              <input
-                type="date"
-                placeholder="Fecha (YYYY-MM-DD)"
-                value={newResource.date}
-                onChange={(e) => setNewResource({ ...newResource, date: e.target.value })}
-              />
-              <input
-                type="text"
-                placeholder="Enlace"
-                value={newResource.link}
-                onChange={(e) => setNewResource({ ...newResource, link: e.target.value })}
-              />
-              <select
-                value={newResource.type}
-                onChange={(e) => setNewResource({ ...newResource, type: e.target.value })}
-              >
-                <option value="pdf">PDF</option>
-                <option value="video">Video</option>
-                <option value="game">Juego</option>
-              </select>
-              <textarea
-                placeholder="Descripción del Recurso"
-                value={newResource.description}
-                onChange={(e) => setNewResource({ ...newResource, description: e.target.value })}
-              />
-              <input
-                type="text"
-                placeholder="Imagen (URL opcional)"
-                value={newResource.image}
-                onChange={(e) => setNewResource({ ...newResource, image: e.target.value })}
-              />
-              {error && <div className="error-message">{error}</div>}
-              <div className="button-container">
-                <button type="button" onClick={handleAddResource}>
-                  Agregar Recurso
-                </button>
-                <button type="button" onClick={handleCancel}>
-                  Cancelar
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white w-1/3 p-6 rounded ">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-bold">Agregar Nuevo Recurso</h3>
+                <button
+                  className="text-gray-500 hover:text-gray-700"
+                  onClick={handleCancel}
+                >
+                  ×
                 </button>
               </div>
-            </form>
+              <form className="space-y-4">
+                <input
+                  type="text"
+                  placeholder="Nombre del Recurso"
+                  value={newResource.name}
+                  onChange={(e) => setNewResource({ ...newResource, name: e.target.value })}
+                  className="w-full border rounded px-3 py-2"
+                />
+                <input
+                  type="date"
+                  placeholder="Fecha (YYYY-MM-DD)"
+                  value={newResource.date}
+                  onChange={(e) => setNewResource({ ...newResource, date: e.target.value })}
+                  className="w-full border rounded px-3 py-2"
+                />
+                <input
+                  type="text"
+                  placeholder="Enlace"
+                  value={newResource.link}
+                  onChange={(e) => setNewResource({ ...newResource, link: e.target.value })}
+                  className="w-full border rounded px-3 py-2"
+                />
+                <select
+                  value={newResource.type}
+                  onChange={(e) => setNewResource({ ...newResource, type: e.target.value })}
+                  className="w-full border rounded px-3 py-2"
+                >
+                  <option value="pdf">PDF</option>
+                  <option value="video">Video</option>
+                  <option value="game">Juego</option>
+                </select>
+                <textarea
+                  placeholder="Descripción del Recurso"
+                  value={newResource.description}
+                  onChange={(e) => setNewResource({ ...newResource, description: e.target.value })}
+                  className="w-full border rounded px-3 py-2"
+                />
+                <input
+                  type="text"
+                  placeholder="Imagen (URL opcional)"
+                  value={newResource.image}
+                  onChange={(e) => setNewResource({ ...newResource, image: e.target.value })}
+                  className="w-full border rounded px-3 py-2"
+                />
+                {error && <div className="text-red-500 text-sm">{error}</div>}
+                <div className="flex justify-between">
+                  <button
+                    type="button"
+                    className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                    onClick={handleAddResource}
+                  >
+                    Agregar Recurso
+                  </button>
+                  <button
+                    type="button"
+                    className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+                    onClick={handleCancel}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
+        )}
+
+        {successMessage && (
+          <div className="bg-green-500 text-white px-4 py-2 rounded mt-4">
+            {successMessage}
+          </div>
+        )}
+
+        <div className="bg-white shadow mt-6">
+          <h3 className="text-lg font-semibold px-4 py-2 border-b">Recursos Disponibles</h3>
+          {topic.resources && topic.resources.length > 0 ? (
+            <table className="min-w-full border-collapse">
+              <thead>
+                <tr className=" text-left">
+                  <th className="px-4 py-2 border">Nombre</th>
+                  <th className="px-4 py-2 border">Tipo</th>
+                  <th className="px-4 py-2 border">Fecha</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topic.resources.map((resource, index) => (
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="px-4 py-2 border">
+                      <a
+                        href={resource.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 hover:underline"
+                      >
+                        {resource.name}
+                      </a>
+                    </td>
+                    <td className="px-4 py-2 border">{resource.type}</td>
+                    <td className="px-4 py-2 border">{resource.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="text-center p-4">No hay recursos disponibles para este tema.</p>
+          )}
         </div>
-      )}
+      </div>
 
-      {successMessage && <div className="success-message">{successMessage}</div>}
-
-      <div className="all-files">
-  <h3 className="text-xl font-semibold mt-6">Recursos Disponibles</h3>
-  {topic.resources && topic.resources.length > 0 ? (
-    <table className="files-table">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Tipo</th>
-          <th>Fecha</th>
-        </tr>
-      </thead>
-      <tbody>
-        {topic.resources.map((resource, index) => (
-          <tr key={index}>
-            <td>
-              <a
-                href={resource.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="file-link"
-              >
-                {resource.name}
-              </a>
-            </td>
-            <td>{resource.type}</td>
-            <td>{resource.date}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  ) : (
-    <p>No hay recursos disponibles para este tema.</p>
-  )}
-</div>
-
-
-
-      <Footer />
     </div>
   );
 };

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Navbar from './navbar';
+import Navbar from './navbar_table';
 import Footer from './footer';
 import Chat from './chat';
-import { FaFileAlt, FaFilePdf, FaYoutube, FaGamepad } from 'react-icons/fa';
+import { FaFilePdf, FaYoutube, FaGamepad } from 'react-icons/fa';
 import { Search } from 'lucide-react';
-import './assets/css/OrganicCompoundConcept.css';
 
 const ViewResourcesPage = () => {
   const { topicName } = useParams(); // Nombre del tema extraído de la URL
@@ -15,30 +14,24 @@ const ViewResourcesPage = () => {
   const [isChatOpen, setIsChatOpen] = useState(false); // Estado del chat
 
   useEffect(() => {
-    // Obtener los temas desde localStorage
     const savedFiles = JSON.parse(localStorage.getItem('allFiles')) || [];
-    console.log(savedFiles); // Verificar si los archivos se obtienen correctamente
-
-    // Buscar el tema por su nombre en el arreglo de archivos
     const selectedTopic = savedFiles.find(
       (file) => file.name.replace(/\s+/g, '-').toLowerCase() === topicName
     );
 
-    // Si se encuentra el tema, lo establecemos en el estado
     setTopic(
       selectedTopic || {
-        name: topicName.replace(/-/g, ' '), // Convertimos el nombre de la URL al formato original
+        name: topicName.replace(/-/g, ' '),
         resources: [],
       }
     );
   }, [topicName]);
 
-  // Filtrado de recursos por búsqueda y tipo
   const materialTypes = [
     { id: 'all', label: 'Todos' },
     { id: 'pdf', label: 'PDF', icon: <FaFilePdf /> },
     { id: 'video', label: 'Videos', icon: <FaYoutube /> },
-    { id: 'game', label: 'Juegos', icon: <FaGamepad /> }
+    { id: 'game', label: 'Juegos', icon: <FaGamepad /> },
   ];
 
   const filteredResources = topic?.resources.filter((resource) => {
@@ -47,40 +40,37 @@ const ViewResourcesPage = () => {
     return matchesSearch && matchesType;
   });
 
-  console.log(filteredResources);  // Verificar los recursos filtrados
-
-  // Si los datos no están listos o el tema no tiene recursos, mostramos un mensaje
-  if (!topic || topic.resources.length === 0) {
-    return <p>No hay recursos disponibles para este tema.</p>;
+  if (!topic) {
+    return <p className="text-center mt-10 text-gray-500">Cargando datos del tema...</p>;
   }
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Navbar />
+      <div className="flex-grow bg-gray-100">
+        {/* Encabezado */}
+        <div className="bg-white shadow-md py-6 px-8">
+          <h1 className="text-2xl font-bold">{topic.name}</h1>
+          {topic.description && <p className="text-gray-600 mt-2">{topic.description}</p>}
+        </div>
 
-      <div className="dashboard-containerr">
-        {/* Sección de búsqueda */}
-        <div className="search-container">
-          <form className="search-form" onSubmit={(e) => e.preventDefault()}>
-            <div className="search-input-container">
+        {/* Contenedor de búsqueda */}
+        <div className="bg-white shadow mt-4 py-4 px-6 flex items-center justify-between">
+          <div className="flex gap-4 items-center">
+            <div className="relative">
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Buscar por nombre de recurso..."
-                className="search-input"
+                className="border border-gray-300 rounded-md py-2 px-4 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <div className="search-icon">
-                <Search size={20} />
-              </div>
+              <Search className="absolute right-3 top-2.5 text-gray-400" size={20} />
             </div>
-          </form>
-
-          <div className="dropdown">
             <select
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
-              className="filter-dropdown"
+              className="border border-gray-300 rounded-md py-2 px-4 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               {materialTypes.map((type) => (
                 <option key={type.id} value={type.id}>
@@ -89,60 +79,64 @@ const ViewResourcesPage = () => {
               ))}
             </select>
           </div>
-
-          <button className="open-chat-button" onClick={() => setIsChatOpen(true)}>
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600"
+            onClick={() => setIsChatOpen(true)}
+          >
             Consultar tema
           </button>
         </div>
 
-        <div className="topic-banner">
-          <h1>{topic.name}</h1>
-          {topic.description && <p>{topic.description}</p>}
-          {topic.image && <img src={topic.image} alt={topic.name} className="topic-image" />}
-        </div>
-
-        {/* Tabla de recursos */}
-        <div className="all-files">
-          <h3 className="text-xl font-semibold mt-6">Recursos Disponibles</h3>
-          {filteredResources.length > 0 ? (
-            <table className="files-table">
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Tipo</th>
-                  <th>Fecha</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredResources.map((resource, index) => (
-                  <tr key={index}>
-                    <td>
-                      <a
-                        href={resource.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="file-link"
-                      >
-                        {resource.name}
-                      </a>
-                    </td>
-                    <td>{resource.type}</td>
-                    <td>{resource.date}</td>
+        {/* Recursos disponibles */}
+        <div className="mt-6 px-8">
+          <h3 className="text-xl font-semibold">Recursos Disponibles</h3>
+          {filteredResources?.length > 0 ? (
+            <div className="overflow-x-auto mt-4">
+              <table className="table-auto w-full bg-white shadow-md rounded-lg overflow-hidden">
+                <thead className="bg-gray-100 border-b">
+                  <tr>
+                    <th className="text-left py-2 px-4">Nombre</th>
+                    <th className="text-left py-2 px-4">Tipo</th>
+                    <th className="text-left py-2 px-4">Fecha</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {filteredResources.map((resource, index) => (
+                    <tr
+                      key={index}
+                      className="hover:bg-gray-50 transition-colors border-b last:border-b-0"
+                    >
+                      <td className="py-2 px-4">
+                        <a
+                          href={resource.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:underline"
+                        >
+                          {resource.name}
+                        </a>
+                      </td>
+                      <td className="py-2 px-4 capitalize">{resource.type}</td>
+                      <td className="py-2 px-4">{resource.date}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           ) : (
-            <p>No hay recursos disponibles para este tema.</p>
+            <p className="text-gray-500 mt-4">No hay recursos disponibles para este tema.</p>
           )}
         </div>
       </div>
 
       {/* Chat */}
       {isChatOpen && (
-        <div className="chat-modal">
-          <div className="chat-modal-content">
-            <button className="close-chat-button" onClick={() => setIsChatOpen(false)}>
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-4/5 md:w-1/2">
+            <button
+              className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+              onClick={() => setIsChatOpen(false)}
+            >
               X
             </button>
             <Chat />
