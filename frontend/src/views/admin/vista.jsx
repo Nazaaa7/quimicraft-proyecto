@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { FaFileAlt, FaTrash, FaEdit } from 'react-icons/fa';
 import Navbar from './navbar_re';
-import './assets/css/vista.css';
-import Footer from '../admin/footer'; // Asegúrate de que esta ruta sea correcta
 
 const Project2 = () => {
   const [fileName, setFileName] = useState('');
   const [allFiles, setAllFiles] = useState([]);
-  const [editingIndex, setEditingIndex] = useState(null); // Para saber qué archivo estamos editando
+  const [editingIndex, setEditingIndex] = useState(null);
 
   useEffect(() => {
-    // Obtener los temas desde localStorage al cargar el componente
     const savedFiles = JSON.parse(localStorage.getItem('allFiles')) || [];
     setAllFiles(savedFiles);
   }, []);
@@ -21,7 +18,7 @@ const Project2 = () => {
     const newFile = {
       name: fileName,
       date: new Date().toLocaleDateString(),
-      link: `/files/${fileName}`, // Simulación de enlace al archivo
+      link: `/files/${fileName}`,
     };
 
     const updatedFiles = [...allFiles, newFile];
@@ -36,89 +33,81 @@ const Project2 = () => {
     localStorage.setItem('allFiles', JSON.stringify(updatedFiles));
   };
 
-  // Función para manejar la edición de un archivo
   const handleEditFile = (index) => {
-    setFileName(allFiles[index].name);  // Establecemos el nombre del archivo para editar
-    setEditingIndex(index);  // Guardamos el índice del archivo que estamos editando
+    setFileName(allFiles[index].name);
+    setEditingIndex(index);
   };
 
-  // Función para guardar la edición
   const handleSaveEdit = () => {
     if (fileName.trim() === '') return;
 
     const updatedFiles = [...allFiles];
-    updatedFiles[editingIndex].name = fileName;  // Actualizamos el nombre del archivo editado
+    updatedFiles[editingIndex].name = fileName;
     setAllFiles(updatedFiles);
     localStorage.setItem('allFiles', JSON.stringify(updatedFiles));
     setFileName('');
-    setEditingIndex(null);  // Limpiamos el índice después de editar
+    setEditingIndex(null);
   };
 
   return (
     <div>
       <Navbar />
-      <div className="dashboard-container">
-        <div className="dashboard">
-          <h3>Panel del Profesor</h3>
+      <div className="container mx-auto p-6 bg-white-700 min-h-screen ">
+        <div className="bg-white shadow rounded-lg">
+          <div className="p-6">
+            <h3 className="text-xl font-bold mb-4">Panel del Profesor</h3>
+        
 
-          <div className="all-files">
-            <table className="files-table">
+            <table className="w-full">
               <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Fecha</th>
-                  <th>Acciones</th>
+                <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+                  <th className="py-3 px-6 text-left">Nombre</th>
+                  <th className="py-3 px-6 text-left">Fecha</th>
+                  <th className="py-3 px-6 text-center">Acciones</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="text-gray-600 text-sm font-light">
                 {allFiles.map((file, index) => (
-                  <tr key={index}>
-                    <td>
-                      <div className="file-name">
-                        <FaFileAlt />
+                  <tr key={index} className="border-b border-gray-200 hover:bg-gray-100">
+                    <td className="py-3 px-6 text-left whitespace-nowrap">
+                      <div className="flex items-center">
+                        <FaFileAlt className="mr-2" />
                         {editingIndex === index ? (
                           <input
                             type="text"
                             value={fileName}
-                            onChange={(e) => setFileName(e.target.value)} // Actualizamos el valor mientras se edita
+                            onChange={(e) => setFileName(e.target.value)}
+                            className="border rounded p-1"
                           />
                         ) : (
                           <span>{file.name}</span>
                         )}
                       </div>
                     </td>
-                    <td>{file.date}</td>
-                    <td>
-                      {/* Mostrar el botón de editar solo si no estamos editando */}
-                      {editingIndex !== index ? (
-                        <button
-                          onClick={() => handleEditFile(index)}
-                          className="edit-button"
+                    <td className="py-3 px-6 text-left">{file.date}</td>
+                    <td className="py-3 px-6 text-center">
+                      <div className="flex item-center justify-center space-x-2">
+                        {editingIndex !== index ? (
+                          <button 
+                            onClick={() => handleEditFile(index)}
+                            className="text-yellow-500 hover:text-yellow-700"
+                          >
+                            <FaEdit />
+                          </button>
+                        ) : null}
+                        <button 
+                          onClick={() => handleDeleteFile(index)}
+                          className="text-red-500 hover:text-red-700"
                         >
-                          <FaEdit />
+                          <FaTrash />
                         </button>
-                      ) : (
-                        <button
-                          onClick={handleSaveEdit}
-                          className="save-edit-button"
-                        >
-                          Guardar
-                        </button>
-                      )}
-                      <button
-                        onClick={() => handleDeleteFile(index)}
-                        className="delete-button"
-                      >
-                        <FaTrash />
-                      </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-      
-
         </div>
       </div>
     </div>

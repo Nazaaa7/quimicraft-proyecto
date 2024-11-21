@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { FaFileAlt, FaFilePdf, FaYoutube, FaGamepad, FaArrowLeft } from 'react-icons/fa';
 import { Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import './assets/css/OrganicCompoundConcept.css';
-import Navbar from './navbar';
+import Navbar from './navbar_table';
+import Footer from './footer';
 import desintegration from './assets/img/desintagration.png';
 import Chat from './chat';
-import Footer from './footer';
 
 const Desintegration = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -70,56 +69,6 @@ const Desintegration = () => {
       tags: ['juego', 'evaluación'],
       link: 'https://www.cerebriti.com/juegos-de-ciencias/test-organico'
     },
-    {
-      name: 'Introducción a Compuestos Orgánicos',
-      icon: <FaFileAlt />,
-      date: 'Agosto 2024',
-      type: 'pdf',
-      tags: ['teoría', 'fundamentos'],
-      link: 'https://quimicaitatljmm.wordpress.com/wp-content/uploads/2014/04/unidad-iii-compuestos-organicos-e-inorganicos.pdf'
-    },
-    {
-      name: 'Guía de Hidrocarburos',
-      icon: <FaFilePdf />,
-      date: 'Agosto 2024',
-      type: 'pdf',
-      tags: ['guía', 'práctica'],
-      link: 'https://www.une.edu.pe/docentesune/jjhoncon/Descargas/Fasciculos%20CTA/Los%20Hidrocarburos.pdf'
-    },
-    {
-      name: 'Tutorial: Nomenclatura Orgánica',
-      icon: <FaYoutube />,
-      date: 'Agosto 2024',
-      type: 'video',
-      tags: ['tutorial', 'nomenclatura'],
-      link: 'https://www.youtube.com/watch?v=jxdNnKn2yuA'
-    },
-    {
-      name: 'Carbohidratos Argentinas',
-      icon: <FaGamepad />,
-      date: 'Agosto 2024',
-      type: 'game',
-      tags: ['juego', 'carbohidratos'],
-      link: 'https://www.cerebriti.com/juegos-de-tecnologia/carbohidratos-argentinas'
-    },
-    {
-      name: 'Características del Carbono',
-      icon: <FaGamepad />,
-      date: 'Agosto 2024',
-      type: 'game',
-      tags: ['juego', 'carbono'],
-      link: 'https://www.cerebriti.com/juegos-de-ciencias/caracteristicas-del-carbono-c'
-    },
-    {
-      name: 'Test Orgánico',
-      icon: <FaGamepad />,
-      date: 'Agosto 2024',
-      type: 'game',
-      tags: ['juego', 'evaluación'],
-      link: 'https://www.cerebriti.com/juegos-de-ciencias/test-organico'
-    },
-    
-    
   ];
 
   const filteredFiles = allFiles.filter(file => {
@@ -131,7 +80,7 @@ const Desintegration = () => {
   return (
     <div>
       <Navbar />
-      <div className="dashboard-containerr">
+      <div className="dashboard-container">
         <button onClick={() => navigate(-1)} className="back-button">
           <FaArrowLeft size={24} />
         </button>

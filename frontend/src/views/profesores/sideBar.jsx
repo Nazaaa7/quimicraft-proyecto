@@ -18,9 +18,7 @@ function Sidebar() {
       icon: <Layers size={20} />, 
       text: "Foro", 
       to: '/foroList' 
-    },
- 
-   
+    }
   ];
 
   return (
@@ -30,7 +28,7 @@ function Sidebar() {
           <Link 
             key={index} 
             to={item.to} 
-            className="block hover:bg-green-100 rounded-lg transition duration-300 ease-in-out tak"
+            className="block hover:bg-green-100 rounded-lg transition duration-300 ease-in-out no-underline" // Aquí agregamos no-underline
           >
             <div className="flex items-center space-x-3 p-3 text-green-700 hover:text-green-900">
               {React.cloneElement(item.icon, { 

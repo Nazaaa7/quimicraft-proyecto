@@ -8,12 +8,23 @@ const Project2Alumno = () => {
   const [allFiles, setAllFiles] = useState([]);
 
   useEffect(() => {
+    // Obtiene los datos de localStorage y los inicializa
     const savedFiles = JSON.parse(localStorage.getItem("allFiles")) || [];
     setAllFiles(savedFiles);
   }, []);
 
+  // Función para generar rutas seguras
+  const slugify = (text) =>
+    text
+      .toString()
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "-") // Reemplaza espacios con guiones
+      .replace(/[^\w-]+/g, ""); // Elimina caracteres no válidos
+
+  // Filtrar los archivos según el término de búsqueda
   const filteredFiles = allFiles.filter((file) =>
-    file.name.toLowerCase().includes(searchTerm.toLowerCase())
+    file.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -42,7 +53,7 @@ const Project2Alumno = () => {
                 <tr key={index} className="text-center">
                   <td className="p-2 border">
                     <Link
-                      to={`/resources/${file.name.replace(/\s+/g, "-").toLowerCase()}`}
+                      to={`/resources/${slugify(file.name)}`}
                       className="text-blue-500 hover:underline flex items-center"
                     >
                       <FaFileAlt className="mr-2" /> {file.name}
@@ -53,6 +64,11 @@ const Project2Alumno = () => {
               ))}
             </tbody>
           </table>
+          {filteredFiles.length === 0 && (
+            <p className="text-gray-500 text-center mt-4">
+              No se encontraron temas.
+            </p>
+          )}
         </div>
       </div>
     </div>

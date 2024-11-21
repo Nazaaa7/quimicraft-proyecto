@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './assets/css/subject.css';
-import Navbar from './navbar';
+import Navbar from './navbar_table';
 import { FaArrowLeft } from 'react-icons/fa';
 
 

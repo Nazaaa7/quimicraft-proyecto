@@ -1,42 +1,94 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import Navbar from './navbar_table';
-import Footer from './footer';
-import Chat from './chat';
-import { FaFilePdf, FaYoutube, FaGamepad } from 'react-icons/fa';
-import { Search } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import Navbar from "./navbar_table";
+import Footer from "./footer";
+import Chat from "./chat";
+import { FaFilePdf, FaYoutube, FaGamepad, FaFileAlt } from "react-icons/fa";
+import { Search } from "lucide-react";
 
 const ViewResourcesPage = () => {
   const { topicName } = useParams(); // Nombre del tema extraído de la URL
   const [topic, setTopic] = useState(null); // Estado para el tema seleccionado
-  const [searchTerm, setSearchTerm] = useState(''); // Término de búsqueda
-  const [selectedType, setSelectedType] = useState('all'); // Tipo de material seleccionado
+  const [searchTerm, setSearchTerm] = useState(""); // Término de búsqueda
+  const [selectedType, setSelectedType] = useState("all"); // Tipo de material seleccionado
   const [isChatOpen, setIsChatOpen] = useState(false); // Estado del chat
 
+  const allFiles = [
+    {
+      name: "Introducción a Compuestos Orgánicos",
+      icon: <FaFileAlt />,
+      date: "Agosto 2024",
+      type: "pdf",
+      tags: ["teoría", "fundamentos"],
+      link: "https://quimicaitatljmm.wordpress.com/wp-content/uploads/2014/04/unidad-iii-compuestos-organicos-e-inorganicos.pdf",
+    },
+    {
+      name: "Guía de Hidrocarburos",
+      icon: <FaFilePdf />,
+      date: "Agosto 2024",
+      type: "pdf",
+      tags: ["guía", "práctica"],
+      link: "https://www.une.edu.pe/docentesune/jjhoncon/Descargas/Fasciculos%20CTA/Los%20Hidrocarburos.pdf",
+    },
+    {
+      name: "Tutorial: Nomenclatura Orgánica",
+      icon: <FaYoutube />,
+      date: "Agosto 2024",
+      type: "video",
+      tags: ["tutorial", "nomenclatura"],
+      link: "https://www.youtube.com/watch?v=jxdNnKn2yuA",
+    },
+    {
+      name: "Carbohidratos Argentinas",
+      icon: <FaGamepad />,
+      date: "Agosto 2024",
+      type: "game",
+      tags: ["juego", "carbohidratos"],
+      link: "https://www.cerebriti.com/juegos-de-tecnologia/carbohidratos-argentinas",
+    },
+    {
+      name: "Características del Carbono",
+      icon: <FaGamepad />,
+      date: "Agosto 2024",
+      type: "game",
+      tags: ["juego", "carbono"],
+      link: "https://www.cerebriti.com/juegos-de-ciencias/caracteristicas-del-carbono-c",
+    },
+    {
+      name: "Test Orgánico",
+      icon: <FaGamepad />,
+      date: "Agosto 2024",
+      type: "game",
+      tags: ["juego", "evaluación"],
+      link: "https://www.cerebriti.com/juegos-de-ciencias/test-organico",
+    },
+  ];
+
   useEffect(() => {
-    const savedFiles = JSON.parse(localStorage.getItem('allFiles')) || [];
+    const savedFiles = JSON.parse(localStorage.getItem("allFiles")) || [];
     const selectedTopic = savedFiles.find(
-      (file) => file.name.replace(/\s+/g, '-').toLowerCase() === topicName
+      (file) => file.name.replace(/\s+/g, "-").toLowerCase() === topicName
     );
 
     setTopic(
       selectedTopic || {
-        name: topicName.replace(/-/g, ' '),
-        resources: [],
+        name: topicName.replace(/-/g, " "),
+        resources: allFiles, // Asignar recursos predeterminados al tema
+        image: "https://www.example.com/image.jpg" // Asegúrate de tener la URL de la imagen
       }
     );
   }, [topicName]);
 
   const materialTypes = [
-    { id: 'all', label: 'Todos' },
-    { id: 'pdf', label: 'PDF', icon: <FaFilePdf /> },
-    { id: 'video', label: 'Videos', icon: <FaYoutube /> },
-    { id: 'game', label: 'Juegos', icon: <FaGamepad /> },
+    { id: "all", label: "Todos" },
+    { id: "pdf", label: "PDF", icon: <FaFilePdf /> },
+    { id: "video", label: "Videos", icon: <FaYoutube /> },
+    { id: "game", label: "Juegos", icon: <FaGamepad /> },
   ];
 
   const filteredResources = topic?.resources.filter((resource) => {
     const matchesSearch = resource.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesType = selectedType === 'all' || resource.type === selectedType;
+    const matchesType = selectedType === "all" || resource.type === selectedType;
     return matchesSearch && matchesType;
   });
 
@@ -52,6 +104,7 @@ const ViewResourcesPage = () => {
         <div className="bg-white shadow-md py-6 px-8">
           <h1 className="text-2xl font-bold">{topic.name}</h1>
           {topic.description && <p className="text-gray-600 mt-2">{topic.description}</p>}
+          {topic.image && <img src={topic.image} alt={topic.name} className="mx-auto mt-4 w-1/2" />} {/* Imagen cargada */}
         </div>
 
         {/* Contenedor de búsqueda */}

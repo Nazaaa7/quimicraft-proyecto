@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Navbar from '../estudiantes/navbar';
+import Navbar from '../estudiantes/navbar_table';
 import Footer from '../estudiantes/footer';
 
 const DynamicTopicPage = () => {

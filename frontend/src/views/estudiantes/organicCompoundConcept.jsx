@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaFileAlt, FaFilePdf, FaYoutube, FaGamepad, FaArrowLeft } from 'react-icons/fa';
 import { Search } from 'lucide-react';
 import './assets/css/OrganicCompoundConcept.css';
-import Navbar from './navbar';
+import Navbar from './navbar_table';
 import organicCompoundBanner from './assets/img/organico.png';
 import Chat from './chat';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate

@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { FaFileAlt, FaFilePdf, FaYoutube, FaGamepad } from 'react-icons/fa';
+import { FaFileAlt, FaFilePdf, FaYoutube, FaGamepad, FaArrowLeft } from 'react-icons/fa';
 import { Search } from 'lucide-react';
-import './assets/css/organicCompound.css';
-import Navbar from './navbar';
+import './assets/css/OrganicCompoundConcept.css';
+import Navbar from './navbar_table';
 import organicCompoundBanner from './assets/img/organico.png';
 import Chat from './chat';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+
 
 const OrganicCompound = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('all');
   const [isChatOpen, setIsChatOpen] = useState(false); // Estado para controlar el chat modal
+  const navigate = useNavigate(); // Define navigate para usarlo después
 
   const materialTypes = [
     { id: 'all', label: 'Todos' },
@@ -27,96 +30,7 @@ const OrganicCompound = () => {
       tags: ['teoría', 'fundamentos'],
       link: 'https://quimicaitatljmm.wordpress.com/wp-content/uploads/2014/04/unidad-iii-compuestos-organicos-e-inorganicos.pdf'
     },
-    {
-      name: 'Guía de Hidrocarburos',
-      icon: <FaFilePdf />,
-      date: 'Agosto 2024',
-      type: 'pdf',
-      tags: ['guía', 'práctica'],
-      link: 'https://www.une.edu.pe/docentesune/jjhoncon/Descargas/Fasciculos%20CTA/Los%20Hidrocarburos.pdf'
-    },
-    {
-      name: 'Tutorial: Nomenclatura Orgánica',
-      icon: <FaYoutube />,
-      date: 'Agosto 2024',
-      type: 'video',
-      tags: ['tutorial', 'nomenclatura'],
-      link: 'https://www.youtube.com/watch?v=jxdNnKn2yuA'
-    },
-    {
-      name: 'Carbohidratos Argentinas',
-      icon: <FaGamepad />,
-      date: 'Agosto 2024',
-      type: 'game',
-      tags: ['juego', 'carbohidratos'],
-      link: 'https://www.cerebriti.com/juegos-de-tecnologia/carbohidratos-argentinas'
-    },
-    {
-      name: 'Características del Carbono',
-      icon: <FaGamepad />,
-      date: 'Agosto 2024',
-      type: 'game',
-      tags: ['juego', 'carbono'],
-      link: 'https://www.cerebriti.com/juegos-de-ciencias/caracteristicas-del-carbono-c'
-    },
-    {
-      name: 'Test Orgánico',
-      icon: <FaGamepad />,
-      date: 'Agosto 2024',
-      type: 'game',
-      tags: ['juego', 'evaluación'],
-      link: 'https://www.cerebriti.com/juegos-de-ciencias/test-organico'
-    },
-    {
-      name: 'Introducción a Compuestos Orgánicos',
-      icon: <FaFileAlt />,
-      date: 'Agosto 2024',
-      type: 'pdf',
-      tags: ['teoría', 'fundamentos'],
-      link: 'https://quimicaitatljmm.wordpress.com/wp-content/uploads/2014/04/unidad-iii-compuestos-organicos-e-inorganicos.pdf'
-    },
-    {
-      name: 'Guía de Hidrocarburos',
-      icon: <FaFilePdf />,
-      date: 'Agosto 2024',
-      type: 'pdf',
-      tags: ['guía', 'práctica'],
-      link: 'https://www.une.edu.pe/docentesune/jjhoncon/Descargas/Fasciculos%20CTA/Los%20Hidrocarburos.pdf'
-    },
-    {
-      name: 'Tutorial: Nomenclatura Orgánica',
-      icon: <FaYoutube />,
-      date: 'Agosto 2024',
-      type: 'video',
-      tags: ['tutorial', 'nomenclatura'],
-      link: 'https://www.youtube.com/watch?v=jxdNnKn2yuA'
-    },
-    {
-      name: 'Carbohidratos Argentinas',
-      icon: <FaGamepad />,
-      date: 'Agosto 2024',
-      type: 'game',
-      tags: ['juego', 'carbohidratos'],
-      link: 'https://www.cerebriti.com/juegos-de-tecnologia/carbohidratos-argentinas'
-    },
-    {
-      name: 'Características del Carbono',
-      icon: <FaGamepad />,
-      date: 'Agosto 2024',
-      type: 'game',
-      tags: ['juego', 'carbono'],
-      link: 'https://www.cerebriti.com/juegos-de-ciencias/caracteristicas-del-carbono-c'
-    },
-    {
-      name: 'Test Orgánico',
-      icon: <FaGamepad />,
-      date: 'Agosto 2024',
-      type: 'game',
-      tags: ['juego', 'evaluación'],
-      link: 'https://www.cerebriti.com/juegos-de-ciencias/test-organico'
-    },
-    
-    
+    // Otros archivos...
   ];
 
   const filteredFiles = allFiles.filter(file => {
@@ -131,6 +45,11 @@ const OrganicCompound = () => {
       <div className="dashboard-container flex">
 
         <div className="flex-1 p-6 bg-white shadow-md rounded-md mt-6">
+          {/* Botón para volver */}
+          <button className="back-button" onClick={() => navigate(-1)}>
+            <FaArrowLeft /> Volver
+          </button>
+
           {/* Buscador y Filtros */}
           <div className="search-container mb-6">
             <form className="search-form" onSubmit={(e) => e.preventDefault()}>
@@ -163,9 +82,9 @@ const OrganicCompound = () => {
               </select>
             </div>
               {/* Botón para abrir el chat */}
-        <button className="open-chat-button" onClick={() => setIsChatOpen(true)}>
-          Consultar tema
-        </button>
+              <button className="open-chat-button" onClick={() => setIsChatOpen(true)}>
+                Consultar tema
+              </button>
           </div>
 
           <h1 className="text-2xl font-bold mb-4">Compuestos Orgánicos</h1>
@@ -223,8 +142,6 @@ const OrganicCompound = () => {
           </div>
         </div>
 
-      
-
         {/* Chat como modal */}
         {isChatOpen && (
           <div className="chat-modal">
@@ -237,6 +154,9 @@ const OrganicCompound = () => {
           </div>
         )}
       </div>
+
+      {/* Pie de página */}
+     
     </div>
   );
 };
