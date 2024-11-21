@@ -15,19 +15,19 @@ const Semester = {
     },
     {
       title: 'FORMULACIÓN Y PREPARACIÓN DE MEZCLAS',
-      path: '/projects',
+      path: '/projects2',
       color: '#46ad81',
     },
   ],
   second: [
     {
       title: 'ACONDICIONAMIENTO Y ALMACENAMIENTO DE PRODUCTOS QUÍMICOS',
-      path: '/social-media',
+      path: '/projects2',
       color: '#46ad81',
     },
     {
       title: 'REGULACIÓN Y CONTROL DE PROCESOS QUÍMICOS I',
-      path: '/social-media',
+      path: '/projects2',
       color: '#46ad81',
     },
   ]

@@ -2,34 +2,25 @@ import { Link } from 'react-router-dom';
 import { Home, StickyNote, Calendar, Atom, Layers } from "lucide-react";
 import React from 'react';
 
-
 function Sidebar() {
   const sidebarItems = [
     { 
       icon: <Home size={20} />, 
       text: "Inicio", 
-      to: '/estudiantes' 
+      to: '/profesores' 
     },
     { 
       icon: <StickyNote size={20} />, 
       text: "Material", 
-      to: '/material' 
+      to: '/subject' 
     },
     { 
       icon: <Layers size={20} />, 
       text: "Foro", 
       to: '/foroList' 
     },
-    { 
-      icon: <Calendar size={20} />, 
-      text: "Calendario", 
-      to: '/calendar' 
-    },
-    { 
-      icon: <Atom size={20} />, 
-      text: "Tabla Periodica", 
-      to: '/periodicTable',
-    }
+ 
+   
   ];
 
   return (

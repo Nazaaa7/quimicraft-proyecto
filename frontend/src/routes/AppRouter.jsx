@@ -30,7 +30,7 @@ import Vista from "../views/admin/vista";
 import DynamicTopicPage from '../views/profesores/DynamicTopicPage';
 import PeriodicTable from "../views/estudiantes/periodicTable";
 import ElementDetail from "../views/estudiantes/elementDetail";
-import ForoList from '../views/foro/foroList';
+import ForoList from "../views/foro/foroList";
 import ViewResourcesPage from "../views/estudiantes/viewResourcesPage";
 
 const AppRouter = () => {
@@ -71,7 +71,8 @@ const AppRouter = () => {
           <Route path="/vista" element={<Vista/>}/>
           <Route path="/periodicTable" element={<PeriodicTable/>} />
           <Route path="/elementDetail" element={<ElementDetail/>} />
-          <Route path="/foroList" element={<ForoList/>}/>
+          <Route path="/foroList" element={<ForoList/>} />
+   
           {/* Ruta dinámica para el tema */}
           <Route path="/resources/:topicName" element={<ViewResourcesPage />} />
           {/* Ruta dinámica para los temas de profesores */}
