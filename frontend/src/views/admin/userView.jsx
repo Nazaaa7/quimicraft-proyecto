@@ -44,7 +44,7 @@ function UserManagement() {
   const [userType, setUserType] = useState('estudiante');
   const [searchTerm, setSearchTerm] = useState('');
   const [userToDelete, setUserToDelete] = useState(null);
-  const [toast, setToast] = useState(null);  // Estado para las notificaciones Toast
+  const [toast, setToast] = useState(null);
 
   const fetchUsers = async () => {
     try {
@@ -79,29 +79,35 @@ function UserManagement() {
     if (!userToDelete) return;
   
     try {
-      const response = await fetch(`http://localhost:3000/admin/${userType}/${userToDelete.id}`, {
+      const response = await fetch(`http://localhost:3000/admin/${userType}/${
+        userType === 'estudiante' 
+          ? userToDelete.id_estudiante 
+          : userToDelete.id_profesor
+      }`, {
         method: 'DELETE',
       });
+      console.log(response)
   
-      const responseData = await response.json(); // Intenta parsear la respuesta del servidor
+      const responseData = await response.json();
   
       if (!response.ok) {
-        // Si la respuesta no es exitosa, lanza un error con el mensaje del servidor
         throw new Error(responseData.message || 'Error al eliminar el usuario');
       }
       
-      // Actualiza inmediatamente el estado para reflejar la eliminación
-      const updatedUsers = users.filter(user => user.id !== userToDelete.id);
+      const updatedUsers = users.filter(user => 
+        userType === 'estudiante' 
+          ? user.id_estudiante !== userToDelete.id_estudiante 
+          : user.id_profesor !== userToDelete.id_profesor
+      );
+      
       setUsers(updatedUsers);
       setFilteredUsers(updatedUsers);
       
-      // Muestra la notificación de éxito con el mensaje del servidor si existe
       setToast({ 
         type: 'success', 
         message: responseData.message || 'Usuario eliminado correctamente' 
       });
       
-      // Restablece la confirmación de eliminación
       setUserToDelete(null);
     } catch (error) {
       console.error('Error al eliminar usuario:', error);
@@ -125,13 +131,6 @@ function UserManagement() {
     fetchUsers();
   }, [userType]);
 
-  // Vuelve a cargar los usuarios si el formulario es cerrado o editado
-  useEffect(() => {
-    if (!isFormVisible) {
-      fetchUsers();
-    }
-  }, [isFormVisible]);
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-400/10 to-green-400/30">
       <Navbar />
@@ -147,7 +146,26 @@ function UserManagement() {
         )}
       </AnimatePresence>
 
-      {/* Contenedor principal de la aplicación */}
+      {/* Formulario de añadir/editar usuario (Overlay) */}
+      <AnimatePresence>
+        {isFormVisible && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+          >
+            <AddUserForm 
+            editUser={editUser}
+            setIsFormVisible={setIsFormVisible}
+            setUsers={setUsers}
+            setFilteredUsers={setFilteredUsers}  // Add this line
+            userType={userType}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="container mx-auto px-4 py-8">
         {/* Selector de tipo de usuario */}
         <motion.div 
