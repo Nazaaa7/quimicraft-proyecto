@@ -32,6 +32,8 @@ import PeriodicTable from "../views/estudiantes/periodicTable";
 import ElementDetail from "../views/estudiantes/elementDetail";
 import ForoList from "../views/foro/foroList";
 import ViewResourcesPage from "../views/estudiantes/viewResourcesPage";
+import AddUserForm from "../views/admin/addUserAlumn";
+import UserManagement from "../views/admin/userView";
 
 const AppRouter = () => {
   return (
@@ -72,6 +74,8 @@ const AppRouter = () => {
           <Route path="/periodicTable" element={<PeriodicTable/>} />
           <Route path="/elementDetail" element={<ElementDetail/>} />
           <Route path="/foroList" element={<ForoList/>} />
+          <Route path="/crearUser" element={<AddUserForm />} />
+          <Route path="/userView" element={<UserManagement />} />
    
           {/* Ruta dinámica para el tema */}
           <Route path="/resources/:topicName" element={<ViewResourcesPage />} />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaFileAlt, FaTrash, FaEdit } from 'react-icons/fa';
-import Navbar from './navbar';
+import Navbar from './navbar_re';
 import './assets/css/vista.css';
 import Footer from '../admin/footer'; // Asegúrate de que esta ruta sea correcta
 

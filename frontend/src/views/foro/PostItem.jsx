@@ -6,8 +6,9 @@ const PostItem = ({
   likedPosts, 
   handleLike, 
   handleUnlike, 
-  userId,  // Add userId prop
-  handleDeletePost  // Add delete handler prop
+  userId,
+  userRole,  // Agregar userRole
+  handleDeletePost 
 }) => {
   // Convertimos las categorías separadas por comas en un array
 // Convertimos las categorías separadas por comas en un array
@@ -81,6 +82,17 @@ const categories = post.category_names ? post.category_names.split(",") : [];
         <p className="text-sm text-gray-600">
           Likes: {post.likes_count || 0}
         </p>
+        {userRole === 'admin' && (
+        <button 
+          onClick={(e) => {
+            e.stopPropagation(); // Evitar que se abra el post
+            handleDeletePost(post.post_id);
+          }}
+          className="bg-red-500 text-white p-2 rounded hover:bg-red-600"
+        >
+          Eliminar Publicación
+        </button>
+      )}
 
         <button
           onClick={(e) => {

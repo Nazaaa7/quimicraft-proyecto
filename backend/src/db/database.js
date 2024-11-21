@@ -9,7 +9,7 @@ const connectDB = async () => {
       host: "localhost",
       user: "root",
       password: "",
-      database: "quimicraftt",
+      database: "quimicraft",
     });
   } catch (error) {
     console.log(error);

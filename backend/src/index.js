@@ -11,6 +11,7 @@ import http from 'http';
 import { Server } from 'socket.io'; 
 import LikeRouter from './routes/likes.routes.js';
 import calendarRouter from "./routes/calendar.routes.js";
+import adminUsRouter from "./routes/user.routes.js";
 
 const app = express();
 const server = http.createServer(app);
@@ -32,6 +33,7 @@ app.use(tableRouter);
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/likes', LikeRouter);
+app.use('/admin', adminUsRouter);
 
 // Ruta para el calendario
 
