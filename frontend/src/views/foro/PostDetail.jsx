@@ -133,7 +133,7 @@ const PostDetail = ({ post, onBack }) => {
           <h3 className="text-2xl font-bold text-gray-800">{post.usuario}</h3>
           <h3 className="text-2xl font-bold text-center text-gray-800">{post.title}</h3>
           <p className="text-gray-600 mt-2">{post.content}</p>
-          <p className="text-gray-500 mt-4"><strong>Categoría:</strong> {post.name}</p>
+          <p className="text-gray-500 mt-4"><strong>Categoría:</strong> {post.category_names}</p>
 
           <CommentList 
         comments={comments}

@@ -345,7 +345,6 @@ const CalendarComponent = () => {
           <div className="space-y-3">
             {/* Título del evento */}
             <input
-              type="text"
               name="title"
               placeholder="Título del evento"
               value={newEvent.title}
@@ -369,14 +368,14 @@ const CalendarComponent = () => {
                 name="start"
                 value={newEvent.start}
                 onChange={handleEventChange}
-                className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
+                className="flex-1 p-2 border w-20 border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
               />
               <input
                 type="datetime-local"
                 name="end"
                 value={newEvent.end}
                 onChange={handleEventChange}
-                className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
+                className="flex-1 p-2 border w-20 border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
               />
             </div>
 

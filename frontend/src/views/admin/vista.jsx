@@ -46,7 +46,7 @@ const Project2 = () => {
     setAllFiles(updatedFiles);
     localStorage.setItem('allFiles', JSON.stringify(updatedFiles));
     setFileName('');
-    setEditingIndex(null);
+    setEditingIndex(null); // Clear the editing state after saving
   };
 
   return (
@@ -56,7 +56,6 @@ const Project2 = () => {
         <div className="bg-white shadow rounded-lg">
           <div className="p-6">
             <h3 className="text-xl font-bold mb-4">Panel del Profesor</h3>
-        
 
             <table className="w-full">
               <thead>
@@ -86,16 +85,23 @@ const Project2 = () => {
                     </td>
                     <td className="py-3 px-6 text-left">{file.date}</td>
                     <td className="py-3 px-6 text-center">
-                      <div className="flex item-center justify-center space-x-2">
-                        {editingIndex !== index ? (
-                          <button 
+                      <div className="flex items-center justify-center space-x-2">
+                        {editingIndex === index ? (
+                          <button
+                            onClick={handleSaveEdit}
+                            className="text-green-500 hover:text-green-700"
+                          >
+                            Guardar
+                          </button>
+                        ) : (
+                          <button
                             onClick={() => handleEditFile(index)}
                             className="text-yellow-500 hover:text-yellow-700"
                           >
                             <FaEdit />
                           </button>
-                        ) : null}
-                        <button 
+                        )}
+                        <button
                           onClick={() => handleDeleteFile(index)}
                           className="text-red-500 hover:text-red-700"
                         >

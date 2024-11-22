@@ -26,6 +26,7 @@ const ForoList = () => {
         const decodedToken = jwt_decode(userData.token);
         setUserId(decodedToken.id.id);
         setUserRole(userData.role); // Añadir esto para obtener el rol del usuario
+        console.log(setUserRole)
       } catch (error) {
         console.error("Error al decodificar el token:", error);
       }
@@ -69,7 +70,7 @@ const ForoList = () => {
 
         const responsePosts = await fetch(url);
         const dataPosts = await responsePosts.json();
-        
+        console.log(dataPosts)
         if (Array.isArray(dataPosts)) {
           const postsWithLikes = await Promise.all(
             dataPosts.map(async (post) => {
@@ -312,10 +313,12 @@ const ForoList = () => {
       };  
   
       // Usar función de actualización para garantizar la inmutabilidad  
-      setPosts((prevPosts) => [completePost, ...prevPosts]);  
+      setPosts((prevPosts) => [completePost, ...prevPosts]); 
       
       // Cerrar el formulario de creación  
       setIsCreatePostOpen(false);  
+      window.onload() 
+
     } catch (error) {  
       console.error("Error fetching post details:", error);  
     }  
@@ -420,6 +423,7 @@ const ForoList = () => {
               handleLike={handleLike}
               handleUnlike={handleUnlike}
               userId={userId}  
+              userRole={userRole}
               handleDeletePost={handleDeletePost}  
             />
           ))

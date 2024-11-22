@@ -10,11 +10,12 @@ const PostItem = ({
   userRole,  // Agregar userRole
   handleDeletePost 
 }) => {
-console.log(post)
   // Convertimos las categorías separadas por comas en un array
-const categories = post.categories ? post.categories.split(",") : [];
+const categories = post.category_names ? post.category_names.split(",") : [];
   // Comprobamos si este post está "liked" por el usuario
   const isLiked = likedPosts.has(post.post_id);
+  console.log(userRole)
+  console.log(userId)
 
   // Verificamos si el usuario actual es el dueño del post
   const isPostOwner = userId === post.user_id;
@@ -26,6 +27,8 @@ const categories = post.categories ? post.categories.split(",") : [];
     month: "short",
     day: "numeric",
   });
+
+  
 
   const handleDelete = (e) => {
     e.stopPropagation();
@@ -81,25 +84,17 @@ const categories = post.categories ? post.categories.split(",") : [];
         <p className="text-sm text-gray-600">
           Likes: {post.likes_count || 0}
         </p>
-        {userRole === 'admin' && (
-        <button 
-          onClick={(e) => {
-            e.stopPropagation(); // Evitar que se abra el post
-            handleDeletePost(post.post_id);
-          }}
-          className="bg-red-500 text-white p-2 rounded hover:bg-red-600"
-        >
-          Eliminar Publicación
-        </button>
+        {userRole === "admin" && (
+       <button
+       onClick={handleDelete}
+       className="text-red-500 border p-2 rounded-md ml-8 border-red-600 bg-red-200 hover:text-red-700 justify-between flex transition-colors duration-300 hover:bg-red-400"
+       title="Eliminar publicación"
+       aria-label="Eliminar publicación"
+     >
+       <Trash2 size={20} />Eliminar publicacion
+     </button>
       )}
-      <button
-  onClick={handleDelete}
-  className="text-red-500 border p-2 rounded-md border-red-600 bg-red-200 hover:text-red-700 justify-between flex transition-colors duration-300 hover:bg-red-400"
-  title="Eliminar publicación"
-  aria-label="Eliminar publicación"
->
-  <Trash2 size={20} />Eliminar publicacion
-</button>
+      
 
 
         <button

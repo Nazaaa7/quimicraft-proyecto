@@ -170,11 +170,14 @@ const Register = () => {
               required
             >
               <option value="">Selecciona un tipo de usuario</option>
-              {tiposUsuario.map((tipo) => (
-                <option key={tipo.idTipoUsuario} value={tipo.idTipoUsuario}>
-                  {tipo.descripcion}
-                </option>
-              ))}
+              {tiposUsuario
+                .filter(tipo => tipo.descripcion !== 'admin') // Filtrar para no mostrar 'admin'
+                .map((tipo) => (
+                  <option key={tipo.idTipoUsuario} value={tipo.idTipoUsuario}>
+                    {tipo.descripcion}
+                  </option>
+                ))}
+
             </Form.Select>
           </FloatingLabel>
 
